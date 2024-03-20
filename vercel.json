@@ -13,6 +13,13 @@
         "APP_DEBUG": "true",
         "APP_URL": "https://yourproductionurl.com",
 
+        "DB_CONNECTION": "pgsql",
+        "DB_HOST": "ep-withered-mode-a2a16mym-pooler.eu-central-1.aws.neon.tech",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "verceldb",
+        "DB_USERNAME": "default",
+        "DB_PASSWORD": "endpoint=ep-fancy-rice-oPSxBAb7n1RT;<password>",
+
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
