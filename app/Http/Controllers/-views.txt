@@ -1,0 +1,157 @@
+CehType 
+    inp>title
+[F title]
++
+
+
+
+Ceh
+    inp>title
+    drop-CehType>type
+[F title, type]
++
+
+
+
+Color
+    inp>title
+    colorPicker>hex
+[F title]
++
+
+
+
+Unit
+    inp>title
+[F title]
++
+
+
+
+(U) +R>Unit,Consist
+Item
+    inp>title
+    drop-Unit>unit_id
+    check>hascolor
+    inp>price
+    inp>url_photo
+    inp>url_instruction
+    inp>description
+    
+    (CRD)
+    Consist
+        (this-id>what)
+        drop-Item>have
+
+[F title, price]
+[Fil hasPhoto, hasColor, isBase]
+[S title, price, consist]
++ Edit View
+
+
+
+(U) +R>CehType,RoleItem,Item
+WorkType
+    inp>title
+    drop-CehType>cehtype
+    inp>minpay
+
+    (CRD)
+    RoleItem
+        (this-id>role)
+        drop-Item>item
+
+[F title, sub(items)]
+[O minpay]
++ Edit View
+
+
+
+(U) +R>Ceh,WorkType
+Worker
+    inp>pib
+    drop-Ceh>ceh 
+    drop-WorkType>role 
+    inp>phone 
+    inp>passport
+
+[F pib, phone, passport]
+[Fil ceh, role, (minpay???)]
++ Edit View
++ allow
++ WorkType by CehType
++
+
+
+
+(RUD)
+Admins
+    inp>pib 
+    inp>phone
+    drop-[owner,admin,(zav ceha???)]>role
+    check>allowed
+
+[F pib, phone]
+[Fil role, allowed]
++ Edit View
++ allow
+
+
+
++
+Zacup
+    drop-Item>item
+    if havecolor
+        drop-Color>color 
+    inp>count
+    inp>price
+
+[F date, Item]
+[O date, summ]
+
+
+__________^^^^^^^^tables
+
+
+
+
+
+
+R>Transaction(+TransactionType),Item,Ceh(>Worker),Consist
+Movement
+    Ceh
+        Item
+        count
+        brak
+    from
+    to
+
+    is ok
+        anomaly
+
+__________^^^^^^^^pseudocanban
+
+
+
+
+
+Income
+    period
+
+
+
+
+Production
+    period
+    ceh
+
+__________^^^^^^^^graphics
+
+
+
+
+Zarplata
+    period
+
+
+Items real cost
