@@ -12,12 +12,16 @@ class ApiController extends BaseController {
 
     public function login(Request $request){
         $worker = Worker::where('phone', '=', $request->phone)->get()[0];
+        if($worker == null)
+            return response(null, 404);
         if (!Hash::check($request->password, $worker->password))
-            $worker = null;
-        return json_encode($worker);
+            return response(null, 403);
+        return response()->json($worker);
     }
 
     public function register(Request $request){
+        if(Worker::where('phone', '=', $request->phone) != null)
+            return response(null, 409);
         $newworker = Worker::create([
             'pib' => $request->pib,
             'ceh_id' => $request->ceh,
@@ -27,15 +31,15 @@ class ApiController extends BaseController {
             'password' => $request->password,
             'checked' => 0
         ]);
-        return json_encode($newworker);
+        return response()->json($newworker);
     }
 
     public function cehs(){
-        return json_encode(Ceh::all());
+        return response()->json(Ceh::all());
     }
 
     public function roles(){
-        return json_encode(WorkType::all());
+        return response()->json(WorkType::all());
     }
 
 }
