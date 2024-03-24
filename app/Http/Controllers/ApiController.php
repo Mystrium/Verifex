@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Ceh;
-use App\Models\WorkType;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use App\Models\WorkType;
 use App\Models\Worker;
+use App\Models\Item;
+use App\Models\Ceh;
 use Hash;
 
 class ApiController extends BaseController {
@@ -38,8 +39,17 @@ class ApiController extends BaseController {
         return response()->json(Ceh::all());
     }
 
-    public function roles(){
-        return response()->json(WorkType::all());
+    public function roles(Request $request){
+        $roles = WorkType::where('cehtype_id', '=', $request->type_id)->get();
+        return response()->json($roles);
     }
+
+    public function items(Request $request){
+        $items = Item::select('items.*')
+            ->leftJoin('role_items', 'role_items.item_id', '=', 'items.id')
+            ->where('role_id', '=', $request->role);
+        return response()->json($items);
+    }
+
 
 }
