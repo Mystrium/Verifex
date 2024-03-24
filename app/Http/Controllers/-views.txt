@@ -155,3 +155,35 @@ Zarplata
 
 
 Items real cost
+
+
+
+API doc
+
+POST    /api/login
+    (phone, password)
+    404 - нима юзера
+    403 - неправильний пароль
+    418 - адмін не підтвертив реєстрацію
+
+POST    /api/register
+    (pib, ceh, type, phone, passport, password)
+    409 - номер вже використовується
+
+GET     /api/cehs
+
+POST    /api/roles
+    (type) тип цеху з /api/cehs -> id
+
+POST    /api/items
+    (role) роль з юзера
+
+GET     /api/colors
+
+GET     /api/transtypes
+
+POST    /api/transact
+    (type, worker_from, worker_to, item, color, count) type - тип транзакції
+
+POST    /api/worktime
+    (worker, date, start) start - 1 - початок, 0 - пауза, закінчення роботи
