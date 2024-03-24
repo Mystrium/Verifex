@@ -36,7 +36,10 @@ class ApiController extends BaseController {
     }
 
     public function cehs(){
-        return response()->json(Ceh::all());
+        $cehs = Ceh::select('ceh.*', 'ceh_types.title as type')
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->get();
+        return response()->json();
     }
 
     public function roles(Request $request){
