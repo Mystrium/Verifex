@@ -10,16 +10,13 @@ use App\Models\Ceh;
 class WorkerController extends BaseController {
 
     public function view(){
-        $workers = Worker::select('workers.*', 'ceh.title','ceh_types.title as ctitle', 'work_types.title as role')
+        $workers = Worker::where('workers.id', '<>', '1')
+            ->select('workers.*', 'ceh.title','ceh_types.title as ctitle', 'work_types.title as role')
             ->leftJoin('ceh', 'ceh.id', '=', 'workers.ceh_id')
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->leftJoin('work_types', 'work_types.id', '=', 'workers.role_id')
             ->get();
-        $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')->get();
-        $worktypes = WorkType::all();
         return view('workers/index')
-            ->withTypes($worktypes)
-            ->withCehs($cehs)
             ->withWorkers($workers);
     }
 

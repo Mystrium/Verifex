@@ -28,7 +28,6 @@ Unit
 
 
 
-(U) +R>Unit,Consist
 Item
     inp>title
     drop-Unit>unit_id
@@ -46,7 +45,6 @@ Item
 [F title, price]
 [Fil hasPhoto, hasColor, isBase]
 [S title, price, consist]
-+ Edit View
 
 
 
@@ -67,7 +65,6 @@ WorkType
 
 
 
-(U) +R>Ceh,WorkType
 Worker
     inp>pib
     drop-Ceh>ceh 
@@ -77,7 +74,6 @@ Worker
 
 [F pib, phone, passport]
 [Fil ceh, role, (minpay???)]
-+ Edit View
 + allow
 + WorkType by CehType
 +
