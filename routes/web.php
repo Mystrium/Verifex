@@ -41,8 +41,10 @@ Route::post('/items/update/{id}', [ItemController::class, 'update']);
 Route::get('/items/delete/{id}', [ItemController::class, 'delete']);
 
 Route::get('/worktypes', [WorktypeController::class, 'view']);
+Route::get('/worktypes/new', [WorktypeController::class, 'new']);
 Route::post('/worktypes/add', [WorktypeController::class, 'add']);
-Route::post('/worktypes/update/{id}', [WorktypeController::class, 'edit']);
+Route::get('/worktypes/edit/{id}', [WorktypeController::class, 'edit']);
+Route::post('/worktypes/update/{id}', [WorktypeController::class, 'update']);
 Route::get('/worktypes/delete/{id}', [WorktypeController::class, 'delete']);
 
 Route::get('/workers', [WorkerController::class, 'view']);
