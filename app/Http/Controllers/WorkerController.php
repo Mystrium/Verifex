@@ -72,7 +72,7 @@ class WorkerController extends BaseController {
                 'phone' => $request->phone,
                 'passport' => $request->passport,
                 'password' => $request->password,
-                'checked' => $request->cheched ? 1 : 0
+                'checked' => $request->checked ? 1 : 0
             ]);
         } else {
             Worker::find($id)->update([
@@ -81,7 +81,7 @@ class WorkerController extends BaseController {
                 'role_id' => $request->role,
                 'phone' => $request->phone,
                 'passport' => $request->passport,
-                'checked' => $request->cheched ? 1 : 0
+                'checked' => $request->checked ? 1 : 0
             ]);
         }
 
