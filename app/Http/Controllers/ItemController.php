@@ -1,18 +1,28 @@
 <?php
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Request;
 use App\Models\Consist;
 use App\Models\Item;
 use App\Models\Unit;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Http\Request;
 
 class ItemController extends BaseController {
 
     public function view(){
+        $types = Item::select('items.*', 'units.title as unit')
+            ->join('units', 'units.id', '=', 'items.unit_id')
+            ->get();
+        return view('items/index')->withItems($types);
+    }
+
+    public function new() {
         $types = Item::all();
         $units = Unit::all();
-        return view('item')->withItems($types)->withUnits($units);
+        return view('items/new')
+            ->withItems($types)
+            ->withUnits($units)
+            ->withAct('add');
     }
 
     public function add(Request $request){
@@ -35,19 +45,44 @@ class ItemController extends BaseController {
                 ]);
             }
         }
+
         return redirect('/items');
     }
 
-    public function edit($id, Request $request){
-        Item::find($id)->update([
+    public function edit($id) {
+        $toedit = Item::where('id', '=', $id)->get()[0];
+        $items = Item::where('id', '<>', $id)->get();
+        $consist = Consist::where('what_id', '=', $id)->get();
+        $units = Unit::all();
+        return view('items/new')
+            ->withItems($items)
+            ->withEdit($toedit)
+            ->withUnits($units)
+            ->withConsists($consist)
+            ->withAct('update');
+    }
+
+    public function update($id, Request $request){
+        $item = Item::find($id)->update([
             'title' => $request->title,
             'unit_id' => $request->unit,
-            'hascolor' => $request->hascolor,
+            'hascolor' => $request->hascolor?1:0,
             'price' => $request->price,
             'url_photo' => $request->photo,
             'url_instruction' => $request->instruction,
             'description' => $request->description
         ]);
+
+        Consist::where('what_id', '=', $id)->delete();
+        if($request->consists){
+            for($i=0; $i<count($request->consists); $i++){
+                Consist::create([
+                    'what_id' => $id,
+                    'have_id' => $request->consists[$i], 
+                    'count' => $request->counts[$i]
+                ]);
+            }
+        }
 
         return redirect('/items');
     }

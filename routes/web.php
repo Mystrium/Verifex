@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\WorkerController;
-use App\Http\Controllers\WorktypeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\WorktypeController;
 use App\Http\Controllers\CehtypeController;
-use App\Http\Controllers\CehController;
-use App\Http\Controllers\UnitController;
+use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CehController;
 
 
 Route::get('/', function () { return view('welcome');});
@@ -34,8 +34,10 @@ Route::post('/colors/update/{id}', [ColorController::class, 'edit']);
 Route::get('/colors/delete/{id}', [ColorController::class, 'delete']);
 
 Route::get('/items', [ItemController::class, 'view']);
+Route::get('/items/new', [ItemController::class, 'new']);
 Route::post('/items/add', [ItemController::class, 'add']);
-Route::post('/items/update/{id}', [ItemController::class, 'edit']);
+Route::get('/items/edit/{id}', [ItemController::class, 'edit']);
+Route::post('/items/update/{id}', [ItemController::class, 'update']);
 Route::get('/items/delete/{id}', [ItemController::class, 'delete']);
 
 Route::get('/worktypes', [WorktypeController::class, 'view']);
@@ -44,8 +46,10 @@ Route::post('/worktypes/update/{id}', [WorktypeController::class, 'edit']);
 Route::get('/worktypes/delete/{id}', [WorktypeController::class, 'delete']);
 
 Route::get('/workers', [WorkerController::class, 'view']);
+Route::get('/workers/new', [WorkerController::class, 'new']);
 Route::post('/workers/add', [WorkerController::class, 'add']);
-Route::post('/workers/update/{id}', [WorkerController::class, 'edit']);
+Route::get('/workers/edit/{id}', [WorkerController::class, 'edit']);
+Route::post('/workers/update/{id}', [WorkerController::class, 'update']);
 Route::get('/workers/delete/{id}', [WorkerController::class, 'delete']);
 
 Route::get('/purchases', [PurchaseController::class, 'view']);

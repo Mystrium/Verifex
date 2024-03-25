@@ -1,30 +1,46 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Worker;
-use App\Models\WorkType;
-use App\Models\Ceh;
-use App\Models\RoleItem;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use App\Models\WorkType;
+use App\Models\Worker;
+use App\Models\Ceh;
 
 class WorkerController extends BaseController {
 
     public function view(){
-        $worktypes = WorkType::all();
+        $workers = Worker::select('workers.*', 'ceh.title','ceh_types.title as ctitle', 'work_types.title as role')
+            ->leftJoin('ceh', 'ceh.id', '=', 'workers.ceh_id')
+            ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->leftJoin('work_types', 'work_types.id', '=', 'workers.role_id')
+            ->get();
         $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')->get();
-        $workitems = Worker::all();
-        return view('worker')
+        $worktypes = WorkType::all();
+        return view('workers/index')
             ->withTypes($worktypes)
             ->withCehs($cehs)
-            ->withWorkers($workitems);
+            ->withWorkers($workers);
+    }
+
+    public function new() {
+        $worktypes = WorkType::all();
+        $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')
+            ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->get();
+        $worker = Worker::all();
+        return view('workers/new')
+            ->withAct('add')
+            ->withTypes($worktypes)
+            ->withCehs($cehs)
+            ->withWorkers($worker);
     }
 
     public function add(Request $request){
         Worker::create([
             'pib' => $request->pib,
             'ceh_id' => $request->ceh,
-            'role_id' => $request->type,
+            'role_id' => $request->role,
             'phone' => $request->phone,
             'passport' => $request->passport,
             'password' => $request->password,
@@ -34,16 +50,40 @@ class WorkerController extends BaseController {
         return redirect('/workers');
     }
 
-    public function edit($id, Request $request){
-        Worker::find($id)->update([
-            'title' => $request->title,
-            'unit_id' => $request->unit,
-            'hascolor' => $request->hascolor,
-            'price' => $request->price,
-            'url_photo' => $request->photo,
-            'url_instruction' => $request->instruction,
-            'description' => $request->description
-        ]);
+    public function edit($id) {
+        $worker = Worker::find($id);
+        $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')
+            ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->get();
+        $worktypes = WorkType::all();
+        return view('workers/new')
+            ->withTypes($worktypes)
+            ->withCehs($cehs)
+            ->withEdit($worker)
+            ->withAct('update');
+    }
+
+    public function update($id, Request $request){
+        if($request->password != null){
+            Worker::find($id)->update([
+                'pib' => $request->pib,
+                'ceh_id' => $request->ceh,
+                'role_id' => $request->role,
+                'phone' => $request->phone,
+                'passport' => $request->passport,
+                'password' => $request->password,
+                'checked' => $request->cheched ? 1 : 0
+            ]);
+        } else {
+            Worker::find($id)->update([
+                'pib' => $request->pib,
+                'ceh_id' => $request->ceh,
+                'role_id' => $request->role,
+                'phone' => $request->phone,
+                'passport' => $request->passport,
+                'checked' => $request->cheched ? 1 : 0
+            ]);
+        }
 
         return redirect('/workers');
     }
