@@ -134,9 +134,19 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="/items" class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-body link-body-emphasis'}}">
+                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Вироби
                                     </a>
+                                    <div style="padding-left:20px;"class="collapse {{$title=='Вироби'||$title=='Закуп'?'show':''}}" id="statscolapse" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/items">
+                                                Вироби
+                                            </a>
+                                            <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/purchases">
+                                                Закуп
+                                            </a>
+                                        </nav>
+                                    </div>
                                 </li>
 
                                 <hr class="text-body">
@@ -155,10 +165,21 @@
                                         </nav>
                                     </div>
                                 </li>
+
                                 <li>
-                                    <a href="/workers" class="nav-link {{$title=='Робітники'?'text-bold text-warning':'text-body link-body-emphasis'}}">
+                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse3" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Робітники
                                     </a>
+                                    <div style="padding-left:20px;"class="collapse {{$title=='Робітники'||$title=='Посади'?'show':''}}" id="statscolapse3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link {{$title=='Робітники'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/workers">
+                                                Робітники
+                                            </a>
+                                            <a class="nav-link {{$title=='Посади'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/worktypes">
+                                                Посади
+                                            </a>
+                                        </nav>
+                                    </div>
                                 </li>
                                 <hr class="text-body">
 

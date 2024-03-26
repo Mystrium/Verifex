@@ -1,5 +1,5 @@
 @extends('nav')
-@section('title', 'Типи')
+@section('title', 'Посади')
 @section('content')
 
 <h1 class="mt-4">{{$act=='add'?'Додати':'Змінити'}} посаду</h1>

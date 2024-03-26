@@ -1,5 +1,5 @@
 @extends('nav')
-@section('title', 'Типи')
+@section('title', 'Посади')
 @section('content')
 
 <h1 class="mt-4">Посади</h1>

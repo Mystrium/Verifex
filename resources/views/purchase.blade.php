@@ -1,8 +1,8 @@
 @extends('nav')
-@section('title', 'Типи')
+@section('title', 'Закуп')
 @section('content')
 
-<h1 class="mt-4">Типи операцій</h1>
+<h1 class="mt-4">Закупка матеріалів</h1>
 <form action="{{ url('/purchases/add') }}" method="POST">
     @csrf
     <div class="input-group">
