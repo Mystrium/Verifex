@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 class UnitController extends BaseController {
 
-    public function view(){
-        $types = Unit::all();
-        return view('unit')->withTypes($types);
+    public function view(Request $request){
+        $units = Unit::where('title', 'like', '%' . ($request->search??'') . '%')->get();
+        return view('unit')
+            ->withSearch($request->search)
+            ->withUnits($units);
     }
 
     public function add(Request $request){

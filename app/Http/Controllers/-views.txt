@@ -1,6 +1,5 @@
 CehType 
     inp>title
-[F title]
 +
 
 
@@ -8,7 +7,6 @@ CehType
 Ceh
     inp>title
     drop-CehType>type
-[F title, type]
 +
 
 
@@ -16,14 +14,13 @@ Ceh
 Color
     inp>title
     colorPicker>hex
-[F title]
+pages ???
 +
 
 
 
 Unit
     inp>title
-[F title]
 +
 
 
@@ -37,7 +34,6 @@ Item
     inp>url_instruction
     inp>description
     
-    (CRD)
     Consist
         (this-id>what)
         drop-Item>have
@@ -45,7 +41,7 @@ Item
 [F title, price]
 [Fil hasPhoto, hasColor, isBase]
 [S title, price, consist]
-
+pages
 
 
 WorkType
@@ -53,14 +49,13 @@ WorkType
     drop-CehType>cehtype
     inp>minpay
 
-    (CRD)
     RoleItem
         (this-id>role)
         drop-Item>item
 
 [F title, sub(items)]
 [O minpay]
-
+pages
 
 Worker
     inp>pib
@@ -72,9 +67,9 @@ Worker
 
 [F pib, phone, passport]
 [Fil ceh, role, (minpay???)]
-+ allow
++ allow ???
 + WorkType by CehType
-
+pages
 
 
 
@@ -103,7 +98,7 @@ Zacup
 
 [F date, Item]
 [O date, summ]
-
+pages
 
 __________^^^^^^^^tables
 
@@ -154,7 +149,7 @@ Zarplata
 
 Items real cost
 
-
+----------------------------------------------------
 
 API doc
 

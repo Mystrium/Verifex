@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 
 class ColorController extends BaseController {
 
-    public function view(){
-        $colors = Color::all();
-        return view('color')->withColors($colors);
+    public function view(Request $request){
+        $colors = Color::where('title', 'like', '%' . ($request->search??'') . '%')->get();
+        return view('color')
+            ->withSearch($request->search)
+            ->withColors($colors);
     }
+
 
     public function add(Request $request){
         Color::create(['title' => $request->title, 'hex' => substr($request->hex, -6)]);
