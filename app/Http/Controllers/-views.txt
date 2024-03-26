@@ -1,30 +1,13 @@
-CehType 
-    inp>title
-+
++++++ CehType
+
++++++ Unit
+
++++++ Ceh
+
++++++ Color pages ???
 
 
-
-Ceh
-    inp>title
-    drop-CehType>type
-+
-
-
-
-Color
-    inp>title
-    colorPicker>hex
-pages ???
-+
-
-
-
-Unit
-    inp>title
-+
-
-
-
+++++
 Item
     inp>title
     drop-Unit>unit_id
@@ -43,7 +26,7 @@ Item
 [S title, price, consist]
 pages
 
-
+++++
 WorkType
     inp>title
     drop-CehType>cehtype
@@ -57,6 +40,8 @@ WorkType
 [O minpay]
 pages
 
+
+++++
 Worker
     inp>pib
     drop-Ceh>ceh 
@@ -73,7 +58,7 @@ pages
 
 
 
-(RUD)
+(СRUD)
 Admins
     inp>pib 
     inp>phone
@@ -88,7 +73,7 @@ Admins
 Valid 3
 
 
-+
+++
 Zacup
     drop-Item>item
     if havecolor
@@ -103,7 +88,7 @@ pages
 __________^^^^^^^^tables
 
 
-
+navBar
 
 
 
@@ -118,6 +103,8 @@ Movement
 
     is ok
         anomaly
+
+    period
 
 __________^^^^^^^^pseudocanban
 

@@ -1,15 +1,15 @@
 @extends('nav')
-@section('title', 'Типи')
+@section('title', 'Виміри')
 @section('content')
 
 <h1 class="mt-4">Одиниці</h1>
 <form action="{{ url('/units/add') }}" method="POST">
     @csrf
-    <div class="input-group">
+    <div class="input-group pt-2 pb-4" style="width:320px">
         <span class="input-group-text">Назва</span>    
         <input type="text" class="form-control" required maxlength=15 name="title" placeholder="кг...">
+        <button type="submit" class="btn btn-primary">Додати</button>
     </div>
-    <button type="submit" class="btn btn-primary m-2">Додати</button>
 </form>
 <table class="table table-striped table-success">
     <thead>

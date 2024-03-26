@@ -1,17 +1,17 @@
 @extends('nav')
-@section('title', 'Типи')
+@section('title', 'Кольори')
 @section('content')
 
 <h1 class="mt-4">Кольори</h1>
 <form action="{{ url('/colors/add') }}" method="POST">
     @csrf
-    <div class="input-group">
+    <div class="input-group pt-2 pb-4" style="width:700px">
         <span class="input-group-text">Колір</span>
         <input type="color" style="width:200px; height:40px" name="hex" value="#4dff00">
         <span class="input-group-text">Назва</span>
         <input type="text" class="form-control" minlength=3 maxlength=20 required name="title" placeholder="Зелений...">
+        <button type="submit" class="btn btn-primary">Додати</button>
     </div>
-    <button type="submit" class="btn btn-primary m-2">Додати</button>
 </form>
 <table class="table table-striped table-success">
     <thead>

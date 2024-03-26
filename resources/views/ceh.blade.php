@@ -1,21 +1,23 @@
 @extends('nav')
-@section('title', 'Типи')
+@section('title', 'Цехи')
 @section('content')
 
-<h1 class="mt-4">Типи операцій</h1>
+<h1 class="mt-4">Цехи</h1>
 <form action="{{ url('/cehs/add') }}" method="POST">
     @csrf
-    <div class="input-group">
-        <span class="input-group-text">Тип</span>
-        <select class="search-drop input-group-text" style="height:40px;" name="type">
+    <div class="input-group pt-2">
+        <span class="input-group-text" style="height:28px">Тип</span>
+        <select class="search-drop" name="type">
             @foreach($types as $tp)
                 <option value="{{$tp->id}}">{{$tp->title}}</option>
             @endforeach
         </select>
+    </div>
+    <div class="input-group pt-2 pb-2" style="width:300px">
         <span class="input-group-text">Назва</span>
         <input type="text" class="form-control" maxlength=20 name="title" placeholder="Розкрієчний...">
     </div>
-    <button type="submit" class="btn btn-primary m-2">Додати</button>
+    <button type="submit" class="btn btn-primary mb-3">Додати</button>
 </form>
 <table class="table table-striped table-success">
     <thead>

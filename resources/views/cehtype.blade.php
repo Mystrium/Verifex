@@ -1,15 +1,15 @@
 @extends('nav')
-@section('title', 'Типи')
+@section('title', 'Типи цехів')
 @section('content')
 
 <h1 class="mt-4">Типи цехів</h1>
 <form action="{{ url('/cehtypes/add') }}" method="POST">
     @csrf
-    <div class="input-group">
+    <div class="input-group pt-2 pb-4" style="width:500px">
         <span class="input-group-text">Назва</span>    
         <input type="text" class="form-control" minlength=5 maxlength=30 required name="title" placeholder="Розкрієчний...">
+        <button type="submit" class="btn btn-primary">Додати</button>
     </div>
-    <button type="submit" class="btn btn-primary m-2">Додати</button>
 </form>
 <table class="table table-striped table-success">
     <thead>
