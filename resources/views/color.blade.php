@@ -68,7 +68,7 @@
                     </button>
                 </form>
                 </td>
-            <tr>
+            </tr>
             @endforeach
         @endif
     </tbody>

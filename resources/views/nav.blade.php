@@ -7,6 +7,7 @@
         <link rel="icon" type="image/ico" sizes="16x16" href="/favicon.ico"> 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('assets/css/navbar.css') }}" type="text/css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
         <style>@charset "UTF-8";
 
         .fixed-top, .sb-nav-fixed #layoutSidenav #layoutSidenav_nav, .sb-nav-fixed .sb-topnav {
@@ -134,10 +135,10 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse4" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Вироби
                                     </a>
-                                    <div style="padding-left:20px;"class="collapse {{$title=='Вироби'||$title=='Закуп'?'show':''}}" id="statscolapse" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <div style="padding-left:20px;"class="collapse {{$title=='Вироби'||$title=='Закуп'?'show':''}}" id="statscolapse4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/items">
                                                 Вироби
@@ -198,7 +199,9 @@
             </div>
 
         </div>
-
+        <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script> new DataTable('#jsTable'); </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -212,6 +215,5 @@
                     document.getElementById(edit_btn).disabled = true;
             }
         </script>
-
     </body>
 </html>

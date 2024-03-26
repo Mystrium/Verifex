@@ -37,7 +37,7 @@
     </div>
     <button type="submit" class="btn btn-primary m-2">Додати</button>
 </form>
-<table class="table table-striped table-success">
+<table class="table table-striped table-success" id="jsTable">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -59,7 +59,7 @@
                 <td>{{$purchase->price}}₴</td>
                 <td>{{$purchase->count * $purchase->price}}₴</td>
                 <td>{{substr($purchase->date, 0, 10)}}</td>
-            <tr>
+            </tr>
         @endforeach
     </tbody>
 </table>
