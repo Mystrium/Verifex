@@ -147,13 +147,13 @@ POST    /api/login
     418 - адмін не підтвертив реєстрацію
 
 POST    /api/register
-    (pib, ceh, type, phone, passport, password)
+    (pib, ceh_id, role_id, phone, passport, password)
     409 - номер вже використовується
 
 GET     /api/cehs
 
 POST    /api/roles
-    (type) тип цеху з /api/cehs -> id
+    (type_id) тип цеху з /api/cehs -> type_id
 
 POST    /api/items
     (role) роль з юзера

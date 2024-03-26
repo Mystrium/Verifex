@@ -32,8 +32,8 @@ class ApiController extends BaseController {
             return response(null, 409);
         $newworker = Worker::create([
             'pib'       => $request->pib,
-            'ceh_id'    => $request->ceh,
-            'role_id'   => $request->type,
+            'ceh_id'    => $request->ceh_id,
+            'role_id'   => $request->role_id,
             'phone'     => $request->phone,
             'passport'  => $request->passport,
             'password'  => $request->password,
@@ -50,7 +50,7 @@ class ApiController extends BaseController {
     }
 
     public function roles(Request $request){
-        $roles = WorkType::where('cehtype_id', '=', $request->type)->get();
+        $roles = WorkType::where('cehtype_id', '=', $request->type_id)->get();
         return response()->json($roles);
     }
 
