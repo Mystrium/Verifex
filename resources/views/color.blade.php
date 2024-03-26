@@ -9,7 +9,7 @@
         <span class="input-group-text">Колір</span>
         <input type="color" style="width:200px; height:40px" name="hex" value="#4dff00">
         <span class="input-group-text">Назва</span>
-        <input type="text" class="form-control" maxlength=20 name="title" placeholder="Зелений...">
+        <input type="text" class="form-control" minlength=3 maxlength=20 required name="title" placeholder="Зелений...">
     </div>
     <button type="submit" class="btn btn-primary m-2">Додати</button>
 </form>

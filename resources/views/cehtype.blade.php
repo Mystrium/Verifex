@@ -2,12 +2,12 @@
 @section('title', 'Типи')
 @section('content')
 
-<h1 class="mt-4">Типи операцій</h1>
+<h1 class="mt-4">Типи цехів</h1>
 <form action="{{ url('/cehtypes/add') }}" method="POST">
     @csrf
     <div class="input-group">
         <span class="input-group-text">Назва</span>    
-        <input type="text" class="form-control" maxlength=20 name="title" placeholder="Розкрієчний...">
+        <input type="text" class="form-control" minlength=5 maxlength=30 required name="title" placeholder="Розкрієчний...">
     </div>
     <button type="submit" class="btn btn-primary m-2">Додати</button>
 </form>

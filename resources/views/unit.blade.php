@@ -7,7 +7,7 @@
     @csrf
     <div class="input-group">
         <span class="input-group-text">Назва</span>    
-        <input type="text" class="form-control" maxlength=20 name="title" placeholder="кг...">
+        <input type="text" class="form-control" required maxlength=15 name="title" placeholder="кг...">
     </div>
     <button type="submit" class="btn btn-primary m-2">Додати</button>
 </form>

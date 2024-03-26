@@ -38,7 +38,7 @@ class WorkerController extends BaseController {
             'pib' => $request->pib,
             'ceh_id' => $request->ceh,
             'role_id' => $request->role,
-            'phone' => $request->phone,
+            'phone' => substr('380', 0, 12 - strlen($request->phone)) . $request->phone,
             'passport' => $request->passport,
             'password' => $request->password,
             'checked' => 1
@@ -66,7 +66,7 @@ class WorkerController extends BaseController {
                 'pib' => $request->pib,
                 'ceh_id' => $request->ceh,
                 'role_id' => $request->role,
-                'phone' => $request->phone,
+                'phone' => substr('380', 0, 12 - strlen($request->phone)) . $request->phone,
                 'passport' => $request->passport,
                 'password' => $request->password,
                 'checked' => $request->checked ? 1 : 0
@@ -76,7 +76,7 @@ class WorkerController extends BaseController {
                 'pib' => $request->pib,
                 'ceh_id' => $request->ceh,
                 'role_id' => $request->role,
-                'phone' => $request->phone,
+                'phone' => substr('380', 0, 12 - strlen($request->phone)) . $request->phone,
                 'passport' => $request->passport,
                 'checked' => $request->checked ? 1 : 0
             ]);

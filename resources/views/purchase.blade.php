@@ -24,15 +24,15 @@
         </div>
         <div class="input-group">
             <span class="input-group-text">Кількість</span>
-            <input type="number" class="form-control" max=10000 step="0.001" name="count">
+            <input type="number" class="form-control" min="0.001" max=10000 required step="0.001" name="count">
         </div>
         <div class="input-group">
             <span class="input-group-text">Ціна закупу</span>
-            <input type="number"  class="form-control" max=10000 step="0.01" name="price">
+            <input type="number"  class="form-control" min="0.01" max=10000 required step="0.01" name="price">
         </div>
         <div class="input-group">
             <span class="input-group-text">Дата</span>
-            <input type="date" class="form-control" value="{{$nowdate}}" name="date">
+            <input type="date" class="form-control" value="{{$nowdate}}" required name="date">
         </div>
     </div>
     <button type="submit" class="btn btn-primary m-2">Додати</button>

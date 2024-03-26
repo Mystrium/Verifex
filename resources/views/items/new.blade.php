@@ -7,7 +7,7 @@
     @csrf
     <div class="input-group">
         <span class="input-group-text">Назва</span>
-        <input type="text" class="form-control" maxlength=20 name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
+        <input type="text" class="form-control" minlength=5 maxlength=70 required name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
     </div>
     <div class="input-group">
         <span class="input-group-text">Одиниця</span>
@@ -19,11 +19,11 @@
     </div>
     <div class="input-group">
         <span class="input-group-text">Оплата</span>
-        <input type="number" class="form-control" maxlength=7 name="price" value="{{$edit->price??''}}" placeholder="за зроблену одиницю">
+        <input type="number" class="form-control" max="9999" required name="price" value="{{$edit->price??''}}" placeholder="за зроблену одиницю">
     </div>
     <div class="input-group">
         <span class="input-group-text">Фото</span>
-        <input type="url" class="form-control" maxlength=150 name="photo" value="{{$edit->url_photo??''}}" placeholder="URL...">
+        <input type="url" class="form-control" maxlength=150 required name="photo" value="{{$edit->url_photo??''}}" placeholder="URL...">
     </div>
     <div class="input-group">
         <span class="input-group-text">Має колір</span>
@@ -31,7 +31,7 @@
     </div>
     <div class="input-group">
         <span class="input-group-text">Опис</span>
-        <input type="text" class="form-control" maxlength=150 name="description" value="{{$edit->description??''}}" placeholder="Розкрієчний...">
+        <input type="text" class="form-control" maxlength=200 name="description" value="{{$edit->description??''}}" placeholder="Розкрієчний...">
     </div>
     <div class="input-group">
         <span class="input-group-text">Інструкція</span>
@@ -53,7 +53,7 @@
                     <div id = "t{{$item->id}}" class="input-group mb-3">
                         <input name="consists[]" type="hidden" value="{{$item->id}}">
                         <input class="form-control success" value="{{$item->title}}"readonly>
-                        <input type="number" name="counts[]" class="form-control" step="0.01" value="{{$cons->count}}">
+                        <input type="number" max="999" required name="counts[]" class="form-control" step="0.01" value="{{$cons->count}}">
                         <button class="input-group-text text-danger" type="button" onclick="dellTag('t{{$item->id}}')">X</button>
                     </div>
                 @endif
@@ -69,7 +69,7 @@
             '<div id = "t'+sel.value+'" class="input-group mb-3">'
                 +'<input name="consists[]" type="hidden" value="'+sel.value+'">'
                 +'<input class="form-control success" value="'+sel.options[sel.selectedIndex].text+'"readonly>'
-                +'<input type="number" name="counts[]" class="form-control" step="0.01" value="1">'
+                +'<input type="number" max="999" required name="counts[]" class="form-control" step="0.01" value="1">'
                 +'<button class="input-group-text text-danger" type="button" onclick="dellTag(`t'+sel.value+'`)">X</button>'
             +'</div>')
     }

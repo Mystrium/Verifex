@@ -48,7 +48,6 @@ Item
 
 
 
-(U) +R>CehType,RoleItem,Item
 WorkType
     inp>title
     drop-CehType>cehtype
@@ -61,8 +60,6 @@ WorkType
 
 [F title, sub(items)]
 [O minpay]
-+ Edit View
-
 
 
 Worker
@@ -71,12 +68,13 @@ Worker
     drop-WorkType>role 
     inp>phone 
     inp>passport
+    inp>password
 
 [F pib, phone, passport]
 [Fil ceh, role, (minpay???)]
 + allow
 + WorkType by CehType
-+
+
 
 
 
@@ -86,12 +84,13 @@ Admins
     inp>phone
     drop-[owner,admin,(zav ceha???)]>role
     check>allowed
+    inp>password
 
 [F pib, phone]
 [Fil role, allowed]
 + Edit View
 + allow
-
+Valid 3
 
 
 +
@@ -128,6 +127,9 @@ Movement
 __________^^^^^^^^pseudocanban
 
 
+Work Time
+    period
+    ceh
 
 
 

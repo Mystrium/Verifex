@@ -7,7 +7,7 @@
     @csrf
     <div class="input-group">
         <span class="input-group-text">Посада</span>
-        <input type="text" class="form-control" maxlength=20 name="title" value="{{$edit->title??''}}" placeholder="Швея...">
+        <input type="text" class="form-control" minlength=5 maxlength=40 required name="title" value="{{$edit->title??''}}" placeholder="Швея...">
     </div>
     <div class="input-group">
         <span class="input-group-text">Тип цеху</span>
@@ -19,7 +19,7 @@
     </div>
     <div class="input-group">
         <span class="input-group-text">Мінімальна плата</span>
-        <input type="number" class="form-control" maxlength=7 name="minpay" value="{{$edit->min_pay??''}}" placeholder="3000">
+        <input type="number" class="form-control" maxlength=4 maxlength=7 name="minpay" required value="{{$edit->min_pay??''}}" placeholder="3000">
     </div>
     <div class="input-group" id="tagsSel">
         <span class="input-group-text">Доступні вироби</span>

@@ -7,7 +7,7 @@
     @csrf
     <div class="input-group">
         <span class="input-group-text">ПІБ</span>
-        <input type="text" class="form-control" maxlength=20 name="pib" value="{{$edit->pib??''}}" placeholder="Іваненко В...">
+        <input type="text" class="form-control" minlength=8 maxlength=70 required name="pib" value="{{$edit->pib??''}}" placeholder="Іваненко В...">
     </div>
     <div class="input-group">
         <span class="input-group-text">Цех</span>
@@ -27,15 +27,15 @@
     </div>
     <div class="input-group">
         <span class="input-group-text">Телефон</span>
-        <input type="number" class="form-control" name="phone" value="{{$edit->phone??''}}" placeholder="+380...">
+        <input type="number" class="form-control" name="phone" min="100000000" max="380999999999" required value="{{$edit->phone??''}}" placeholder="+380...">
     </div>
     <div class="input-group">
         <span class="input-group-text">Паспорт</span>
-        <input type="text" class="form-control" name="passport" value="{{$edit->passport??''}}" placeholder="AR3245322">
+        <input type="text" class="form-control" name="passport" minlength=9 maxlength=9 required value="{{$edit->passport??''}}" placeholder="AR3245322">
     </div>
     <div class="input-group">
         <span class="input-group-text">{{$act=='add'?'П':'Новий п'}}ароль</span>
-        <input type="text" class="form-control" name="password">
+        <input type="text" class="form-control" minlength=4 maxlength=8 {{$act=='add'?'required':''}} name="password">
     </div>
     @if(isset($edit))
         <div class="input-group">
