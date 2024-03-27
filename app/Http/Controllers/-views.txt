@@ -141,22 +141,72 @@ Items real cost
 API doc
 
 POST    /api/login
-    (phone, password)
-    404 - нима юзера
-    403 - неправильний пароль
-    418 - адмін не підтвертив реєстрацію
+    in
+        phone
+        password
+
+    out
+        id
+        pib
+        ceh_id
+        role_id
+        phone
+        passport
+        checked
+
+    response
+        404 - нима юзера
+        403 - неправильний пароль
+        418 - адмін не підтвертив реєстрацію
+-----------------------------------------------------
 
 POST    /api/register
-    (pib, ceh_id, role_id, phone, passport, password)
-    409 - номер вже використовується
+    in
+        pib
+        ceh_id
+        role_id
+        phone
+        passport
+        password
+
+    out
+        id
+
+    response
+        409 - номер вже використовується
 
 GET     /api/cehs
+    out
+        id
+        type_id
+        type - просто назва типу
+        title - назва цеху
 
 POST    /api/roles
-    (type_id) тип цеху з /api/cehs -> type_id
+    in
+        type_id      - тип цеху з /api/cehs -> type_id
+    
+    out
+        id
+        cehtype_id
+        title
+        min_pay
+
 
 POST    /api/items
-    (role) роль з юзера
+    in
+        role         - роль з юзера
+    
+    out
+        id
+        title
+        unit
+        hascolor
+        price              - плата за одиницю виконану
+        url_photo
+        url_instruction    - null
+        description        - null
+
 
 GET     /api/colors
 

@@ -28,7 +28,7 @@ class ApiController extends BaseController {
     }
 
     public function register(Request $request){
-        if(Worker::where('phone', '=', $request->phone) != null)
+        if(Worker::where('phone', '=', $request->phone)->get() != null)
             return response(null, 409);
         $newworker = Worker::create([
             'pib'       => $request->pib,
@@ -39,7 +39,7 @@ class ApiController extends BaseController {
             'password'  => $request->password,
             'checked'   => 0
         ]);
-        return response()->json($newworker);
+        return response()->json($newworker->id);
     }
 
     public function cehs(){
