@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PayController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\WorktypeController;
@@ -56,3 +57,6 @@ Route::get('/workers/delete/{id}', [WorkerController::class, 'delete']);
 
 Route::get('/purchases', [PurchaseController::class, 'view']);
 Route::post('/purchases/add', [PurchaseController::class, 'add']);
+
+Route::get('/pay', [PayController::class, 'view']);
+Route::get('/pay/{id}', [PayController::class, 'byworker']);

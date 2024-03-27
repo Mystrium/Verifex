@@ -6,25 +6,15 @@
 
 +++++ Color pages ???
 
++++ Zacup
 
-++++
-Item
-    inp>title
-    drop-Unit>unit_id
-    check>hascolor
-    inp>price
-    inp>url_photo
-    inp>url_instruction
-    inp>description
-    
-    Consist
-        (this-id>what)
-        drop-Item>have
++++++ Item
 
-[F title, price]
-[Fil hasPhoto, hasColor, isBase]
-[S title, price, consist]
-pages
+
++++++ Worker
++ allow ???
++ WorkType by CehType
+
 
 ++++
 WorkType
@@ -39,23 +29,6 @@ WorkType
 [F title, sub(items)]
 [O minpay]
 pages
-
-
-++++
-Worker
-    inp>pib
-    drop-Ceh>ceh 
-    drop-WorkType>role 
-    inp>phone 
-    inp>passport
-    inp>password
-
-[F pib, phone, passport]
-[Fil ceh, role, (minpay???)]
-+ allow ???
-+ WorkType by CehType
-pages
-
 
 
 (СRUD)
@@ -73,17 +46,7 @@ Admins
 Valid 3
 
 
-++
-Zacup
-    drop-Item>item
-    if havecolor
-        drop-Color>color 
-    inp>count
-    inp>price
 
-[F date, Item]
-[O date, summ]
-pages
 
 __________^^^^^^^^tables
 
@@ -130,7 +93,7 @@ __________^^^^^^^^graphics
 
 
 
-Zarplata
++ Zarplata
     period
 
 

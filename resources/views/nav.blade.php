@@ -171,13 +171,16 @@
                                     <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse3" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Робітники
                                     </a>
-                                    <div style="padding-left:20px;"class="collapse {{$title=='Робітники'||$title=='Посади'?'show':''}}" id="statscolapse3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <div style="padding-left:20px;"class="collapse {{$title=='Робітники'|| $title=='Посади' || $title=='ЗП'?'show':''}}" id="statscolapse3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link {{$title=='Робітники'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/workers">
                                                 Робітники
                                             </a>
                                             <a class="nav-link {{$title=='Посади'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/worktypes">
                                                 Посади
+                                            </a>
+                                            <a class="nav-link {{$title=='ЗП'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/pay">
+                                                ЗП
                                             </a>
                                         </nav>
                                     </div>
@@ -200,7 +203,20 @@
 
         </div>
         <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-        <script> new DataTable('#jsTable'); </script>
+        <script> 
+            $(document).ready(function() {
+                $('#jsTable').DataTable( {
+                    "language": {
+                        "lengthMenu": " _MENU_  записів на сторінку",
+                        "zeroRecords": "Нічого не знайденно",
+                        "info": "Сторінка _PAGE_ із _PAGES_ сторінок",
+                        "infoEmpty": "Поки що немає записів",
+                        "search": "Пошук",
+                        "infoFiltered": "(Фільтровано з _MAX_ записів)"
+                    }
+                } );
+            } ); 
+        </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

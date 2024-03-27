@@ -13,14 +13,16 @@
                     <option value="{{$tp->id}}|{{$tp->hascolor}}">{{$tp->title}} ({{$tp->unit}})</option>
                 @endforeach
             </select>
-        </div>
-        <div class="input-group" id="color_sel">
-            <span class="input-group-text">Колір</span>
-            <select class="search-drop input-group-text" style="height:40px;" name="color">
-                @foreach($colors as $tp)
-                    <option value="{{$tp->id}}">{{$tp->title}}</option>
-                @endforeach
-            </select>
+            <div>
+                <div class="input-group" id="color_sel">
+                    <span class="input-group-text">Колір</span>
+                    <select class="search-drop input-group-text" style="height:40px;" name="color">
+                        @foreach($colors as $tp)
+                        <option value="{{$tp->id}}">{{$tp->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="input-group">
             <span class="input-group-text">Кількість</span>
@@ -28,7 +30,7 @@
         </div>
         <div class="input-group">
             <span class="input-group-text">Ціна закупу</span>
-            <input type="number"  class="form-control" min="0.01" max=10000 required step="0.01" name="price">
+            <input type="number"  class="form-control" min="0.01" max=10000 required step="0.01" name="price" placeholder="за одиницю">
         </div>
         <div class="input-group">
             <span class="input-group-text">Дата</span>
@@ -44,8 +46,9 @@
             <th scope="col">Назва</th>
             <th scope="col">Колір</th>
             <th scope="col">Кількість</th>
-            <th scope="col">Ціна</th>
-            <th scope="col">Вартість</th>
+            <th scope="col">Одиниця</th>
+            <th scope="col">Ціна $</th>
+            <th scope="col">Вартість $</th>
             <th scope="col">Дата</th>
         </tr>
     </thead>
@@ -55,9 +58,10 @@
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>{{$purchase->title}}</td>
                 <td><div style="background-color:#{{$purchase->hex}};">{{$purchase->ctitle}}</div></td>
-                <td>{{$purchase->count}} {{$purchase->unit}}</td>
-                <td>{{$purchase->price}}₴</td>
-                <td>{{$purchase->count * $purchase->price}}₴</td>
+                <td>{{$purchase->count}}</td>
+                <td>{{$purchase->unit}}</td>
+                <td>{{$purchase->price}}</td>
+                <td>{{$purchase->count * $purchase->price}}</td>
                 <td>{{substr($purchase->date, 0, 10)}}</td>
             </tr>
         @endforeach

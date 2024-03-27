@@ -63,7 +63,7 @@ class ItemController extends BaseController {
     }
 
     public function update($id, Request $request){
-        $item = Item::find($id)->update([
+        Item::find($id)->update([
             'title' => $request->title,
             'unit_id' => $request->unit,
             'hascolor' => $request->hascolor?1:0,

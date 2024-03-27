@@ -24,7 +24,7 @@
                 <td>{{$item->title}}</td>
                 <td>{{$item->unit}}</td>
                 <td><img src="{{$item->url_photo}}" style="max-width:200px;max-height:200px"></td>
-                <td>{{$item->price!=0?$item->price:'---'}}</td>
+                <td>{{$item->price!=0?$item->price:'Базова одиниця'}}</td>
                 <td>{{$item->hascolor==1?'Має':'---'}}</td>
                 <td>{{$item->description??'---'}}</td>
                 <td>
