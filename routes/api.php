@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login',       [ApiController::class, 'login']);
-Route::post('/register',    [ApiController::class, 'register']);
+Route::get('/register',    [ApiController::class, 'register']);
 Route::get( '/cehs',        [ApiController::class, 'cehs']);
 Route::post('/roles',       [ApiController::class, 'roles']);
 Route::post('/items',       [ApiController::class, 'items']);

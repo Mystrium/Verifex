@@ -28,7 +28,7 @@ class ApiController extends BaseController {
     }
 
     public function register(Request $request){
-        if(Worker::where('phone', '=', $request->phone)->get() != null)
+        if(isset(Worker::where('phone', '=', $request->phone)->get()[0]))
             return response(null, 409);
         $newworker = Worker::create([
             'pib'       => $request->pib,
@@ -73,11 +73,11 @@ class ApiController extends BaseController {
 
     public function transact(Request $request){
         $isok = Transaction::create([
-            'type_id'        => $request->type,
+            'type_id'        => $request->type_id,
             'worker_from_id' => $request->worker_from,
             'worker_to_id'   => $request->worker_to,
-            'item_id_id'     => $request->item,
-            'color_id'       => $request->color,
+            'item_id_id'     => $request->item_id,
+            'color_id'       => $request->color_id,
             'count'          => $request->count,
             'date'           => Carbon::now()->toDateTimeString()
         ]);
