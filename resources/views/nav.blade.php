@@ -139,13 +139,16 @@
                                     <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse4" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Вироби
                                     </a>
-                                    <div style="padding-left:20px;"class="collapse {{$title=='Вироби'||$title=='Закуп'?'show':''}}" id="statscolapse4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <div style="padding-left:20px;"class="collapse {{$title=='Вироби'|| $title=='Закуп' ||  $title=='Вартість'?'show':''}}" id="statscolapse4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/items">
                                                 Вироби
                                             </a>
                                             <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/purchases">
                                                 Закуп
+                                            </a>
+                                            <a class="nav-link {{$title=='Вартість'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/cost">
+                                                Собівартість
                                             </a>
                                         </nav>
                                     </div>
@@ -187,6 +190,10 @@
                                     </div>
                                 </li>
                                 <hr class="text-body">
+
+                                <a class="nav-link {{$title=='Рух'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/movement">
+                                    Переміщення
+                                </a>
 
                             </ul>
                         </div>

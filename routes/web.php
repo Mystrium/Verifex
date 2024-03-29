@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\MovementController;
 use App\Http\Controllers\PayController;
+use App\Http\Controllers\SelfcostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\WorktypeController;
@@ -60,3 +62,8 @@ Route::post('/purchases/add', [PurchaseController::class, 'add']);
 
 Route::get('/pay', [PayController::class, 'view']);
 Route::get('/pay/{id}', [PayController::class, 'byworker']);
+
+Route::get('/movement', [MovementController::class, 'view']);
+
+Route::get('/cost', [SelfcostController::class, 'view']);
+

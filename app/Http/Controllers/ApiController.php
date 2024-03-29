@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
-use App\Models\TransactionType;
-use App\Models\WorkHour;
-use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\TransactionType;
+use App\Models\Transaction;
+use App\Models\WorkHour;
 use App\Models\WorkType;
 use App\Models\Worker;
 use App\Models\Color;
@@ -95,6 +96,23 @@ class ApiController extends BaseController {
         if ($isok == null)
             return response(null, 404);
         return response(null, 200);
+    }
+
+    public function workers(Request $request){
+        $workers = Worker::select('workers.id', 'pib', 'work_types.title as role', 'ceh.title', 'ceh_types.title as type')
+            ->join('ceh', 'ceh.id', '=', 'workers.ceh_id')
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->join('work_types', 'work_types.id', '=', 'workers.role_id')
+            ->where('workers.id', '<>', 1)
+            ->where('workers.id', '<>', $request->id)
+            ->whereRaw(
+                'ceh_id IN ( 
+                    SELECT ceh_id 
+                    FROM workers 
+                    WHERE id = ' . $request->id . 
+                ') OR (work_types.title = "Кладовщик")')
+            ->get();
+        return response()->json($workers);
     }
 
 }
