@@ -5,15 +5,18 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Models\TransactionType;
-use App\Models\Transaction;
-use App\Models\WorkHour;
-use App\Models\WorkType;
-use App\Models\Worker;
-use App\Models\Color;
-use App\Models\Item;
-use App\Models\Ceh;
 use Hash;
+
+use App\Models\{
+    TransactionType,
+    Transaction,
+    WorkHour,
+    WorkType,
+    Worker,
+    Color,
+    Item,
+    Ceh
+};
 
 class ApiController extends BaseController {
 
@@ -90,8 +93,8 @@ class ApiController extends BaseController {
     public function worktime(Request $request){
         $isok = WorkHour::create([
             'worker_id' => $request->worker,
-            'date'      => $request->date,
-            'start'     => $request->start
+            'start'     => $request->start,
+            'stop'      => $request->stop
         ]);
         if ($isok == null)
             return response(null, 404);

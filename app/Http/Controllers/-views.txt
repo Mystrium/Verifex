@@ -4,7 +4,7 @@
 
 +++++ Ceh
 
-+++++ Color pages ???
++++++ Color pages   ???
 
 +++ Zacup
 
@@ -12,23 +12,13 @@
 
 
 +++++ Worker
-+ allow ???
++ allow             ???
 + WorkType by CehType
 
 
-++++
-WorkType
-    inp>title
-    drop-CehType>cehtype
-    inp>minpay
+++++ WorkType
+F sub(items)        ???
 
-    RoleItem
-        (this-id>role)
-        drop-Item>item
-
-[F title, sub(items)]
-[O minpay]
-pages
 
 
 (СRUD)
@@ -46,12 +36,8 @@ Admins
 Valid 3
 
 
-
-
 __________^^^^^^^^tables
 
-
-navBar
 
 
 
@@ -216,9 +202,9 @@ POST    /api/transact
 
 POST    /api/worktime
     in
-        worker
-        date
-        start       - 1 - початок, 0 - пауза, закінчення роботи
+        worker      - id
+        start       - datetime
+        stop        - time
 
 -----------------------------------------------------
 
