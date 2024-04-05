@@ -4,16 +4,17 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\{
     MovementController,
-    PayController,
     SelfcostController,
     PurchaseController,
     WorktypeController,
     CehtypeController,
     WorkerController,
+    ChartController,
     ColorController,
     UnitController,
     ItemController,
     CehController,
+    PayController,
 };
 
 
@@ -70,3 +71,4 @@ Route::get('/movement',             [MovementController::class, 'view']);
 
 Route::get('/cost',                 [SelfcostController::class, 'view']);
 
+Route::get('/worktime',             [ChartController::class, 'hours']);

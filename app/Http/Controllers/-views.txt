@@ -69,7 +69,6 @@ Income
 
 
 
-
 Production
     period
     ceh
@@ -223,7 +222,7 @@ POST    /api/workers
 
 -----------------------------------------------------
 
-hours_chart
+POST    /api/hours_chart
     in
         id      - id з юзера
         start   - період початок
@@ -233,7 +232,7 @@ hours_chart
 
 -----------------------------------------------------
 
-pay_chart
+POST    /api/pay_chart
     in
         id      - id з юзера
         start   - період початок
@@ -243,7 +242,7 @@ pay_chart
 
 -----------------------------------------------------
         
-items_chart
+POST    /api/items_chart
     in
         id      - id з юзера
         start   - період початок

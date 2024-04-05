@@ -172,7 +172,6 @@ class ApiController extends BaseController {
             items.title')
         ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
         ->join('items', 'items.id', '=', 'transactions.item_id_id')
-        ->join('work_types', 'work_types.id', '=', 'workers.role_id')
         ->where(
             'workers.id', 
             '=', 
