@@ -222,7 +222,7 @@ POST    /api/workers
 
 -----------------------------------------------------
 
-POST    /api/hours_chart
+POST    /api/chart/hours
     in
         id      - id з юзера
         start   - період початок
@@ -232,7 +232,7 @@ POST    /api/hours_chart
 
 -----------------------------------------------------
 
-POST    /api/pay_chart
+POST    /api/chart/pay
     in
         id      - id з юзера
         start   - період початок
@@ -242,7 +242,7 @@ POST    /api/pay_chart
 
 -----------------------------------------------------
         
-POST    /api/items_chart
+POST    /api/chart/items
     in
         id      - id з юзера
         start   - період початок
