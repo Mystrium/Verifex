@@ -20,8 +20,8 @@
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>{{$pay->pib}}</td>
                 <td>
-                    @if($pay->summ > $pay->min_pay)
-                        {{$pay->summ}}
+                    @if($pay->sum > $pay->min_pay)
+                        {{$pay->sum}}
                         </td>
                         <td>
                             Виробіток
@@ -32,7 +32,7 @@
                             Мінімальна ЗП
                     @endif
                 </td>
-                <td>{{substr($pay->date, 0, 10)}}</td>
+                <td>{{$pay->date}}</td>
                 <td>
                     <a href="/pay/{{$pay->id}}" class="btn btn-info btn-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info" viewBox="0 0 16 16">

@@ -94,7 +94,7 @@ class ApiController extends BaseController {
         $isok = WorkHour::create([
             'worker_id' => $request->worker,
             'start'     => $request->start,
-            'stop'      => $request->stop
+            'time'      => $request->time
         ]);
         if ($isok == null)
             return response(null, 404);
@@ -118,4 +118,80 @@ class ApiController extends BaseController {
         return response()->json($workers);
     }
 
+    public function hours_chart(Request $request){
+        $hours = WorkHour::selectRaw('DATE(start) as date, time')
+            ->where('worker_id', '=', $request->id)
+            ->whereBetween('start', [$request->start, $request->end])
+            ->get();
+
+        $hours_map = [];
+        foreach($hours as $hour)
+            $hours_map[$hour->date] = $hour->time;
+
+        return response()->json($hours_map);
+    }
+
+    public function pay_chart(Request $request){
+        $pays = Worker::selectRaw(
+                'date(transactions.date) as date,
+                GREATEST(
+                    sum(
+                        if(transactions.type_id = 4, transactions.count * -1, transactions.count) 
+                            * items.price), 
+                        work_types.min_pay) 
+                    as pay')
+            ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
+            ->join('items', 'items.id', '=', 'transactions.item_id_id')
+            ->join('work_types', 'work_types.id', '=', 'workers.role_id')
+            ->where(
+                'workers.id', 
+                '=', 
+                $request->id)
+            ->whereIn('transactions.type_id', [4, 3])
+            ->whereBetween(
+                'date', 
+                [
+                    $request->start, 
+                    $request->end
+                ])
+            ->orderBy('date', 'desc')
+            ->groupByRaw('DATE(date)')
+            ->get();
+
+        $pay_map = [];
+        foreach($pays as $pay)
+            $pay_map[$pay->date] = $pay->pay;
+
+        return response()->json($pay_map);
+    }
+
+    public function items_chart(Request $request){
+        $items = Worker::selectRaw(
+            'date(transactions.date) as date,
+            sum(if(transactions.type_id = 4, transactions.count * -1, transactions.count)) as count,
+            items.title')
+        ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
+        ->join('items', 'items.id', '=', 'transactions.item_id_id')
+        ->join('work_types', 'work_types.id', '=', 'workers.role_id')
+        ->where(
+            'workers.id', 
+            '=', 
+            $request->id)
+        ->whereIn('transactions.type_id', [4, 3])
+        ->whereBetween(
+            'date', 
+            [
+                $request->start, 
+                $request->end
+            ])
+        ->orderBy('date', 'desc')
+        ->groupBy('items.id')
+        ->get();
+
+        $items_map = [];
+        foreach($items as $item)
+            $items_map[$item->date][] = [$item->title => $item->count];
+
+        return response()->json($items_map);
+    }
 }
