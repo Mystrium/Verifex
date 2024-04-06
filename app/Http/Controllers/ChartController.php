@@ -27,19 +27,18 @@ class ChartController extends BaseController {
     }
 
     public function hours(Request $request){
-        $start = $request->start ?? Carbon::now()->subDays(100);
-        $end = $request->end ?? Carbon::now();
+        $start = $request->period[0] ?? Carbon::now()->subDays(30)->toDateString();
+        $end = $request->period[1] ?? Carbon::now()->toDateString();
 
-        $hours = WorkHour::selectRaw('DATE(start) as date, time')
-            ->where('worker_id', '=', $request->id)
+        $hours = WorkHour::selectRaw('DATE(start) as date, TIME_TO_SEC(time)/60/60 as time')
             ->whereBetween('start', [$start, $end])
             ->get();
-dd($hours); // ------
         $data = [];
         $data['label'] = $hours->pluck('date')->all();
         $data['time']  = $hours->pluck('time')->all();
 
         return view('charts/index')
+            ->withPeriod([$start, $end])
             ->withData($data);
     }
 

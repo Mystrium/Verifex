@@ -3,8 +3,7 @@
 @section('content')
 
 <h1 class="mt-4">Вироби</h1>
-<form method="POST" action="{{ url('chart/worktime') }}" style="display:inline">
-    @csrf
+<form method="GET" action="{{ url('worktime') }}" style="display:inline">
     <div class="row">
         <div class="col-1">
             <div class="input-group">
@@ -14,13 +13,13 @@
         <div class="col">
             <div class="input-group">
                 <span class="input-group-text">Від</span>    
-                <input type="date" class="form-control" name="period[]" value="{{$dates[0]??''}}">
+                <input type="date" class="form-control" name="period[]" value="{{$period[0]??''}}">
             </div>
         </div>
         <div class="col">
             <div class="input-group">
                 <span class="input-group-text">До</span>    
-                <input type="date" class="form-control" name="period[]" value="{{$dates[1]??''}}">
+                <input type="date" class="form-control" name="period[]" value="{{$period[1]??''}}">
             </div>
         </div>
     </div>
@@ -30,17 +29,17 @@
 <div class="card chart-container">
     <canvas id="hourschart"></canvas>
 </div>
-{{var_dump($data)}}
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
     const ctx2 = document.getElementById("hourschart").getContext('2d');
     let rand_colors = [];
     for (let i = 0; i < {{ count($data['label']) }}; i++)
         rand_colors[i] = "hsl(" + 360 / {{ count($data['label']) }} * i +", 100%, 50%)";
     const myChart3 = new Chart(ctx2, {
-        type: 'pie', data: {
+        type: 'line', 
+        data: {
             labels: @json($data['label']),
             datasets: [{
                 label: 'c' ,

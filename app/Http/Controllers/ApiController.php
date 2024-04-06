@@ -122,6 +122,7 @@ class ApiController extends BaseController {
         $hours = WorkHour::selectRaw('DATE(start) as date, time as value')
             ->where('worker_id', '=', $request->id)
             ->whereBetween('start', [$request->start, $request->end])
+            ->orderBy('date', 'desc')
             ->get();
 
         // $hours_map = [];
