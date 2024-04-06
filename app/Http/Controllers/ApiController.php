@@ -119,16 +119,16 @@ class ApiController extends BaseController {
     }
 
     public function hours_chart(Request $request){
-        $hours = WorkHour::selectRaw('DATE(start) as date, time')
+        $hours = WorkHour::selectRaw('DATE(start) as date, time as value')
             ->where('worker_id', '=', $request->id)
             ->whereBetween('start', [$request->start, $request->end])
             ->get();
 
-        $hours_map = [];
-        foreach($hours as $hour)
-            $hours_map[$hour->date] = $hour->time;
+        // $hours_map = [];
+        // foreach($hours as $hour)
+        //     $hours_map[$hour->date] = $hour->time;
 
-        return response()->json($hours_map);
+        return response()->json($hours);
     }
 
     public function pay_chart(Request $request){
@@ -139,7 +139,7 @@ class ApiController extends BaseController {
                         if(transactions.type_id = 4, transactions.count * -1, transactions.count) 
                             * items.price), 
                         work_types.min_pay) 
-                    as pay')
+                    as value')
             ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
@@ -158,11 +158,11 @@ class ApiController extends BaseController {
             ->groupByRaw('DATE(date)')
             ->get();
 
-        $pay_map = [];
-        foreach($pays as $pay)
-            $pay_map[$pay->date] = $pay->pay;
+        // $pay_map = [];
+        // foreach($pays as $pay)
+        //     $pay_map[$pay->date] = $pay->pay;
 
-        return response()->json($pay_map);
+        return response()->json($pays);
     }
 
     public function items_chart(Request $request){

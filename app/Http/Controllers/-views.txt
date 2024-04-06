@@ -232,7 +232,7 @@ POST    /api/chart/hours
 
 -----------------------------------------------------
 
-POST    /api/chart/pay
+POST    /api/chart/payment
     in
         id      - id з юзера
         start   - період початок
