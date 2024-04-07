@@ -19,6 +19,8 @@ class PurchaseController extends BaseController {
             ->leftJoin('items', 'items.id', '=', 'transactions.item_id_id')
             ->leftJoin('colors', 'colors.id', '=', 'transactions.color_id')
             ->leftJoin('units', 'units.id', '=', 'items.unit_id')
+            ->where('worker_from_id', '=', '1')
+            ->where('type_id', '=', 3)
             ->orderBy('date', 'desc')
             ->get();
         
