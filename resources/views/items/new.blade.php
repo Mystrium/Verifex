@@ -37,7 +37,7 @@
         <span class="input-group-text">Інструкція</span>
         <input type="url" class="form-control" maxlength=150 name="instruction" value="{{$edit->url_instruction??''}}" placeholder="URL...">
     </div>
-    <div class="input-group" id="tagsSel">
+    <div class="input-group pb-3" id="tagsSel">
         <span class="input-group-text">Складники</span>
         <select class="search-drop input-group-text" style="height:40px;" name="consist" onchange="addTag(this, 'tagsSel')">
             <option>-</option>
@@ -52,7 +52,9 @@
                 @if($item->id == $cons->have_id)
                     <div id = "t{{$item->id}}" class="input-group mb-3">
                         <input name="consists[]" type="hidden" value="{{$item->id}}">
-                        <input class="form-control success" value="{{$item->title}}"readonly>
+                        <a href="/items/edit/{{$item->id}}">
+                            <input class="form-control success" style="cursor:pointer" value="{{$item->title}}"readonly>
+                        </a>
                         <input type="number" max="999" required name="counts[]" class="form-control" step="0.01" value="{{$cons->count}}">
                         <button class="input-group-text text-danger" type="button" onclick="dellTag('t{{$item->id}}')">X</button>
                     </div>
@@ -68,7 +70,9 @@
             document.getElementById(after_name).insertAdjacentHTML("afterend",
             '<div id = "t'+sel.value+'" class="input-group mb-3">'
                 +'<input name="consists[]" type="hidden" value="'+sel.value+'">'
-                +'<input class="form-control success" value="'+sel.options[sel.selectedIndex].text+'"readonly>'
+                +'<a href="/items/edit/'+sel.value+'">'
+                    +'<input class="form-control success" style="cursor:pointer" value="'+sel.options[sel.selectedIndex].text+'"readonly>'
+                +'</a>'
                 +'<input type="number" max="999" required name="counts[]" class="form-control" step="0.01" value="1">'
                 +'<button class="input-group-text text-danger" type="button" onclick="dellTag(`t'+sel.value+'`)">X</button>'
             +'</div>')

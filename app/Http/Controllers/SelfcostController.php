@@ -24,7 +24,7 @@ class SelfcostController extends BaseController {
                 'WITH RECURSIVE TreeTraversal AS (
                     SELECT what_id, have_id, count, count AS total_count
                     FROM consists
-                    WHERE what_id = 10
+                    WHERE what_id = ' . $item->id . '
                     
                     UNION ALL
                     
@@ -33,13 +33,36 @@ class SelfcostController extends BaseController {
                     INNER JOIN TreeTraversal tt ON c.what_id = tt.have_id
                 )
                 
-                SELECT items.title, have_id, items.url_photo, units.title as unit, sum(total_count) as cnt
+                SELECT items.title, have_id, items.url_photo, units.title as unit, sum(total_count) as cnt, avg(tr.price) as price
                 FROM TreeTraversal
                 INNER JOIN items on items.id = have_id
                 INNER JOIN units on units.id = items.unit_id
+                LEFT OUTER JOIN (
+                        SELECT * FROM transactions
+                        WHERE worker_from_id = 1) tr 
+                    ON tr.item_id_id = have_id
                 WHERE have_id NOT IN (SELECT what_id FROM consists)
                 GROUP BY what_id;'
             );
+
+            $item['work_cost'] = DB::select(
+                'WITH RECURSIVE TreeTraversal AS (
+                    SELECT what_id, have_id, count, i.price, count AS total_children
+                    FROM consists
+                    INNER JOIN items i on i.id = have_id
+                    WHERE what_id = ' . $item->id . '
+                    
+                    UNION ALL
+                    
+                    SELECT c.what_id, c.have_id, c.count, i.price, t.total_children * c.count
+                    FROM TreeTraversal AS t
+                    JOIN consists AS c ON t.have_id = c.what_id
+                    INNER JOIN items i on i.id = c.have_id
+                )
+                
+                SELECT SUM(total_children * price) AS work_price
+                FROM TreeTraversal;'
+            )[0]->work_price;
         }
 
         return view('cost')

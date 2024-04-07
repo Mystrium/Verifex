@@ -33,15 +33,21 @@ class ChartController extends BaseController {
         $hours = WorkHour::selectRaw('DATE(start) as date, TIME_TO_SEC(time)/60/60 as time')
             ->whereBetween('start', [$start, $end])
             ->get();
+        
         $data = [];
-        $data['label'] = $hours->pluck('date')->all();
-        $data['time']  = $hours->pluck('time')->all();
+        // $data['label'] = $hours->pluck('date')->all();
+        // $data['time']  = $hours->pluck('time')->all();
 
+        foreach($hours as $hour){
+            // $data['datasets'][] = ['data' => ['x' => $hour->date, 'y' => $hour->time], 'label' => 'test'];
+            $data['test'][] = ['x' => $hour->date, 'y' => $hour->time];
+        }
+        
         return view('charts/index')
             ->withPeriod([$start, $end])
             ->withData($data);
     }
-
+    
     public function pay(Request $request){
         $pays = Worker::selectRaw(
                 'date(transactions.date) as date,

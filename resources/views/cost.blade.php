@@ -12,6 +12,7 @@
             <th scope="col">Одиниця</th>
             <th scope="col">Ціна $</th>
             <th scope="col">Дата</th>
+            <th scope="col">Дата</th>
         </tr>
     </thead>
     <tbody>
@@ -19,27 +20,43 @@
             <tr>
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>{{$item->title}}</td>
-                <td><img src="{{$item->url_photo}}" style="max-width:100px; max-height:100px"></td>
+                <td>
+                    <a href="/items/edit/{{$item->id}}">
+                        <img src="{{$item->url_photo}}" style="max-width:100px; max-height:100px">
+                    </a>
+                </td>
                 <td>{{$item->unit}}</td>
-                <td>1</td>
-                <td>1</td>
+                <td>{{$item->work_cost + 0}}</td>
+                <td>-</td>
+                <td>-</td>
             </tr>
+            @php($total = $item->work_cost)
             @foreach($item->subitems as $sub)
                 <tr>
-                    <td></td>
+                    <td>{{ $loop->iteration }}</td>
                     <td></td>
                     <td>{{$sub->title}}</td>
-                    <td><img src="{{$sub->url_photo}}" style="max-width:100px; max-height:100px"></td>
-                    <td>{{$sub->cnt}}</td>
+                    <td>
+                        <a href="/items/edit/{{$sub->have_id}}">    
+                            <img src="{{$sub->url_photo}}" style="max-width:100px; max-height:100px">
+                        </a>
+                    </td>
+                    <td>{{$sub->price ? $sub->price + 0 : '-'}}</td>
+                    <td>{{$sub->cnt + 0}}</td>
                     <td>{{$sub->unit}}</td>
                 </tr>
+                @php($total += $sub->cnt * $sub->price)
             @endforeach
+            <tr>
+                <th></th>
+                <td></td>
+                <td></td>
+                <td>Всього</td>
+                <td>{{$total}}</td>
+                <td></td>
+                <td></td>
+            </tr>
         @endforeach
     </tbody>
 </table>
-
-
-
 @endsection
-
-
