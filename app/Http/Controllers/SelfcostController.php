@@ -17,6 +17,10 @@ class SelfcostController extends BaseController {
                 Consist::select('have_id')
                     ->get()
                     ->toArray())
+            ->whereIn('items.id',
+                Consist::select('what_id')
+                    ->get()
+                    ->toArray())
             ->get();
 
         foreach($items as $item){
@@ -42,7 +46,7 @@ class SelfcostController extends BaseController {
                         WHERE worker_from_id = 1) tr 
                     ON tr.item_id_id = have_id
                 WHERE have_id NOT IN (SELECT what_id FROM consists)
-                GROUP BY what_id;'
+                GROUP BY have_id;'
             );
 
             $item['work_cost'] = DB::select(
