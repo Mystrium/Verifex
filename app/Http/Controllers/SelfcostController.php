@@ -37,16 +37,18 @@ class SelfcostController extends BaseController {
                     INNER JOIN TreeTraversal tt ON c.what_id = tt.have_id
                 )
                 
-                SELECT items.title, have_id, items.url_photo, units.title as unit, sum(total_count) as cnt, avg(tr.price) as price
-                FROM TreeTraversal
-                INNER JOIN items on items.id = have_id
-                INNER JOIN units on units.id = items.unit_id
-                LEFT OUTER JOIN (
-                        SELECT * FROM transactions
-                        WHERE worker_from_id = 1) tr 
-                    ON tr.item_id_id = have_id
-                WHERE have_id NOT IN (SELECT what_id FROM consists)
-                GROUP BY have_id;'
+                SELECT itms.*, avg(price) as price
+                FROM (
+                    SELECT items.title, have_id, items.url_photo, units.title as unit, sum(total_count) as cnt
+                    FROM TreeTraversal
+                    INNER JOIN items ON items.id = have_id
+                    INNER JOIN units ON units.id = items.unit_id
+                    WHERE have_id NOT IN (SELECT what_id FROM consists)
+                    GROUP BY have_id
+                ) as itms
+                LEFT OUTER JOIN transactions ON itms.have_id = transactions.item_id_id
+                WHERE worker_from_id = 1
+                GROUP BY item_id_id'
             );
 
             $item['work_cost'] = DB::select(

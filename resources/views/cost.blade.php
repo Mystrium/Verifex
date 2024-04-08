@@ -9,10 +9,10 @@
             <th scope="col">#</th>
             <th scope="col">Назва</th>
             <th scope="col">Фото</th>
-            <th scope="col">Одиниця</th>
+            <th scope="col">-</th>
             <th scope="col">Ціна $</th>
-            <th scope="col">Дата</th>
-            <th scope="col">Дата</th>
+            <th scope="col">Кількість</th>
+            <th scope="col">Сума</th>
         </tr>
     </thead>
     <tbody>
@@ -25,9 +25,9 @@
                         <img src="{{$item->url_photo}}" style="max-width:100px; max-height:100px">
                     </a>
                 </td>
-                <td>{{$item->unit}}</td>
-                <td>{{$item->work_cost + 0}}</td>
                 <td>-</td>
+                <td>{{$item->work_cost + 0}}₴</td>
+                <td>{{$item->unit}}</td>
                 <td>-</td>
             </tr>
             @php($total = $item->work_cost)
@@ -41,9 +41,9 @@
                             <img src="{{$sub->url_photo}}" style="max-width:100px; max-height:100px">
                         </a>
                     </td>
-                    <td>{{$sub->price ? $sub->price + 0 : '-'}}</td>
-                    <td>{{$sub->cnt + 0}}</td>
-                    <td>{{$sub->unit}}</td>
+                    <td>{{$sub->price ? $sub->price + 0 : '-'}}₴</td>
+                    <td>{{$sub->cnt + 0}} {{$sub->unit}}</td>
+                    <td>{{$sub->cnt * $sub->price}}₴</td>
                 </tr>
                 @php($total += $sub->cnt * $sub->price)
             @endforeach
@@ -52,7 +52,7 @@
                 <td></td>
                 <td></td>
                 <td>Всього</td>
-                <td>{{$total}}</td>
+                <td>{{$total}}₴</td>
                 <td></td>
                 <td></td>
             </tr>
