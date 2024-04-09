@@ -52,7 +52,7 @@
                 <td></td>
                 <td></td>
                 <td>Всього</td>
-                <td>{{$total}}₴</td>
+                <td>{{$total + 0}}₴</td>
                 <td></td>
                 <td></td>
             </tr>

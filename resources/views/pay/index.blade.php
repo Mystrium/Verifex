@@ -18,7 +18,7 @@
         @foreach($pays as $pay)
             <tr>
                 <th scope="row">{{ $loop->iteration }}</th>
-                <td>{{$pay->pib}}</td>
+                <td><a href="/workers/edit/{{$pay->id}}">{{$pay->pib}}</a></td>
                 <td>
                     @if($pay->sum > $pay->min_pay)
                         {{$pay->sum}}

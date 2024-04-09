@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\Consist;
 use App\Models\Color;
 use App\Models\Item;
 use Carbon\Carbon;
@@ -14,6 +15,10 @@ class PurchaseController extends BaseController {
         $colors = Color::all();
         $items = Item::select('items.*', 'units.title as unit')
             ->leftJoin('units', 'units.id', '=', 'items.unit_id')
+            ->whereNotIn('items.id',
+                Consist::select('what_id')
+                    ->get()
+                    ->toArray())
             ->get();
         $purchases = Transaction::select('transactions.*', 'items.title', 'colors.hex', 'colors.title as ctitle', 'units.title as unit')
             ->leftJoin('items', 'items.id', '=', 'transactions.item_id_id')

@@ -77,12 +77,14 @@ __________^^^^^^^^graphics
 
 
 
-
 + Zarplata
     period
 
 
-Items real cost
++ Items real cost
+    by color
+    by period
+    without purchase price
 
 _____________________________________________________________
 
