@@ -49,8 +49,8 @@
 </table>
 
 <pre>{{json_encode($anomaly, JSON_PRETTY_PRINT);}}</pre>
-<br><br><br>
-{{--<pre>{{json_encode($consists, JSON_PRETTY_PRINT);}}</pre>--}}
+
+{{--<pre>{{json_encode($consists, JSON_PRETTY_PRINT);}}</pre>
 
 @foreach($workers as $worker => $items)
     <br>
@@ -62,8 +62,68 @@
             <p class="ps-5">{{$color}} ==> {{$count}}</p>
         @endforeach
     @endforeach
-@endforeach
+@endforeach--}}
 
-
+<div class="card-group">
+    @foreach($workers as $worker => $items)
+        <div class="col">
+            <div class="card m-1">
+                <div class="card-header">
+                    @foreach($names as $nm)
+                        @if($nm->id == $worker)
+                            {{$nm->pib}}
+                            @if($nm->id != 1)
+                                <a href="/workers/edit/{{$nm->id}}" style="text-decoration: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                    </svg>
+                                </a>
+                            @endif
+                            @break
+                        @endif
+                    @endforeach
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach($items as $item => $colors)
+                        <li class="list-group-item">
+                            @foreach($itemsnames as $itm)
+                                @if($itm->id == $item)
+                                    {{$itm->title}}
+                                    <a href="/items/edit/{{$itm->id}}" style="text-decoration: none;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                        </svg>
+                                    </a>
+                                    </a>
+                                    @php($unit = $itm->unit)
+                                    @break
+                                @endif
+                            @endforeach
+                        </li>
+                        <ul>
+                            @foreach($colors as $color => $count)
+                                <li class="list-group-item">
+                                    @foreach($colornames as $col)
+                                        @if($col->id == $color)
+                                            <span style="background-color:#{{$col->hex}};">
+                                                <span style="mix-blend-mode: difference; color:white">
+                                                    {{$col->title}}
+                                                </span>
+                                            </span> ==>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    {{$count}} {{$unit}}
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endforeach
+</div>
 
 @endsection
