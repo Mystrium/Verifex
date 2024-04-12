@@ -101,7 +101,29 @@ class ApiController extends BaseController {
         return response(null, 200);
     }
 
-    public function workers(Request $request){
+    public function workers(Request $request) {
+        $role = Worker::select('work_types.title')
+            ->join('work_types', 'work_types.id', '=', 'workers.role_id')
+            ->where('workers.id', '=', $request->id)
+            ->get();
+
+        if(isset($role[0]) && $role[0]->title == 'Кладовщик'){
+            $workers = Worker::select('workers.id', 'pib', 'work_types.title as role', 'ceh.title', 'ceh_types.title as type')
+            ->join('ceh', 'ceh.id', '=', 'workers.ceh_id')
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->join('work_types', 'work_types.id', '=', 'workers.role_id')
+            ->where('workers.id', '<>', $request->id)
+            ->whereRaw(
+                'ceh_id IN ( 
+                    SELECT ceh_id 
+                    FROM workers 
+                    WHERE id = ' . $request->id . ') 
+                OR (work_types.title = "Кладовщик") 
+                OR (workers.id = 1)')
+            ->get();
+            return response()->json($workers);
+        }
+
         $workers = Worker::select('workers.id', 'pib', 'work_types.title as role', 'ceh.title', 'ceh_types.title as type')
             ->join('ceh', 'ceh.id', '=', 'workers.ceh_id')
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
@@ -113,7 +135,7 @@ class ApiController extends BaseController {
                     SELECT ceh_id 
                     FROM workers 
                     WHERE id = ' . $request->id . 
-                ') OR (work_types.title = "Кладовщик")')
+                ')')
             ->get();
         return response()->json($workers);
     }
