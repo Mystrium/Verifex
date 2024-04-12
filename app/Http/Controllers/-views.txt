@@ -44,8 +44,8 @@ __________^^^^^^^^tables
 R>Transaction(+TransactionType),Item,Ceh(>Worker),Consist
 Movement
     Ceh
-        Item
-        count
+        +Item
+        +count
         brak
     from
     to

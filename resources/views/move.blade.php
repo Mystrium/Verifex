@@ -49,8 +49,9 @@
 </table>
 
 <pre>{{json_encode($anomaly, JSON_PRETTY_PRINT);}}</pre>
-
-{{--<pre>{{json_encode($consists, JSON_PRETTY_PRINT);}}</pre>
+{{--<br>
+<pre>{{json_encode($workers, JSON_PRETTY_PRINT);}}</pre>
+<pre>{{json_encode($consists, JSON_PRETTY_PRINT);}}</pre>
 
 @foreach($workers as $worker => $items)
     <br>

@@ -31,22 +31,23 @@ class MovementController extends BaseController {
             ->orderBy('date', 'asc')
             ->get();
 
-        $consists = Consist::all();
+        $consists = Consist::select('what_id', 'have_id', 'count', 'hascolor')
+            ->join('items', 'items.id', '=', 'consists.have_id')
+            ->get();
         $cons = [];
         foreach($consists as $cn) {
-            $cons[$cn->what_id][] = ['item' => $cn->have_id, 'count' => $cn->count];
+            $cons[$cn->what_id][] = ['item' => $cn->have_id, 'count' => $cn->count, 'color' => $cn->hascolor];
         }
 
         $colors = Color::whereIn('id', $move->pluck('color_id'))->get();
         $users = Worker::select('id', 'pib', 'ceh_id')->whereIn('id', $move->pluck('worker'))->get();
-        $items = Item::selectRaw('items.id as id, items.title, units.title as unit')
-            ->join('units', 'units.id', '=', 'items.unit_id')
-            ->whereIn('items.id', $move->pluck('item'))
-            ->get();
         
+        $items_ids = [];
+
         $anomalies = [];
         $workers = [];
         foreach($move as $mv) {
+            $items_ids[] = $mv->item;
             switch($mv->type_id) {
                 case 1:                     // ->
                     if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
@@ -96,22 +97,28 @@ class MovementController extends BaseController {
                         if(isset($cons[$mv->item])){
                             foreach($cons[$mv->item] as $cn) {
                                 if(isset($workers[$mv->worker][$cn['item']])){
-                                    // if(isset($workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n']))
+                                    if($cn['color'] == 1)
                                         $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= $mv->count * $cn['count'];
-                                    // else
-                                    //     $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= $mv->count * $cn['count'];
+                                    else
+                                        $workers[$mv->worker][$cn['item']]['n'] -= $mv->count * $cn['count'];
                                 } else {
-                                    // if(isset($workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n']))
+                                    if($cn['color'] == 1)
                                         $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -$mv->count * $cn['count'];
-                                    // else
-                                    //     $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -$mv->count * $cn['count'];
+                                    else
+                                        $workers[$mv->worker][$cn['item']]['n'] = -$mv->count * $cn['count'];
                                 }
+                                $items_ids[] = $cn['item'];
                             }
                         }
                     }
                 break;
             }
         }
+
+        $items = Item::selectRaw('items.id as id, items.title, units.title as unit')
+            ->join('units', 'units.id', '=', 'items.unit_id')
+            ->whereIn('items.id', $items_ids)
+            ->get();
 
         $this->removeZeroAnomalies($anomalies);
         $this->removeZeroValues($workers);
@@ -145,7 +152,7 @@ class MovementController extends BaseController {
                 $this->removeZeroValues($value);
                 if (empty($value))
                     unset($array[$key]);
-            } elseif ($value === 0)
+            } elseif ($value == 0)
                 unset($array[$key]);
         }
     }

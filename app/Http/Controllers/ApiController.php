@@ -83,7 +83,9 @@ class ApiController extends BaseController {
             'item_id_id'     => $request->item_id,
             'color_id'       => $request->color_id,
             'count'          => $request->count,
-            'date'           => Carbon::now()->toDateTimeString()
+            'date'           => Carbon::now()
+                                ->timezone('Europe/Kyiv')
+                                ->toDateTimeString()
         ]);
         if ($isok == null)
             return response(null, 404);
