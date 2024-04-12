@@ -96,15 +96,15 @@ class MovementController extends BaseController {
                         if(isset($cons[$mv->item])){
                             foreach($cons[$mv->item] as $cn) {
                                 if(isset($workers[$mv->worker][$cn['item']])){
-                                    if(isset($workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n']))
+                                    // if(isset($workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n']))
                                         $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= $mv->count * $cn['count'];
-                                    else
-                                        $workers[$mv->worker][$cn['item']]['n'] -= $mv->count * $cn['count'];
+                                    // else
+                                    //     $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= $mv->count * $cn['count'];
                                 } else {
-                                    if(isset($workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n']))
+                                    // if(isset($workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n']))
                                         $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -$mv->count * $cn['count'];
-                                    else
-                                        $workers[$mv->worker][$cn['item']]['n'] = -$mv->count * $cn['count'];
+                                    // else
+                                    //     $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -$mv->count * $cn['count'];
                                 }
                             }
                         }
