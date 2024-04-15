@@ -32,7 +32,6 @@ class WorkerController extends BaseController {
         $position_cehs = Ceh::selectRaw('ceh.id as cehid, work_types.id, work_types.title')
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->join('work_types', 'work_types.cehtype_id', '=', 'ceh_types.id')
-            ->orderBy('cehtype_id')
             ->get();
 
         return view('workers/new')
@@ -68,7 +67,6 @@ class WorkerController extends BaseController {
         $position_cehs = Ceh::selectRaw('ceh.id as cehid, work_types.id, work_types.title')
         ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
         ->join('work_types', 'work_types.cehtype_id', '=', 'ceh_types.id')
-        ->orderBy('cehtype_id')
         ->get();
         
         return view('workers/new')
