@@ -77,7 +77,6 @@ __________^^^^^^^^graphics
 
 + Items real cost
     by color
-    without purchase price
 
 _____________________________________________________________
 

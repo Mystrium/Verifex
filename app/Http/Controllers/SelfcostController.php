@@ -46,8 +46,11 @@ class SelfcostController extends BaseController {
                     WHERE have_id NOT IN (SELECT what_id FROM consists)
                     GROUP BY have_id
                 ) as itms
-                LEFT OUTER JOIN transactions ON itms.have_id = transactions.item_id_id
-                WHERE worker_from_id = 1
+                LEFT OUTER JOIN (
+                    SELECT * 
+                    FROM transactions 
+                    WHERE worker_from_id = 1
+                    ) as tr ON itms.have_id = tr.item_id_id
                 GROUP BY item_id_id'
             );
 

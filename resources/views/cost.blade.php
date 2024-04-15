@@ -10,7 +10,7 @@
             <th scope="col">Назва</th>
             <th scope="col">Фото</th>
             <th scope="col">-</th>
-            <th scope="col">Ціна $</th>
+            <th scope="col">Ціна</th>
             <th scope="col">Кількість</th>
             <th scope="col">Сума</th>
         </tr>
@@ -41,9 +41,9 @@
                             <img src="{{$sub->url_photo}}" style="max-width:100px; max-height:100px">
                         </a>
                     </td>
-                    <td>{{$sub->price ? $sub->price + 0 : '-'}}₴</td>
+                    <td>{{$sub->price ? round($sub->price, 2) . '₴' : 'He закупленo'}}</td>
                     <td>{{$sub->cnt + 0}} {{$sub->unit}}</td>
-                    <td>{{$sub->cnt * $sub->price}}₴</td>
+                    <td>{{round($sub->cnt * $sub->price, 2)}}₴</td>
                 </tr>
                 @php($total += $sub->cnt * $sub->price)
             @endforeach
@@ -52,7 +52,7 @@
                 <td></td>
                 <td></td>
                 <td>Всього</td>
-                <td>{{$total + 0}}₴</td>
+                <td>{{round($total, 2)}}₴</td>
                 <td></td>
                 <td></td>
             </tr>
