@@ -13,7 +13,7 @@
             <th scope="col">Посада</th>
             <th scope="col">Телефон</th>
             <th scope="col">Паспорт</th>
-            <th scope="col">Статус</th>
+            <th scope="col">Перевірений</th>
             <th scope="col">Дії</th>
         </tr>
     </thead>
@@ -26,7 +26,12 @@
                 <td>{{$worker->role}}</td>
                 <td>{{$worker->phone}}</td>
                 <td>{{$worker->passport}}</td>
-                <td>{{$worker->checked==1?'Перевірений':'Новий'}}</td>
+                <td>
+                    <form action="/workers/check/{{$worker->id}}" method="POST">
+                        @csrf
+                        <input type="checkbox" name="status" {{$worker->checked==1?'checked':''}} onchange="this.form.submit()"/>
+                    </form>
+                </td>
                 <td>
                     <a href="/workers/edit/{{$worker->id}}" class="btn btn-warning btn-sm m-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -44,5 +49,13 @@
         @endforeach
     </tbody>
 </table>
+@if(session('msg') == 23000)
+    <div class="alert alert-danger" role="alert" style="position: fixed; top: 15%; left:30%; z-index: 1100;">
+        Ви не можете видалити цього користувача, тому що його записи використовуються в переміщеннях
+    </div>
+@endif
 
+<script>
+    $('.alert').fadeOut(7000);
+</script>
 @endsection

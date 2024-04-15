@@ -19,7 +19,7 @@ class PayController extends BaseController {
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->where('workers.id', '<>', 1)
             ->whereIn('transactions.type_id', [4, 3])
-            ->orderBy('date', 'desc')
+            ->orderBy('date', 'asc')
             ->groupByRaw('workers.id, DATE(date)')
             ->get();
         
@@ -41,13 +41,12 @@ class PayController extends BaseController {
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->where('workers.id', '=', $id)
             ->whereIn('transactions.type_id', [4, 3])
-            ->orderBy('date', 'desc')
+            ->orderBy('date', 'asc')
             ->get();
         
         return view('pay/worker')
             ->withWorker($worker)
             ->withPays($pays);
     }
-
-
+    
 }

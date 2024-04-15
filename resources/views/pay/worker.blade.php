@@ -8,9 +8,9 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Виріб</th>
+            <th scope="col">Оплата</th>
             <th scope="col">Кількість</th>
-            <th scope="col">Оплата ₴</th>
-            <th scope="col">Всього ₴</th>
+            <th scope="col">Всього</th>
             <th scope="col">Дата</th>
         </tr>
     </thead>
@@ -21,9 +21,19 @@
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{$pay->title}}</td>
-                    <td>{{$pay->count}}</td>
-                    <td>{{$pay->price}}</td>
-                    <td>{{$pay->count * $pay->price}}</td>
+                    <td>
+                        <div class="d-flex justify-content-between">
+                            <div class="text-start">{{$pay->price + 0}}₴</div>
+                            <div class="text-end pe-5">x</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-between">
+                            <div class="text-start">{{$pay->count}}</div>
+                            <div class="text-end pe-5">=</div>
+                        </div>
+                    </td>
+                    <td>{{$pay->count * $pay->price}}₴</td>
                     <td>{{$pay->date}}</td>
                 </tr>
                 @php($summ += $pay->count * $pay->price)
@@ -31,9 +41,9 @@
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td class="bg-danger">{{$pay->title}}</td>
+                    <td class="bg-danger">{{-$pay->price + 0}}₴</td>
                     <td class="bg-danger">{{$pay->count}}</td>
-                    <td class="bg-danger">{{-$pay->price}}</td>
-                    <td class="bg-danger">{{-$pay->count * $pay->price}}</td>
+                    <td class="bg-danger">{{-$pay->count * $pay->price}}₴</td>
                     <td>{{$pay->date}}</td>
                 </tr>
                 @php($summ -= $pay->count * $pay->price)

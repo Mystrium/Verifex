@@ -59,6 +59,7 @@ Route::get( '/workers/new',             [WorkerController::class,   'new']);
 Route::post('/workers/add',             [WorkerController::class,   'add']);
 Route::get( '/workers/edit/{id}',       [WorkerController::class,   'edit']);
 Route::post('/workers/update/{id}',     [WorkerController::class,   'update']);
+Route::post('/workers/check/{id}',      [WorkerController::class,   'check']);
 Route::get( '/workers/delete/{id}',     [WorkerController::class,   'delete']);
 
 Route::get('/purchases',            [PurchaseController::class, 'view']);
@@ -68,6 +69,7 @@ Route::get('/pay',                  [PayController::class,      'view']);
 Route::get('/pay/{id}',             [PayController::class,      'byworker']);
 
 Route::get('/movement',             [MovementController::class, 'view']);
+Route::get('/movement/delete/{id}', [MovementController::class, 'delete']);
 
 Route::get('/cost',                 [SelfcostController::class, 'view']);
 

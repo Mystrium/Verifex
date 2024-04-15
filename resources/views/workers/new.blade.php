@@ -11,7 +11,7 @@
     </div>
     <div class="input-group">
         <span class="input-group-text">Цех</span>
-        <select class="search-drop input-group-text" style="height:40px;" name="ceh">
+        <select class="search-drop input-group-text" style="height:40px;" name="ceh" id="ceh_select" onchange="updateOptions(this.value);">
             @foreach($cehs as $tp)
                 <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->ceh_id?'selected':''):''}}>{{$tp->ctitle}} {{$tp->title}}</option>
             @endforeach
@@ -19,7 +19,7 @@
     </div>
     <div class="input-group">
         <span class="input-group-text">Посада</span>
-        <select class="search-drop input-group-text" style="height:40px;" name="role">
+        <select class="search-drop input-group-text" style="width:200px" name="role" id="role_select">
             @foreach($types as $tp)
                 <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->role_id?'selected':''):''}}>{{$tp->title}}</option>
             @endforeach
@@ -45,4 +45,26 @@
     @endif
     <button type="submit" class="btn btn-primary m-2">{{$act=='add'?'Додати':'Змінити'}} </button>
 </form>
+
+<script>
+    var optionsMap = @json($posistionmap)
+    
+    var secondDropdown = document.getElementById("role_select");
+
+    updateOptions(document.getElementById("ceh_select").value);
+    
+    function updateOptions(selectedValue) {
+        secondDropdown.innerHTML = "";
+
+        optionsMap.forEach(function(option) {
+            if (option.cehid == selectedValue) {
+                var optionElement = document.createElement("option");
+                optionElement.value = option.id;
+                optionElement.text = option.title;
+                secondDropdown.add(optionElement);
+            }
+        });
+    }
+</script>
+
 @endsection

@@ -4,17 +4,13 @@
 
 +++++ Ceh
 
-+++++ Color pages   ???
-
 +++ Zacup
 
 +++++ Item
 
++++++++ Worker
 
-+++++ Worker
-+ allow             ???
-+ WorkType by CehType
-
++++++ Color pages   ???
 
 ++++ WorkType
 F sub(items)        ???

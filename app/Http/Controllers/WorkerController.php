@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\WorkType;
 use App\Models\Worker;
 use App\Models\Ceh;
+use Illuminate\Support\Facades\Redirect;
 
 class WorkerController extends BaseController {
 
@@ -16,6 +17,7 @@ class WorkerController extends BaseController {
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->leftJoin('work_types', 'work_types.id', '=', 'workers.role_id')
             ->get();
+
         return view('workers/index')
             ->withWorkers($workers);
     }
@@ -26,10 +28,18 @@ class WorkerController extends BaseController {
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->get();
         $worker = Worker::all();
+
+        $position_cehs = Ceh::selectRaw('ceh.id as cehid, work_types.id, work_types.title')
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->join('work_types', 'work_types.cehtype_id', '=', 'ceh_types.id')
+            ->orderBy('cehtype_id')
+            ->get();
+
         return view('workers/new')
             ->withAct('add')
             ->withTypes($worktypes)
             ->withCehs($cehs)
+            ->withPosistionmap($position_cehs)
             ->withWorkers($worker);
     }
 
@@ -52,11 +62,20 @@ class WorkerController extends BaseController {
         $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->get();
+
         $worktypes = WorkType::all();
+
+        $position_cehs = Ceh::selectRaw('ceh.id as cehid, work_types.id, work_types.title')
+        ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+        ->join('work_types', 'work_types.cehtype_id', '=', 'ceh_types.id')
+        ->orderBy('cehtype_id')
+        ->get();
+        
         return view('workers/new')
             ->withTypes($worktypes)
             ->withCehs($cehs)
             ->withEdit($worker)
+            ->withPosistionmap($position_cehs)
             ->withAct('update');
     }
 
@@ -85,8 +104,19 @@ class WorkerController extends BaseController {
         return redirect('/workers');
     }
 
-    public function delete($id){
-        Worker::destroy($id);
+    public function delete($id) {
+        $mess = '';
+        try {
+            Worker::destroy($id);
+        } catch(\Illuminate\Database\QueryException $ex) {
+            $mess = $ex->getCode();
+        }
+
+        return back()->with('msg', $mess);
+    }
+
+    public function check($id, Request $request){
+        Worker::find($id)->update(['checked' => $request->status ? 1 : 0]);
 
         return redirect('/workers');
     }

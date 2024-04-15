@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Consist;
@@ -14,6 +13,7 @@ use App\Models\Item;
 class MovementController extends BaseController {
     public function view(Request $request){
         $move = Transaction::selectRaw('
+                transactions.id as trans,
                 items.title,
                 items.id as item,
                 workers.id as worker,
@@ -23,27 +23,30 @@ class MovementController extends BaseController {
                 workers.ceh_id, 
                 transactions.count, 
                 transactions.type_id,
-                transactions_types.title as type,
                 date')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
-            ->join('transactions_types', 'transactions_types.id', '=', 'transactions.type_id')
             ->orderBy('date', 'asc')
             ->get();
 
         $consists = Consist::select('what_id', 'have_id', 'count', 'hascolor')
             ->join('items', 'items.id', '=', 'consists.have_id')
             ->get();
+
         $cons = [];
         foreach($consists as $cn) {
-            $cons[$cn->what_id][] = ['item' => $cn->have_id, 'count' => $cn->count, 'color' => $cn->hascolor];
+            $cons[$cn->what_id][] = 
+                [
+                    'item' => $cn->have_id,
+                    'count' => $cn->count,
+                    'color' => $cn->hascolor
+                ];
         }
 
         $colors = Color::whereIn('id', $move->pluck('color_id'))->get();
         $users = Worker::select('id', 'pib', 'ceh_id')->whereIn('id', $move->pluck('worker'))->get();
         
         $items_ids = [];
-
         $anomalies = [];
         $workers = [];
         foreach($move as $mv) {
@@ -155,6 +158,12 @@ class MovementController extends BaseController {
             } elseif ($value == 0)
                 unset($array[$key]);
         }
+    }
+
+
+    public function delete($id){
+        Transaction::destroy($id);
+        return redirect('/movement');
     }
 
 }
