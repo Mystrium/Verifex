@@ -11,6 +11,8 @@
             <th scope="col">Назва</th>
             <th scope="col">Цех</th>
             <th scope="col">Мін ЗП</th>
+            <th scope="col">Вироби</th>
+            <th scope="col">Права</th>
             <th scope="col">Дії</th>
         </tr>
     </thead>
@@ -21,6 +23,23 @@
                 <td>{{$type->title}}</td>
                 <td>{{$type->cehtype}}</td>
                 <td>{{$type->min_pay}}</td>
+                <td>
+                    @foreach($workitems as $itm)
+                        @if($itm->role_id == $type->id)
+                            <a href="/items/edit/{{$itm->id}}" style="text-decoration:none">{{$itm->title}}</a>,
+                        @endif
+                    @endforeach
+                </td>
+                <td>
+                    @foreach(explode(',', $type->operations) as $oper)
+                        @foreach($permisions as $per)
+                            @if($per->id == $oper)
+                                {{$per->title}}{{$loop->last ? '' : ','}}
+                                @break
+                            @endif
+                        @endforeach
+                    @endforeach
+                </td>
                 <td>
                     <a href="/worktypes/edit/{{$type->id}}" class="btn btn-warning btn-sm m-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

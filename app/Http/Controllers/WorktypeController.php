@@ -1,22 +1,28 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\TransactionType;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use App\Models\TransactionType;
 use App\Models\RoleItem;
 use App\Models\WorkType;
 use App\Models\CehType;
 use App\Models\Item;
 
 class WorktypeController extends BaseController {
-
-    public function view(){
+    public function view() {
+        $perm = TransactionType::all();
+        $workitems = RoleItem::select('role_id', 'items.id', 'title')
+            ->join('items', 'items.id', '=', 'role_items.item_id')
+            ->get();
         $worktypes = WorkType::select('work_types.*', 'ceh_types.title as cehtype')
             ->join('ceh_types', 'ceh_types.id', '=', 'work_types.cehtype_id')
             ->get();
-        
-        return view('worktypes/index')->withWorktypes($worktypes);
+
+        return view('worktypes/index')
+            ->withPermisions($perm)
+            ->withWorkitems($workitems)
+            ->withWorktypes($worktypes);
     }
 
     public function new() {
