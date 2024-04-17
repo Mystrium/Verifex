@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\TransactionType;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\RoleItem;
@@ -21,8 +22,10 @@ class WorktypeController extends BaseController {
     public function new() {
         $cehtypes = CehType::all();
         $items = Item::all();
+        $perm = TransactionType::all();
         return view('worktypes/new')
             ->withCehtypes($cehtypes)
+            ->withPermisions($perm)
             ->withItems($items)
             ->withAct('add');
     }
@@ -31,7 +34,8 @@ class WorktypeController extends BaseController {
         $newtype = WorkType::create([
             'title' => $request->title,
             'cehtype_id' => $request->type,
-            'min_pay' => $request->minpay
+            'min_pay' => $request->minpay,
+            'operations' => implode(',', $request->operations)
         ]);
 
         if($request->items){
@@ -53,11 +57,13 @@ class WorktypeController extends BaseController {
             $workitems2[] = $item->item_id;
         $cehtypes = CehType::all();
         $items = Item::all();
+        $perm = TransactionType::all();
         return view('worktypes/new')
             ->withItems($items)
             ->withEdit($toedit)
             ->withWorkitems($workitems2)
             ->withCehtypes($cehtypes)
+            ->withPermisions($perm)
             ->withAct('update');
     }
 
@@ -65,7 +71,8 @@ class WorktypeController extends BaseController {
         WorkType::find($id)->update([
             'title' => $request->title,
             'cehtype_id' => $request->type,
-            'min_pay' => $request->minpay
+            'min_pay' => $request->minpay,
+            'operations' => implode(',', $request->operations)
         ]);
 
         RoleItem::where('role_id', '=', $id)->delete();

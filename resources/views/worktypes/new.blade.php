@@ -23,9 +23,19 @@
     </div>
     <div class="input-group" id="tagsSel">
         <span class="input-group-text">Доступні вироби</span>
-        <select class="multiple-search input-group-text" style="height:300px;" multiple="multiple" name="items[]">
+        <select class="multiple-search input-group-text" id="itm" style="height:300px;" multiple="multiple" name="items[]">
             @foreach($items as $item)
                 <option value="{{$item->id}}" {{ (isset($workitems) && in_array($item->id, $workitems)) ? 'selected' : '' }}>
+                    {{$item->title}}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    <div class="input-group" id="tagsSel1">
+        <span class="input-group-text">Дозволи</span>
+        <select class="multiple-search input-group-text" id="opr" style="height:300px;" multiple="multiple" name="operations[]">
+            @foreach($permisions as $item)
+                <option value="{{$item->id}}" {{ (isset($edit) && in_array($item->id, explode(',', $edit->operations))) ? 'selected' : '' }}>
                     {{$item->title}}
                 </option>
             @endforeach
@@ -34,6 +44,7 @@
     <button type="submit" class="btn btn-primary m-2">{{$act=='add'?'Додати':'Змінити'}}</button>
 </form>
 <script>
-    $(".multiple-search").select2({placeholder: "Оберіть вироби"});
+    $("#itm").select2({placeholder: "Оберіть вироби"});
+    $("#opr").select2({placeholder: "Оберіть дозволи"});
 </script>
 @endsection

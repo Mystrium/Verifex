@@ -71,8 +71,15 @@ class ApiController extends BaseController {
         return response()->json(Color::all());
     }
 
-    public function transtypes(){
-        return response()->json(TransactionType::all());
+    public function transtypes(Request $request) {
+        $types = TransactionType::whereIn('id',
+                explode(',',
+                    WorkType::select('operations')
+                        ->find($request->role_id)['operations']
+                        )
+            )->get();
+
+        return response()->json($types);
     }
 
     public function transact(Request $request){

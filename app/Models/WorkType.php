@@ -15,7 +15,8 @@ class WorkType extends Model {
     protected $fillable = [
         'title', 
         'cehtype_id', 
-        'min_pay'
+        'min_pay',
+        'operations'
     ];
 
 }
