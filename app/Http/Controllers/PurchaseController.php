@@ -46,7 +46,7 @@ class PurchaseController extends BaseController {
 
             $crawler = new Crawler($html);
 
-            $exchange = str_replace(',', '.', $crawler->filter('div.bKmKjX')->text());
+            $exchange = str_replace(',', '.', explode('.', $crawler->filter('div.bKmKjX')->text())[0]);
         }
 
         Transaction::create([
