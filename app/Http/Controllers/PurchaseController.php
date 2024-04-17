@@ -46,10 +46,8 @@ class PurchaseController extends BaseController {
 
             $crawler = new Crawler($html);
 
-            $exchange = $crawler->filter('div.bKmKjX')->text();
+            $exchange = str_replace(',', '.', $crawler->filter('div.bKmKjX')->text());
         }
-
-        $exchange[$exchange] == 1;
 
         Transaction::create([
             'type_id' => 3,
