@@ -49,6 +49,8 @@ class PurchaseController extends BaseController {
             $exchange = $crawler->filter('div.bKmKjX')->text();
         }
 
+        dd($exchange);
+
         Transaction::create([
             'type_id' => 3,
             'worker_from_id' => 1,
