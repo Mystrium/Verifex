@@ -49,7 +49,7 @@ class PurchaseController extends BaseController {
             $exchange = $crawler->filter('div.bKmKjX')->text();
         }
 
-        dd($exchange);
+        $exchange[$exchange] == 1;
 
         Transaction::create([
             'type_id' => 3,
