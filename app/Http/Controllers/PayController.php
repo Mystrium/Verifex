@@ -10,9 +10,9 @@ use Illuminate\Support\Carbon;
 class PayController extends BaseController {
 
     public function view(Request $request) {
-        $start = $request->period[0] ?? Carbon::now()->startOfMonth()->subMonthsNoOverflow()->toDateString();
-        $end = $request->period[1] ?? Carbon::now()->startOfMonth()->toDateString();
-
+        $start = $request->period[0] ?? Carbon::now()->startOfWeek()->subDays(7)->toDateString();
+        $end = $request->period[1] ?? Carbon::now()->startOfWeek()->toDateString();
+        
         $pays = Worker::selectRaw('
                 DATE_FORMAT(transactions.date, "%d.%m.%Y") as date, 
                 sum(if(transactions.type_id = 4, transactions.count * -1, transactions.count) * items.price) as sum,
@@ -35,8 +35,8 @@ class PayController extends BaseController {
     }
 
     public function byworker($id, Request $request) {
-        $start = $request->period[0] ?? Carbon::now()->subDays(30)->toDateString();
-        $end = $request->period[1] ?? Carbon::now()->toDateString();
+        $start = $request->period[0] ?? Carbon::now()->startOfWeek()->subDays(7)->toDateString();
+        $end = $request->period[1] ?? Carbon::now()->startOfWeek()->toDateString();
 
         $worker = Worker::select('workers.pib')->find($id);
         $pays = Worker::select(

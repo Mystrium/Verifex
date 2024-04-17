@@ -30,7 +30,7 @@
 </form>
 
 @if(empty(Request()->period))
-    <h5>за минулий місяць</h5>
+    <h5>за минулий тиждень</h5>
 @endif
 
 <table class="table table-striped table-success" id="jsTable">

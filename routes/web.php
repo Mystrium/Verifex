@@ -62,8 +62,11 @@ Route::post('/workers/update/{id}',     [WorkerController::class,   'update']);
 Route::post('/workers/check/{id}',      [WorkerController::class,   'check']);
 Route::get( '/workers/delete/{id}',     [WorkerController::class,   'delete']);
 
-Route::get('/purchases',            [PurchaseController::class, 'view']);
-Route::post('/purchases/add',       [PurchaseController::class, 'add']);
+Route::get('/purchases',                [PurchaseController::class, 'view']);
+Route::get( '/purchases/new',           [PurchaseController::class, 'new']);
+Route::post('/purchases/add',           [PurchaseController::class, 'add']);
+Route::get( '/purchases/edit/{id}',     [PurchaseController::class, 'edit']);
+Route::post('/purchases/update/{id}',   [PurchaseController::class, 'update']);
 
 Route::get('/pay',                  [PayController::class,      'view']);
 Route::get('/pay/{id}',             [PayController::class,      'byworker']);
