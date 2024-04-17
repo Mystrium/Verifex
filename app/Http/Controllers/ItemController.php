@@ -8,12 +8,51 @@ use App\Models\Item;
 use App\Models\Unit;
 
 class ItemController extends BaseController {
-
-    public function view(){
+    public function items(){
         $types = Item::select('items.*', 'units.title as unit')
             ->join('units', 'units.id', '=', 'items.unit_id')
+            ->whereNotIn('items.id', 
+                Consist::select('have_id')
+                    ->get()
+                    ->toArray())
+            ->whereIn('items.id',
+                Consist::select('what_id')
+                    ->get()
+                    ->toArray())
             ->get();
-        return view('items/index')->withItems($types);
+        return view('items/index')
+            ->withTitle('Вироби')
+            ->withItems($types);
+    }
+
+    public function operations(){
+        $types = Item::select('items.*', 'units.title as unit')
+            ->join('units', 'units.id', '=', 'items.unit_id')
+            ->whereIn('items.id', 
+                Consist::select('have_id')
+                    ->get()
+                    ->toArray())
+            ->whereIn('items.id',
+                Consist::select('what_id')
+                    ->get()
+                    ->toArray())
+            ->get();
+        return view('items/index')
+            ->withTitle('Операції')
+            ->withItems($types);
+    }
+
+    public function materials(){
+        $types = Item::select('items.*', 'units.title as unit')
+            ->join('units', 'units.id', '=', 'items.unit_id')
+            ->whereNotIn('items.id',
+                Consist::select('what_id')
+                    ->get()
+                    ->toArray())
+            ->get();
+        return view('items/index')
+            ->withTitle('Матеріали')
+            ->withItems($types);
     }
 
     public function new() {

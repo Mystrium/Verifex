@@ -19,11 +19,11 @@
         }
 
         #layoutSidenav #layoutSidenav_nav {
-            flex-basis: 150px;
+            flex-basis: 180px;
             flex-shrink: 0;
             transition: transform 0.15s ease-in-out;
             z-index: 1038;
-            transform: translateX(-150px);
+            transform: translateX(-180px);
         }
 
         #layoutSidenav #layoutSidenav_content {
@@ -33,7 +33,7 @@
             justify-content: space-between;
             min-width: 0;
             flex-grow: 1;
-            margin-left: -150px;
+            margin-left: -180px;
         }
 
         @media (min-width: 992px) {
@@ -42,21 +42,21 @@
                 margin-left: 0;
                 transition: margin 0.15s ease-in-out;
             }
-            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {transform: translateX(-150px); }
-            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content { margin-left: -150px; }
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {transform: translateX(-180px); }
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content { margin-left: -180px; }
             .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {display: none; }
         }
 
         .sb-nav-fixed .sb-topnav {  z-index: 1039; }
 
         .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
-            width: 150px;
+            width: 180px;
             height: 100vh;
             z-index: 1038;
         }
 
         .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-            padding-left: 150px;
+            padding-left: 180px;
             top: 30px;
         }
 
@@ -135,21 +135,49 @@
                                         </nav>
                                     </div>
                                 </li>
+                                <hr class="text-body">
                                 <li>
                                     <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse4" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Вироби
+                                        Продукція
                                     </a>
-                                    <div style="padding-left:20px;"class="collapse {{$title=='Вироби'|| $title=='Закуп' ||  $title=='Вартість'?'show':''}}" id="statscolapse4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <div style="padding-left:20px;"class="collapse 
+                                        {{$title=='Вироби'|| 
+                                        $title=='Закуп' ||  
+                                        $title=='Вартість' ||
+                                        $title=='Операції' ||
+                                        $title=='Матеріали'
+                                        ?'show':''}}" 
+                                        id="statscolapse4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/items">
+                                            <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#items" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                                 Вироби
                                             </a>
-                                            <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/purchases">
-                                                Закуп
+                                            <div style="padding-left:20px;" class="collapse {{$title=='Вироби'||$title=='Вартість'?'show':''}}" id="items" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                                <nav class="sb-sidenav-menu-nested nav">
+                                                    <a class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/items">
+                                                        Вироби
+                                                    </a>
+                                                    <a class="nav-link {{$title=='Вартість'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/cost">
+                                                        Собівартість
+                                                    </a>
+                                                </nav>
+                                            </div>
+                                            <a class="nav-link {{$title=='Операції'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/operations">
+                                                Операції
                                             </a>
-                                            <a class="nav-link {{$title=='Вартість'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/cost">
-                                                Собівартість
+                                            <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#materials" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                                Матеріали
                                             </a>
+                                            <div style="padding-left:20px;" class="collapse {{$title=='Матеріали'||$title=='Закуп'?'show':''}}" id="materials" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                                <nav class="sb-sidenav-menu-nested nav">
+                                                    <a class="nav-link {{$title=='Матеріали'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/materials">
+                                                        Матеріали
+                                                    </a>
+                                                    <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/purchases">
+                                                        Закуп
+                                                    </a>
+                                                </nav>
+                                            </div>
                                         </nav>
                                     </div>
                                 </li>

@@ -1,8 +1,8 @@
 @extends('nav')
-@section('title', 'Вироби')
+@section('title', $title)
 @section('content')
 
-<h1 class="mt-4">Вироби</h1>
+<h1 class="mt-4">{{$title}}</h1>
 <a href="items/new" class="btn btn-success m-2">Створити</a>
 <table id="jsTable" class="table table-striped table-success">
     <thead>
