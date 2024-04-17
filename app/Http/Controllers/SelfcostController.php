@@ -39,7 +39,7 @@ class SelfcostController extends BaseController {
                 
                 SELECT itms.*, avg(price) as price
                 FROM (
-                    SELECT items.title, have_id, items.url_photo, units.title as unit, sum(total_count) as cnt
+                    SELECT items.title, have_id, items.url_photo, items.description, units.title as unit, sum(total_count) as cnt
                     FROM TreeTraversal
                     INNER JOIN items ON items.id = have_id
                     INNER JOIN units ON units.id = items.unit_id
@@ -54,7 +54,7 @@ class SelfcostController extends BaseController {
                 GROUP BY item_id_id'
             );
 
-            $item['work_cost'] = DB::select(
+            $item['work'] = DB::select(
                 'WITH RECURSIVE TreeTraversal AS (
                     SELECT what_id, have_id, count, i.price, count AS total_children
                     FROM consists
@@ -69,9 +69,11 @@ class SelfcostController extends BaseController {
                     INNER JOIN items i on i.id = c.have_id
                 )
                 
-                SELECT SUM(total_children * price) AS work_price
-                FROM TreeTraversal;'
-            )[0]->work_price;
+                SELECT items.title, have_id, items.url_photo, items.description, total_children  as count, TreeTraversal.price
+                FROM TreeTraversal
+                INNER JOIN items ON items.id = have_id
+                WHERE TreeTraversal.price <> 0'
+            );
         }
 
         return view('cost')
