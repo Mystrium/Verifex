@@ -18,9 +18,10 @@
                     <span class="input-group-text">Колір</span>
                     <select class="search-drop input-group-text" style="height:40px;" name="color">
                         @foreach($colors as $tp)
-                        <option value="{{$tp->id}}">{{$tp->title}}</option>
+                            <option value="{{$tp->id}}">{{$tp->title}}</option>
                         @endforeach
                     </select>
+                    <p class="ps-1 pe-1">Не знайшли колір ?</p><a href="/colors" target="_blank">Створіть новий</a>
                 </div>
             </div>
         </div>
@@ -30,7 +31,12 @@
         </div>
         <div class="input-group">
             <span class="input-group-text">Ціна закупу</span>
-            <input type="number"  class="form-control" min="0.01" max=10000 required step="0.01" name="price" placeholder="за одиницю">
+            <select class="input-group-text" style="height:40px;" name="valute">
+                <option value="grn">₴</option>
+                <option value="usd">$</option>
+                <option value="eur">€</option>
+            </select>
+            <input type="number" class="form-control" min="0.01" max=10000 required step="0.01" name="price" placeholder="за одиницю">
         </div>
         <div class="input-group">
             <span class="input-group-text">Дата</span>
@@ -47,8 +53,8 @@
             <th scope="col">Колір</th>
             <th scope="col">Кількість</th>
             <th scope="col">Одиниця</th>
-            <th scope="col">Ціна $</th>
-            <th scope="col">Вартість $</th>
+            <th scope="col">Ціна ₴</th>
+            <th scope="col">Вартість ₴</th>
             <th scope="col">Дата</th>
         </tr>
     </thead>

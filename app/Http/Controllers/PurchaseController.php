@@ -8,6 +8,8 @@ use App\Models\Consist;
 use App\Models\Color;
 use App\Models\Item;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+use Symfony\Component\DomCrawler\Crawler;
 
 class PurchaseController extends BaseController {
 
@@ -37,13 +39,23 @@ class PurchaseController extends BaseController {
     }
 
     public function add(Request $request){
+        $exchange = 1;
+        if($request->valute != 'grn'){
+            $response = Http::get('https://minfin.com.ua/ua/currency/' . $request->valute . '/');
+            $html = $response->body();
+
+            $crawler = new Crawler($html);
+
+            $exchange = $crawler->filter('div.bKmKjX')->text();
+        }
+
         Transaction::create([
             'type_id' => 3,
             'worker_from_id' => 1,
             'item_id_id' => explode('|', $request->item)[0],
             'color_id' => explode('|', $request->item)[1] == 1 ? $request->color : null,
             'count' => $request->count,
-            'price' => $request->price,
+            'price' => $request->price * $exchange,
             'date' => $request->date==Carbon::now()->format('Y-m-d') ? Carbon::now() : $request->date
         ]);
 
