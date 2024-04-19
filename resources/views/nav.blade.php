@@ -214,7 +214,7 @@
                                         <a class="nav-link {{$title=='Залишки'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/remains">
                                             Залишки
                                         </a>
-                                        <a class="nav-link {{$title=='Виробіток'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/movement">
+                                        <a class="nav-link {{$title=='Виробіток'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/production">
                                             Виробіток
                                         </a>
                                     </nav>

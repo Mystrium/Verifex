@@ -11,8 +11,7 @@ use App\Models\Ceh;
 class WorkerController extends BaseController {
 
     public function view(){
-        $workers = Worker::where('workers.id', '<>', '1')
-            ->select('workers.*', 'ceh.title','ceh_types.title as ctitle', 'work_types.title as role')
+        $workers = Worker::select('workers.*', 'ceh.title','ceh_types.title as ctitle', 'work_types.title as role')
             ->leftJoin('ceh', 'ceh.id', '=', 'workers.ceh_id')
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->leftJoin('work_types', 'work_types.id', '=', 'workers.role_id')

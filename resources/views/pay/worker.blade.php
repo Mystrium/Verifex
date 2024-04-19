@@ -17,7 +17,7 @@
     <tbody>
         @php($summ = 0)
         @foreach($pays as $pay)
-            @if($pay->type_id == 3)
+            @if($pay->count > 0)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{$pay->title}}</td>
@@ -46,7 +46,7 @@
                     <td class="bg-danger">{{-$pay->count * $pay->price}}₴</td>
                     <td>{{$pay->date}}</td>
                 </tr>
-                @php($summ -= $pay->count * $pay->price)
+                @php($summ = $pay->count * $pay->price)
             @endif
         @endforeach
         <tr>

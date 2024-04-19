@@ -21,8 +21,7 @@ class PayController extends BaseController {
             ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
-            ->where('workers.id', '<>', 1)
-            ->where('transactions.type_id', '=', 3)
+            ->whereNull('transactions.worker_to_id')
             ->whereBetween('date', [$start, $end])
             ->orderBy('date', 'asc')
             ->groupByRaw('workers.id, MONTH(date)')
@@ -44,14 +43,13 @@ class PayController extends BaseController {
                 'workers.id',
                 'items.title', 
                 'work_types.min_pay', 
-                'transactions.date', 
-                'transactions.type_id')
+                'transactions.date')
             ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->where('workers.id', '=', $id)
             ->whereBetween('date', [$start, $end])
-            ->where('transactions.type_id', '=', 3)
+            ->whereNull('transactions.worker_to_id')
             ->orderBy('date', 'asc')
             ->get();
         

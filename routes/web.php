@@ -77,6 +77,7 @@ Route::get('/pay/{id}',             [PayController::class,      'byworker']);
 
 Route::get('/remains',              [MovementController::class, 'view']);
 Route::get('/movement',             [MovementController::class, 'movement']);
+Route::get('/production',           [MovementController::class, 'production']);
 Route::get('/movement/delete/{id}', [MovementController::class, 'delete']);
 
 Route::get('/cost',                 [SelfcostController::class, 'view']);

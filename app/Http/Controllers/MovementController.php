@@ -27,9 +27,9 @@ class MovementController extends BaseController {
                 ceh_types.title as ceh,
                 purchases.count, 
                 date')
-            ->join('items', 'items.id', '=', 'purchases.item_id')
+            ->join('items', 'items.id', '=', 'purchases.item_id')       //debug
             ->join('ceh', 'ceh.id', '=', DB::raw($storeman[0]))
-            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id');
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id');    //debug
 
         $move = Transaction::selectRaw('
                 transactions.id as trans,
@@ -41,7 +41,7 @@ class MovementController extends BaseController {
                 workers.pib as ceh,
                 transactions.count, 
                 date')
-            ->join('items', 'items.id', '=', 'transactions.item_id_id')
+            ->join('items', 'items.id', '=', 'transactions.item_id_id')     //debug
             ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
             ->join('workers as worker_to', 'worker_to.id', '=', 'transactions.worker_to_id', 'left outer')
             ->union($storage)
@@ -149,7 +149,7 @@ class MovementController extends BaseController {
 
     public function delete($id){
         Transaction::destroy($id);
-        return redirect('/movement');
+        return redirect()->back();
     }
 
 
@@ -185,6 +185,36 @@ class MovementController extends BaseController {
             ->get();
 
         return view('movement.move')
+            ->withMoves($move);
+    }
+
+    public function production() {
+        $move = Transaction::selectRaw('
+                ceh_id,
+                items.title,
+                items.id as item,
+                ceh.title as ceh,
+                ceh_types.title as type,
+                transactions.color_id,
+                workers.pib,
+                colors.hex,
+                colors.title as color,
+                sum(transactions.count) as count
+                ')
+            ->join('items', 'items.id', '=', 'transactions.item_id_id')
+            ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
+            ->join('ceh', 'ceh.id', '=', 'workers.ceh_id')
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->join('colors', 'colors.id', '=', 'transactions.color_id', 'left outer')
+            ->whereNull('worker_to_id')
+            ->groupBy('ceh_id', 'item_id_id', 'color_id')
+            ->when(1 == 1, function ($q) {
+                return $q->groupBy( 'worker_from_id');
+            })
+            ->orderBy('ceh_id')
+            ->get();
+
+        return view('movement.production')
             ->withMoves($move);
     }
 

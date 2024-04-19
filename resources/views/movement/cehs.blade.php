@@ -83,7 +83,7 @@
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$move->worker}}</td>
-                <td>{{$move->pib}}</td>
+                <td>{{$move->ceh}}</td>
                 <td>{{$move->worker_to_id}}</td>
                 <td>{{$move->title}}</td>
                 <td>{{$move->color_id}}</td>
