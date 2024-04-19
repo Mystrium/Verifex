@@ -9,13 +9,13 @@
         <span class="input-group-text">Цех</span>
         <select class="search-drop input-group-text" style="height:40px;" name="initceh" id="ceh_select" onchange="updateOptions(this.value);">
             @foreach($cehs as $tp)
-                <option value="{{$tp->id}}" {{$tp->id==$save[0]?'selected':''}}>{{$tp->type}} {{$tp->title}}</option>
+                <option value="{{$tp->id}}" {{isset($save[0])?($tp->id==$save[0]?'selected':''):''}}>{{$tp->type}} {{$tp->title}}</option>
             @endforeach
         </select>
         <span class="input-group-text">Посада</span>
         <select class="search-drop input-group-text" style="width:200px" name="initworker" id="role_select">
             @foreach($workers as $tp)
-                <option value="{{$tp->id}}" {{$tp->id==$save[1]?'selected':''}}>{{$tp->pib}} {{$tp->title}}</option>
+                <option value="{{$tp->id}}" {{isset($save[0])?($tp->id==$save[1]?'selected':''):''}}>{{$tp->pib}} {{$tp->title}}</option>
             @endforeach
         </select>
     </div>
