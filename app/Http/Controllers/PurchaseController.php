@@ -104,7 +104,7 @@ class PurchaseController extends BaseController {
 
     public function material_ceh(Request $request) {
         if (!Storage::disk('local')->exists('storage/materialceh.txt'))
-            Storage::disk('local')->put('storage/materialceh.txt', 'Initial content');
+            Storage::disk('local')->put('storage/materialceh.txt', '1:1');
 
         $contents = Storage::disk('local')->get('storage/materialceh.txt');
         $ceh_worker = explode(':', $contents);
