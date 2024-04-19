@@ -98,7 +98,6 @@ class MovementController extends BaseController {
                 else
                     $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = $mv->count;
 
-
                 if($mv->worker != 1){   // subitems
                     if(isset($cons[$mv->item])){
                         foreach($cons[$mv->item] as $cn) {
@@ -179,14 +178,14 @@ class MovementController extends BaseController {
                 colors.title as color,
                 transactions.count,
                 date')
-            ->join('items', 'items.id', '=', 'transactions.item_id_id')
-            ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
-            ->join('ceh', 'workers.ceh_id', '=', 'ceh.id')
-            ->join('ceh_types', 'ceh.type_id', '=', 'ceh_types.id')
-            ->join('workers as workerto', 'workerto.id', '=', 'transactions.worker_to_id')
-            ->join('ceh as ceh_to', 'workerto.ceh_id', '=', 'ceh_to.id')
-            ->join('ceh_types as ceh_type_to', 'ceh_to.type_id', '=', 'ceh_type_to.id')
-            ->join('colors', 'colors.id', '=', 'transactions.color_id')
+            ->join('items',                     'items.id',         '=', 'transactions.item_id_id')
+            ->join('workers',                   'workers.id',       '=', 'transactions.worker_from_id')
+            ->join('ceh',                       'workers.ceh_id',   '=', 'ceh.id')
+            ->join('ceh_types',                 'ceh.type_id',      '=', 'ceh_types.id')
+            ->join('workers as workerto',       'workerto.id',      '=', 'transactions.worker_to_id')
+            ->join('ceh as ceh_to',             'workerto.ceh_id',  '=', 'ceh_to.id')
+            ->join('ceh_types as ceh_type_to',  'ceh_to.type_id',   '=', 'ceh_type_to.id')
+            ->join('colors',                    'colors.id',        '=', 'transactions.color_id')
             ->whereNotNull('worker_to_id')
             ->orderBy('date', 'asc')
             ->get();
@@ -195,7 +194,7 @@ class MovementController extends BaseController {
             ->withMoves($move);
     }
 
-    public function production() {
+    public function production(Request $request) {
         $move = Transaction::selectRaw('
                 ceh_id,
                 items.title,
@@ -214,14 +213,18 @@ class MovementController extends BaseController {
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->join('colors', 'colors.id', '=', 'transactions.color_id', 'left outer')
             ->whereNull('worker_to_id')
-            ->groupBy('ceh_id', 'item_id_id', 'color_id')
-            ->when(1 == 1, function ($q) {
+            ->groupBy('ceh_id', 'item_id_id')
+            ->when(empty($request->byworker), function ($q) {
                 return $q->groupBy( 'worker_from_id');
+            })
+            ->when(empty($request->bycolor), function ($q) {
+                return $q->groupBy( 'color_id');
             })
             ->orderBy('ceh_id')
             ->get();
 
         return view('movement.production')
+            ->withGroup(['worker' => $request->byworker, 'color' => $request->bycolor])
             ->withMoves($move);
     }
 

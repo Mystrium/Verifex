@@ -3,6 +3,16 @@
 @section('content')
 
 <h1 class="mt-4">Виробіток</h1>
+<form action="/production" method="GET" class="pb-3">
+    <div class="input-group">
+        <span class="input-group-text">Робітники</span>
+        <input type="checkbox" name="byworker" {{isset($group['worker'])?'checked':''}} onchange="this.form.submit()"/>
+    </div>
+    <div class="input-group">
+        <span class="input-group-text">Кольори</span>
+        <input type="checkbox" name="bycolor"  {{isset($group['color']) ?'checked':''}} onchange="this.form.submit()"/>
+    </div>
+</form>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     @php($uniq = '')
@@ -32,9 +42,13 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Робітник</th>
+                            @if(!empty($group['worker']))
+                                <th scope="col">Робітник</th>
+                            @endif
                             <th scope="col">Виріб</th>
-                            <th scope="col">Колір</th>
+                            @if(!empty($group['color']))
+                                <th scope="col">Колір</th>
+                            @endif
                             <th scope="col">Кількість</th>
                         </tr>
                     </thead>
@@ -42,13 +56,17 @@
         @endif
         <tr>
             <td>{{$loop->iteration}}</td>
-            <td>{{$prods->pib}}</td>
+            @if(!empty($group['worker']))
+                <td>{{$prods->pib}}</td>
+            @endif            
             <td>{{$prods->title}}</td>
-            <td><div style="background-color:#{{$prods->hex}};">{{$prods->color}}</div></td>
+            @if(!empty($group['color']))
+                <td><div style="background-color:#{{$prods->hex}};">{{$prods->color}}</div></td>
+            @endif
             <td>{{$prods->count + 0}}</td>
         </tr>
         @php($uniq = $prods->ceh_id)
     @endforeach
 </div>
-
+{{var_dump($group)}}
 @endsection
