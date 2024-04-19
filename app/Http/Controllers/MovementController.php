@@ -103,10 +103,17 @@ class MovementController extends BaseController {
                     if(isset($cons[$mv->item])){
                         foreach($cons[$mv->item] as $cn) {
                             if(isset($workers[$mv->worker][$cn['item']])){
-                                if($cn['color'] == 1)
-                                    $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= abs($mv->count) * $cn['count'];
-                                else
-                                    $workers[$mv->worker][$cn['item']]['n'] -= abs($mv->count) * $cn['count'];
+                                if($cn['color'] == 1) {
+                                    if(isset($workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n']))
+                                        $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= abs($mv->count) * $cn['count'];
+                                    else
+                                        $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -abs($mv->count) * $cn['count'];
+                                } else {
+                                    if(isset($workers[$mv->worker][$cn['item']]['n']))
+                                        $workers[$mv->worker][$cn['item']]['n'] -= abs($mv->count) * $cn['count'];
+                                    else
+                                        $workers[$mv->worker][$cn['item']]['n'] = -abs($mv->count) * $cn['count'];
+                                }
                             } else {
                                 if($cn['color'] == 1)
                                     $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -abs($mv->count) * $cn['count'];
