@@ -15,7 +15,7 @@
         <span class="input-group-text">Посада</span>
         <select class="search-drop input-group-text" style="width:200px" name="initworker" id="role_select">
             @foreach($workers as $tp)
-                <option value="{{$tp->id}}" {{isset($save[0])?($tp->id==$save[1]?'selected':''):''}}>{{$tp->pib}} {{$tp->title}}</option>
+                <option value="{{$tp->id}}" {{isset($save[1])?($tp->id==$save[1]?'selected':''):''}}>{{$tp->pib}} {{$tp->title}}</option>
             @endforeach
         </select>
     </div>
