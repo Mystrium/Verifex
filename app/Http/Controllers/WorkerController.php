@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\WorkType;
 use App\Models\Worker;
 use App\Models\Ceh;
-use Illuminate\Support\Facades\Redirect;
+
 
 class WorkerController extends BaseController {
 

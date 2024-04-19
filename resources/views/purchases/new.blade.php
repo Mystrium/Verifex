@@ -49,6 +49,7 @@
     </div>
     <button type="submit" class="btn btn-primary m-2">{{$act=='add'?'Додати':'Змінити'}} </button>
 </form>
+<a href="/purchases/materials" class="btn btn-warning m-2">Змінити склад призначення</a>
 <script>
     window.hasColor = function(sel){
         if(sel.options[sel.selectedIndex].value.split("|")[1] == 1)

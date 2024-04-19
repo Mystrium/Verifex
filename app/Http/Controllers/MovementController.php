@@ -1,31 +1,49 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Ceh;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Consist;
-use App\Models\Worker;
 use App\Models\Color;
 use App\Models\Item;
 
 
 class MovementController extends BaseController {
     public function view(Request $request){
+        $storeman = explode(':', file_get_contents(public_path() . '\materialceh.txt'));
+        
+        $storage = DB::table('purchases')
+            ->selectRaw('
+                purchases.id as trans,
+                items.title,
+                items.id as item,
+                ' . $storeman[0] . ' as worker,
+                null as worker_to_id,
+                purchases.color_id,
+                ceh_types.title as ceh,
+                purchases.count, 
+                date')
+            ->join('items', 'items.id', '=', 'purchases.item_id')
+            ->join('ceh', 'ceh.id', '=', DB::raw($storeman[0]))
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id');
+
         $move = Transaction::selectRaw('
                 transactions.id as trans,
                 items.title,
                 items.id as item,
-                workers.id as worker,
-                transactions.worker_to_id,
+                workers.ceh_id as worker,
+                worker_to.ceh_id as worker_to_id,
                 transactions.color_id,
-                workers.pib,
-                workers.ceh_id, 
+                workers.pib as ceh,
                 transactions.count, 
-                transactions.type_id,
                 date')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
+            ->join('workers as worker_to', 'worker_to.id', '=', 'transactions.worker_to_id', 'left outer')
+            ->union($storage)
             ->orderBy('date', 'asc')
             ->get();
 
@@ -44,77 +62,60 @@ class MovementController extends BaseController {
         }
 
         $colors = Color::whereIn('id', $move->pluck('color_id'))->get();
-        $users = Worker::select('id', 'pib', 'ceh_id')->whereIn('id', $move->pluck('worker'))->get();
+        $users = Ceh::select('ceh.id', 'ceh.title', 'ceh_types.title as type')
+            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->whereIn('ceh.id', $move->pluck('worker'))
+            ->get();
         
         $items_ids = [];
-        $anomalies = [];
         $workers = [];
         foreach($move as $mv) {
             $items_ids[] = $mv->item;
-            switch($mv->type_id) {
-                case 1:                     // ->
-                    if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
-                        $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] -= $mv->count;
+            if(isset($mv->worker_to_id)) {
+                    // ->
+                if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
+                    $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] -= $mv->count;
+                else
+                    $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
+
+                // <-
+                if(isset($workers[$mv->worker_to_id][$mv->item][$mv->color_id ?? 'n']))
+                    $workers[$mv->worker_to_id][$mv->item][$mv->color_id ?? 'n'] += $mv->count;
+                else
+                    $workers[$mv->worker_to_id][$mv->item][$mv->color_id ?? 'n'] = $mv->count;
+
+                if($mv->worker_to_id == 1) {
+                    if(isset($workers[1][$mv->item][$mv->color_id ?? 'n']))
+                        $workers[1][$mv->item][$mv->color_id ?? 'n'] -= $mv->count;
                     else
-                        $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
-                    
-                    $anomalies[$mv->worker.'-'.$mv->worker_to_id][1][$mv->item][$mv->color_id ?? 'n']['time'] = $mv->date;
-                    $anomalies[$mv->worker.'-'.$mv->worker_to_id][1][$mv->item][$mv->color_id ?? 'n']['val'] = $mv->count;
-                break;
+                        $workers[1][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
+                }
 
-                case 2:                     // <-
-                    if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
-                        $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] += $mv->count;
-                    else
-                        $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = $mv->count;
+            } else {
+                if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
+                    $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] += $mv->count;
+                else
+                    $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = $mv->count;
 
-                    if($mv->worker_to_id == 1) {
-                        if(isset($workers[1][$mv->item][$mv->color_id ?? 'n']))
-                            $workers[1][$mv->item][$mv->color_id ?? 'n'] -= $mv->count;
-                        else
-                            $workers[1][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
-                    }
 
-                    if($mv->worker_to_id != 1){
-                        if(isset($anomalies[$mv->worker_to_id.'-'.$mv->worker][1][$mv->item][$mv->color_id ?? 'n']['val']))
-                            $anomalies[$mv->worker_to_id.'-'.$mv->worker][1][$mv->item][$mv->color_id ?? 'n']['val'] -= $mv->count;
-                        else
-                            $anomalies[$mv->worker.'-'.$mv->worker_to_id][1][$mv->item][$mv->color_id ?? 'n']['val'] = $mv->count;
-                    }
-                break;
-
-                default:
-                    if($mv->type_id == 3){  // +
-                        if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
-                            $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] += $mv->count;
-                        else
-                            $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = $mv->count;
-                    } else {                // -
-                        if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
-                            $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] -= $mv->count;
-                        else
-                            $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
-                    }
-
-                    if($mv->worker != 1){   // subitems
-                        if(isset($cons[$mv->item])){
-                            foreach($cons[$mv->item] as $cn) {
-                                if(isset($workers[$mv->worker][$cn['item']])){
-                                    if($cn['color'] == 1)
-                                        $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= $mv->count * $cn['count'];
-                                    else
-                                        $workers[$mv->worker][$cn['item']]['n'] -= $mv->count * $cn['count'];
-                                } else {
-                                    if($cn['color'] == 1)
-                                        $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -$mv->count * $cn['count'];
-                                    else
-                                        $workers[$mv->worker][$cn['item']]['n'] = -$mv->count * $cn['count'];
-                                }
-                                $items_ids[] = $cn['item'];
+                if($mv->worker != 1){   // subitems
+                    if(isset($cons[$mv->item])){
+                        foreach($cons[$mv->item] as $cn) {
+                            if(isset($workers[$mv->worker][$cn['item']])){
+                                if($cn['color'] == 1)
+                                    $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] -= abs($mv->count) * $cn['count'];
+                                else
+                                    $workers[$mv->worker][$cn['item']]['n'] -= abs($mv->count) * $cn['count'];
+                            } else {
+                                if($cn['color'] == 1)
+                                    $workers[$mv->worker][$cn['item']][$mv->color_id ?? 'n'] = -abs($mv->count) * $cn['count'];
+                                else
+                                    $workers[$mv->worker][$cn['item']]['n'] = -abs($mv->count) * $cn['count'];
                             }
+                            $items_ids[] = $cn['item'];
                         }
                     }
-                break;
+                }
             }
         }
 
@@ -123,30 +124,15 @@ class MovementController extends BaseController {
             ->whereIn('items.id', $items_ids)
             ->get();
 
-        $this->removeZeroAnomalies($anomalies);
         $this->removeZeroValues($workers);
         
-        return view('move')
+        return view('movement.cehs')
             ->withWorkers($workers)
             ->withConsists($cons)
-            ->withAnomaly($anomalies)
             ->withNames($users)
             ->withItemsnames($items)
             ->withColornames($colors)
             ->withMoves($move);
-    }
-
-    function removeZeroAnomalies(&$array) {
-        foreach ($array as $key => &$value) {
-            if (is_array($value)) {
-                if(isset($value['val']) && $value['val'] == 0)
-                    unset($value['time']);
-                $this->removeZeroAnomalies($value);
-                if (empty($value))
-                    unset($array[$key]);
-            } elseif ($value === 0)
-                unset($array[$key]);
-        }
     }
 
     function removeZeroValues(&$array) {
@@ -160,10 +146,45 @@ class MovementController extends BaseController {
         }
     }
 
-
     public function delete($id){
         Transaction::destroy($id);
         return redirect('/movement');
+    }
+
+
+    public function movement(Request $request){
+        $move = Transaction::selectRaw('
+                transactions.id as trans,
+                workers.pib,
+                workers.ceh_id,
+                ceh.title as ceh_title,
+                ceh_types.title as cehtype,
+                workerto.pib as to_pib,
+                ceh_to.title as cehto_title,
+                ceh_type_to.title as cehtypeto,
+                items.title,
+                items.id as item,
+                workers.id as worker,
+                transactions.worker_to_id,
+                transactions.color_id,
+                colors.hex,
+                colors.title as color,
+                transactions.count,
+                date')
+            ->join('items', 'items.id', '=', 'transactions.item_id_id')
+            ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
+            ->join('ceh', 'workers.ceh_id', '=', 'ceh.id')
+            ->join('ceh_types', 'ceh.type_id', '=', 'ceh_types.id')
+            ->join('workers as workerto', 'workerto.id', '=', 'transactions.worker_to_id')
+            ->join('ceh as ceh_to', 'workerto.ceh_id', '=', 'ceh_to.id')
+            ->join('ceh_types as ceh_type_to', 'ceh_to.type_id', '=', 'ceh_type_to.id')
+            ->join('colors', 'colors.id', '=', 'transactions.color_id')
+            ->whereNotNull('worker_to_id')
+            ->orderBy('date', 'asc')
+            ->get();
+
+        return view('movement.move')
+            ->withMoves($move);
     }
 
 }

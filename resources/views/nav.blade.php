@@ -121,22 +121,6 @@
                             <div class="sb-sidenav-menu-heading m-2">Core</div>
                             <ul class="nav nav-pills flex-column m-3">
                                 <li>
-                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse2" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Одиниці
-                                    </a>
-                                    <div style="padding-left:20px;" class="collapse {{$title=='Виміри'||$title=='Кольори'?'show':''}}" id="statscolapse2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link {{$title=='Виміри'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/units">
-                                                Виміру
-                                            </a>
-                                            <a class="nav-link {{$title=='Кольори'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/colors">
-                                                Кольори
-                                            </a>
-                                        </nav>
-                                    </div>
-                                </li>
-                                <hr class="text-body">
-                                <li>
                                     <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse4" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Продукція
                                     </a>
@@ -184,10 +168,10 @@
 
                                 <hr class="text-body">
                                 <li>
-                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#cehs" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Цехи
                                     </a>
-                                    <div style="padding-left:20px;"class="collapse {{$title=='Типи цехів'||$title=='Цехи'?'show':''}}" id="statscolapse" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <div style="padding-left:20px;"class="collapse {{$title=='Типи цехів'||$title=='Цехи'?'show':''}}" id="cehs" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link {{$title=='Типи цехів'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/cehtypes">
                                                 Типи
@@ -200,10 +184,10 @@
                                 </li>
 
                                 <li>
-                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse3" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#workers" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Робітники
                                     </a>
-                                    <div style="padding-left:20px;"class="collapse {{$title=='Робітники'|| $title=='Посади' || $title=='ЗП'?'show':''}}" id="statscolapse3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <div style="padding-left:20px;"class="collapse {{$title=='Робітники'|| $title=='Посади' || $title=='ЗП'?'show':''}}" id="workers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link {{$title=='Робітники'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/workers">
                                                 Робітники
@@ -219,10 +203,42 @@
                                 </li>
                                 <hr class="text-body">
 
-                                <a class="nav-link {{$title=='Рух'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/movement">
-                                    Переміщення
+                                <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#movement" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                    Рух
                                 </a>
-
+                                <div style="padding-left:20px;"class="collapse {{$title=='Рух'|| $title=='Залишки' || $title=='Виробіток' ? 'show' : ''}}" id="movement" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link {{$title=='Рух'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/movement">
+                                            Переміщення
+                                        </a>
+                                        <a class="nav-link {{$title=='Залишки'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/remains">
+                                            Залишки
+                                        </a>
+                                        <a class="nav-link {{$title=='Виробіток'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/movement">
+                                            Виробіток
+                                        </a>
+                                    </nav>
+                                </div>
+                                <hr class="text-body">
+                                <li>
+                                    <a class="dropdown-toggle nav-link collapsed text-body" href="#" data-bs-toggle="collapse" data-bs-target="#units" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Одиниці
+                                    </a>
+                                    <div style="padding-left:20px;" class="collapse {{$title=='Виміри'||$title=='Кольори'||$title=='Сировина'?'show':''}}" id="units" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link {{$title=='Виміри'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/units">
+                                                Виміру
+                                            </a>
+                                            <a class="nav-link {{$title=='Кольори'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/colors">
+                                                Кольори
+                                            </a>
+                                            <a class="nav-link {{$title=='Сировина'?'text-bold text-warning':'text-body link-body-emphasis'}}" href="/purchases/materials">
+                                                Цех сировини
+                                            </a>
+                                        </nav>
+                                    </div>
+                                </li>
+                                
                             </ul>
                         </div>
                     </div>

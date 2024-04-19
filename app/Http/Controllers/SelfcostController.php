@@ -46,12 +46,8 @@ class SelfcostController extends BaseController {
                     WHERE have_id NOT IN (SELECT what_id FROM consists)
                     GROUP BY have_id
                 ) as itms
-                LEFT OUTER JOIN (
-                    SELECT * 
-                    FROM transactions 
-                    WHERE worker_from_id = 1
-                    ) as tr ON itms.have_id = tr.item_id_id
-                GROUP BY item_id_id'
+                LEFT OUTER JOIN purchases ON itms.have_id = purchases.item_id
+                GROUP BY item_id'
             );
 
             $item['work'] = DB::select(

@@ -14,19 +14,19 @@ class CehtypeController extends BaseController {
             ->withTypes($types);
     }
 
-    public function addType(Request $request){
+    public function add(Request $request){
         CehType::create(['title' => $request->title]);
 
         return redirect('/cehtypes');
     }
 
-    public function editType($id, Request $request){
+    public function edit($id, Request $request){
         CehType::find($id)->update(['title' => $request->title]);
 
         return redirect('/cehtypes');
     }
 
-    public function deleteType($id){
+    public function delete($id){
         CehType::destroy($id);
 
         return redirect('/cehtypes');

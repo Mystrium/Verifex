@@ -21,14 +21,14 @@ use App\Http\Controllers\{
 Route::get('/', function () { return view('welcome');});
 
 Route::get( '/cehtypes',                [CehtypeController::class, 'view']);
-Route::post('/cehtypes/add',            [CehtypeController::class, 'addType']);
-Route::post('/cehtypes/update/{id}',    [CehtypeController::class, 'editType']);
-Route::get( '/cehtypes/delete/{id}',    [CehtypeController::class, 'deleteType']);
+Route::post('/cehtypes/add',            [CehtypeController::class, 'add']);
+Route::post('/cehtypes/update/{id}',    [CehtypeController::class, 'edit']);
+Route::get( '/cehtypes/delete/{id}',    [CehtypeController::class, 'delete']);
 
 Route::get( '/cehs',                    [CehController::class,      'view']);
-Route::post('/cehs/add',                [CehController::class,      'addCeh']);
-Route::post('/cehs/update/{id}',        [CehController::class,      'editCeh']);
-Route::get( '/cehs/delete/{id}',        [CehController::class,      'deleteCeh']);
+Route::post('/cehs/add',                [CehController::class,      'add']);
+Route::post('/cehs/update/{id}',        [CehController::class,      'edit']);
+Route::get( '/cehs/delete/{id}',        [CehController::class,      'delete']);
 
 Route::get( '/units',                   [UnitController::class,     'view']);
 Route::post('/units/add',               [UnitController::class,     'add']);
@@ -64,16 +64,19 @@ Route::post('/workers/update/{id}',     [WorkerController::class,   'update']);
 Route::post('/workers/check/{id}',      [WorkerController::class,   'check']);
 Route::get( '/workers/delete/{id}',     [WorkerController::class,   'delete']);
 
-Route::get('/purchases',                [PurchaseController::class, 'view']);
-Route::get( '/purchases/new',           [PurchaseController::class, 'new']);
-Route::post('/purchases/add',           [PurchaseController::class, 'add']);
-Route::get( '/purchases/edit/{id}',     [PurchaseController::class, 'edit']);
-Route::post('/purchases/update/{id}',   [PurchaseController::class, 'update']);
+Route::get('/purchases',                    [PurchaseController::class, 'view']);
+Route::get( '/purchases/new',               [PurchaseController::class, 'new']);
+Route::post('/purchases/add',               [PurchaseController::class, 'add']);
+Route::get( '/purchases/edit/{id}',         [PurchaseController::class, 'edit']);
+Route::post('/purchases/update/{id}',       [PurchaseController::class, 'update']);
+Route::get( '/purchases/materials',         [PurchaseController::class, 'material_ceh']);
+Route::post('/purchases/materials/update',  [PurchaseController::class, 'ceh_update']);
 
 Route::get('/pay',                  [PayController::class,      'view']);
 Route::get('/pay/{id}',             [PayController::class,      'byworker']);
 
-Route::get('/movement',             [MovementController::class, 'view']);
+Route::get('/remains',              [MovementController::class, 'view']);
+Route::get('/movement',             [MovementController::class, 'movement']);
 Route::get('/movement/delete/{id}', [MovementController::class, 'delete']);
 
 Route::get('/cost',                 [SelfcostController::class, 'view']);

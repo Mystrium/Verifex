@@ -1,19 +1,19 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Purchase;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\DomCrawler\Crawler;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\Purchase;
 use App\Models\Consist;
+use App\Models\Worker;
 use App\Models\Color;
 use App\Models\Item;
+use App\Models\Ceh;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
-use Symfony\Component\DomCrawler\Crawler;
 
 class PurchaseController extends BaseController {
-
     public function view(){
         $purchases = Purchase::select('purchases.*', 'items.title', 'colors.hex', 'colors.title as ctitle', 'units.title as unit')
             ->leftJoin('items', 'items.id', '=', 'purchases.item_id')
@@ -101,4 +101,29 @@ class PurchaseController extends BaseController {
         return $exchange;
     }
 
+    public function material_ceh(Request $request) {
+        $filename = public_path() . '\materialceh.txt';
+        $contents = file_get_contents($filename);
+        $ceh_worker = explode(':', $contents);
+
+        $cehs = Ceh::select('ceh.id', 'ceh.title', 'ceh_types.title as type')
+            ->join('ceh_types', 'ceh.type_id', '=', 'ceh_types.id')
+            ->get();
+
+        $workers = Worker::select('ceh_id', 'workers.id', 'workers.pib', 'work_types.title')
+            ->join('work_types', 'workers.role_id', '=', 'work_types.id')
+            ->where('operations', 'like', '%1%')
+            ->get();
+
+        return view('purchases.ceh')
+            ->withCehs($cehs)
+            ->withWorkers($workers)
+            ->withSave($ceh_worker);
+    }
+
+    public function ceh_update(Request $request) {
+        $filename = public_path() . '\materialceh.txt';
+        file_put_contents($filename, $request->initceh . ':' . $request->initworker);
+        return redirect()->back();
+    }
 }

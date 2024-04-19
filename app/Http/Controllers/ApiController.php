@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Hash;
@@ -84,7 +83,6 @@ class ApiController extends BaseController {
 
     public function transact(Request $request){
         $isok = Transaction::create([
-            'type_id'        => $request->type_id,
             'worker_from_id' => $request->worker_from,
             'worker_to_id'   => $request->worker_to,
             'item_id_id'     => $request->item_id,

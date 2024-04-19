@@ -23,19 +23,19 @@ class CehController extends BaseController {
             ->withTypes($types);
     }
 
-    public function addCeh(Request $request){
+    public function add(Request $request){
         Ceh::create(['type_id' => $request->type, 'title' => $request->title??'']);
 
         return redirect('/cehs');
     }
 
-    public function editCeh($id, Request $request){
+    public function edit($id, Request $request){
         Ceh::find($id)->update(['type_id' => $request->type, 'title' => $request->title??'']);
 
         return redirect('/cehs');
     }
 
-    public function deleteCeh($id){
+    public function delete($id){
         Ceh::destroy($id);
 
         return redirect('/cehs');

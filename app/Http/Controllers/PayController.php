@@ -1,21 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use App\Models\Worker;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
+use App\Models\Worker;
 
 
 class PayController extends BaseController {
-
     public function view(Request $request) {
         $start = $request->period[0] ?? Carbon::now()->startOfWeek()->subDays(7)->toDateString();
         $end = $request->period[1] ?? Carbon::now()->startOfWeek()->toDateString();
         
         $pays = Worker::selectRaw('
                 DATE_FORMAT(transactions.date, "%d.%m.%Y") as date, 
-                sum(if(transactions.type_id = 4, transactions.count * -1, transactions.count) * items.price) as sum,
+                sum(transactions.count * items.price) as sum,
                 workers.id,
                 workers.pib, 
                 work_types.min_pay')
@@ -23,7 +22,7 @@ class PayController extends BaseController {
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->where('workers.id', '<>', 1)
-            ->whereIn('transactions.type_id', [4, 3])
+            ->where('transactions.type_id', '=', 3)
             ->whereBetween('date', [$start, $end])
             ->orderBy('date', 'asc')
             ->groupByRaw('workers.id, MONTH(date)')
@@ -52,7 +51,7 @@ class PayController extends BaseController {
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->where('workers.id', '=', $id)
             ->whereBetween('date', [$start, $end])
-            ->whereIn('transactions.type_id', [4, 3])
+            ->where('transactions.type_id', '=', 3)
             ->orderBy('date', 'asc')
             ->get();
         

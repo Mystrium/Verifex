@@ -13,13 +13,11 @@ class Transaction extends Model {
     protected $table = 'transactions';
 
     protected $fillable = [
-        'type_id', 
         'worker_from_id', 
         'worker_to_id', 
         'item_id_id', 
         'color_id',
         'count',
-        'price',
         'date'
     ];
 
