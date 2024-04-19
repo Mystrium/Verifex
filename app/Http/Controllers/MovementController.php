@@ -1,19 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Ceh;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Consist;
 use App\Models\Color;
 use App\Models\Item;
+use App\Models\Ceh;
 
 
 class MovementController extends BaseController {
     public function view(Request $request){
-        $storeman = explode(':', file_get_contents(public_path() . '\materialceh.txt'));
+        $storeman = explode(':', Storage::disk('local')->get('storage/materialceh.txt'));
         
         $storage = DB::table('purchases')
             ->selectRaw('

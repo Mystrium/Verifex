@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\DomCrawler\Crawler;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
@@ -102,8 +103,10 @@ class PurchaseController extends BaseController {
     }
 
     public function material_ceh(Request $request) {
-        $filename = public_path() . '\materialceh.txt';
-        $contents = file_get_contents($filename);
+        if (!Storage::disk('local')->exists('storage/materialceh.txt'))
+            Storage::disk('local')->put('storage/materialceh.txt', 'Initial content');
+
+        $contents = Storage::disk('local')->get('storage/materialceh.txt');
         $ceh_worker = explode(':', $contents);
 
         $cehs = Ceh::select('ceh.id', 'ceh.title', 'ceh_types.title as type')
@@ -114,7 +117,7 @@ class PurchaseController extends BaseController {
             ->join('work_types', 'workers.role_id', '=', 'work_types.id')
             ->where('operations', 'like', '%1%')
             ->get();
-
+            
         return view('purchases.ceh')
             ->withCehs($cehs)
             ->withWorkers($workers)
@@ -122,8 +125,7 @@ class PurchaseController extends BaseController {
     }
 
     public function ceh_update(Request $request) {
-        $filename = public_path() . '\materialceh.txt';
-        file_put_contents($filename, $request->initceh . ':' . $request->initworker);
+        Storage::disk('local')->put('storage/materialceh.txt', $request->initceh . ':' . $request->initworker);
         return redirect()->back();
     }
 }
