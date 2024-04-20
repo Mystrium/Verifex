@@ -73,6 +73,11 @@
         @endif
     </tbody>
 </table>
+@if(session('msg') == 23000)
+    <div class="alert alert-danger" role="alert" style="position: fixed; top: 18%; left:40%; z-index: 1100;">
+        Ви не можете видалити цей колір, є матеріали та вироби, яким він потрібен
+    </div>
+@endif
 @endsection
 
 

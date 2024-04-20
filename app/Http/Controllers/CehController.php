@@ -36,9 +36,13 @@ class CehController extends BaseController {
     }
 
     public function delete($id){
-        Ceh::destroy($id);
-
-        return redirect('/cehs');
+        $mess = '';
+        try {
+            Ceh::destroy($id);
+        } catch(\Illuminate\Database\QueryException $ex) {
+            $mess = $ex->getCode();
+        }
+        return back()->with('msg', $mess);
     }
 
 }

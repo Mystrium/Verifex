@@ -27,9 +27,13 @@ class UnitController extends BaseController {
     }
 
     public function delete($id){
-        Unit::destroy($id);
-
-        return redirect('/units');
+        $mess = '';
+        try {
+            Unit::destroy($id);
+        } catch(\Illuminate\Database\QueryException $ex) {
+            $mess = $ex->getCode();
+        }
+        return back()->with('msg', $mess);
     }
 
 }

@@ -127,9 +127,13 @@ class ItemController extends BaseController {
     }
 
     public function delete($id){
-        Item::destroy($id);
-
-        return redirect('/items');
+        $mess = '';
+        try {
+            Item::destroy($id);
+        } catch(\Illuminate\Database\QueryException $ex) {
+            $mess = $ex->getCode();
+        }
+        return back()->with('msg', $mess);
     }
 
 }

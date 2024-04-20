@@ -57,4 +57,9 @@
         @endforeach
     </tbody>
 </table>
+@if(session('msg') == 23000)
+    <div class="alert alert-danger" role="alert" style="position: fixed; top: 15%; left:40%; z-index: 1100;">
+        Ви не можете видалити цю посаду, тому що на цехах з нею працюють робітники
+    </div>
+@endif
 @endsection

@@ -28,9 +28,13 @@ class ColorController extends BaseController {
     }
 
     public function delete($id){
-        Color::destroy($id);
-
-        return redirect('/colors');
+        $mess = '';
+        try {
+            Color::destroy($id);
+        } catch(\Illuminate\Database\QueryException $ex) {
+            $mess = $ex->getCode();
+        }
+        return back()->with('msg', $mess);
     }
 
 }

@@ -49,13 +49,11 @@
         @endforeach
     </tbody>
 </table>
+
 @if(session('msg') == 23000)
     <div class="alert alert-danger" role="alert" style="position: fixed; top: 15%; left:30%; z-index: 1100;">
         Ви не можете видалити цього користувача, тому що його записи використовуються в переміщеннях
     </div>
 @endif
 
-<script>
-    $('.alert').fadeOut(7000);
-</script>
 @endsection

@@ -67,4 +67,9 @@
         @endif
     </tbody>
 </table>
+@if(session('msg') == 23000)
+    <div class="alert alert-danger" role="alert" style="position: fixed; top: 18%; left:40%; z-index: 1100;">
+        З таким типом є цех, спочатку видаліть цех
+    </div>
+@endif
 @endsection

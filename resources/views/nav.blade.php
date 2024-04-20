@@ -293,5 +293,6 @@
                 }
             });
         </script>
+        <script>$('.alert').fadeOut(7000);</script>
     </body>
 </html>

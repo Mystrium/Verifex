@@ -44,4 +44,9 @@
         @endforeach
     </tbody>
 </table>
+@if(session('msg') == 23000)
+    <div class="alert alert-danger" role="alert" style="position: fixed; top: 15%; left:30%; z-index: 1100;">
+        Ви не можете видалити виріб, він використовується в переміщеннях, закупах (а може і є складником якогось виробу)
+    </div>
+@endif
 @endsection

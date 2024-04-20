@@ -95,9 +95,13 @@ class WorktypeController extends BaseController {
     }
 
     public function delete($id){
-        WorkType::destroy($id);
-
-        return redirect('/worktypes');
+        $mess = '';
+        try {
+            WorkType::destroy($id);
+        } catch(\Illuminate\Database\QueryException $ex) {
+            $mess = $ex->getCode();
+        }
+        return back()->with('msg', $mess);
     }
 
 }

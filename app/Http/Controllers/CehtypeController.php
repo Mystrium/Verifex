@@ -27,9 +27,13 @@ class CehtypeController extends BaseController {
     }
 
     public function delete($id){
-        CehType::destroy($id);
-
-        return redirect('/cehtypes');
+        $mess = '';
+        try {
+            CehType::destroy($id);
+        } catch(\Illuminate\Database\QueryException $ex) {
+            $mess = $ex->getCode();
+        }
+        return back()->with('msg', $mess);
     }
 
 }
