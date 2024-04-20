@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -159,7 +160,10 @@ class MovementController extends BaseController {
     }
 
 
-    public function movement(Request $request){
+    public function movement(Request $request) {
+        $start = $request->period[0] ?? Carbon::now()->subDays(30)->toDateString();
+        $end = $request->period[1] ?? Carbon::now()->toDateString();
+
         $move = Transaction::selectRaw('
                 transactions.id as trans,
                 workers.pib,
@@ -186,15 +190,20 @@ class MovementController extends BaseController {
             ->join('ceh as ceh_to',             'workerto.ceh_id',  '=', 'ceh_to.id')
             ->join('ceh_types as ceh_type_to',  'ceh_to.type_id',   '=', 'ceh_type_to.id')
             ->join('colors',                    'colors.id',        '=', 'transactions.color_id')
+            ->whereBetween('date', [$start, $end])
             ->whereNotNull('worker_to_id')
-            ->orderBy('date', 'asc')
+            ->orderBy('date', 'desc')
             ->get();
 
         return view('movement.move')
+            ->withPeriod([$start, $end])
             ->withMoves($move);
     }
 
     public function production(Request $request) {
+        $start = $request->period[0] ?? Carbon::now()->subDays(7)->toDateString();
+        $end = $request->period[1] ?? Carbon::now()->toDateString();
+
         $move = Transaction::selectRaw('
                 ceh_id,
                 items.title,
@@ -213,6 +222,7 @@ class MovementController extends BaseController {
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->join('colors', 'colors.id', '=', 'transactions.color_id', 'left outer')
             ->whereNull('worker_to_id')
+            ->whereBetween('date', [$start, $end])
             ->groupBy('ceh_id', 'item_id_id')
             ->when(empty($request->byworker), function ($q) {
                 return $q->groupBy( 'worker_from_id');
@@ -225,6 +235,7 @@ class MovementController extends BaseController {
 
         return view('movement.production')
             ->withGroup(['worker' => $request->byworker, 'color' => $request->bycolor])
+            ->withPeriod([$start, $end])
             ->withMoves($move);
     }
 

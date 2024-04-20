@@ -4,6 +4,31 @@
 
 <h1 class="mt-4">Переміщення</h1>
 
+<form action="/production" method="GET" class="pb-3">
+    <div class="row">
+        <div class="col-1">
+            <div class="input-group">
+                <h5>Період</h5>
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text">Від</span>    
+                <input type="date" class="form-control" name="period[]" value="{{$period[0]??''}}">
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text">До</span>    
+                <input type="date" class="form-control" name="period[]" value="{{$period[1]??''}}">
+            </div>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-success btn-sm">Порахувати</button>
+        </div>
+    </div>
+</form>
+
 <table class="table table-striped table-success">
     <thead>
         <tr>
