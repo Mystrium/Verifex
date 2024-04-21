@@ -11,7 +11,7 @@
     </div>
     <div class="input-group">
         <span class="input-group-text">Тип цеху</span>
-        <select class="search-drop input-group-text" style="height:40px;" name="type">
+        <select class="search-drop input-group-text" name="type">
             @foreach($cehtypes as $tp)
                 <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->cehtype_id?'selected':''):''}}>{{$tp->title}}</option>
             @endforeach

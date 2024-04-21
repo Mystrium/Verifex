@@ -4,7 +4,7 @@
 
 <h1 class="mt-4">Переміщення</h1>
 
-<form action="/production" method="GET" class="pb-3">
+<form action="/movement" method="GET" class="pb-3">
     <div class="row">
         <div class="col-1">
             <div class="input-group">

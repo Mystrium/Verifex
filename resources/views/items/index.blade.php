@@ -11,7 +11,9 @@
             <th scope="col">Назва</th>
             <th scope="col">Одиниця</th>
             <th scope="col">Фото</th>
-            <th scope="col">Оплата</th>
+            @if(isset($items[0]) && $items[0]->price > 0)
+                <th scope="col">Оплата</th>
+            @endif
             <th scope="col">Колір</th>
             <th scope="col">Опис</th>
             <th scope="col">Дії</th>
@@ -24,7 +26,9 @@
                 <td>{{$item->title}}</td>
                 <td>{{$item->unit}}</td>
                 <td><img src="{{$item->url_photo}}" style="max-width:200px;max-height:200px"></td>
-                <td>{{$item->price!=0?$item->price:'Базова одиниця'}}</td>
+                @if($item->price > 0)
+                    <td>{{$item->price}}</td>
+                @endif
                 <td>{{$item->hascolor==1?'Має':'---'}}</td>
                 <td>{{$item->description??'---'}}</td>
                 <td>

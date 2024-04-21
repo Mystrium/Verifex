@@ -2,7 +2,7 @@
 @section('title', 'Залишки')
 @section('content')
 
-<h1 class="mt-4">PYX DEBUG !!!</h1>
+<h1 class="mt-4">Залишки</h1>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     @foreach($workers as $worker => $items)
@@ -63,7 +63,7 @@
     @endforeach
 </div>
 
-<br><br>
+<div style="height:500px"></div>
 <table class="table table-striped table-success">
     <thead>
         <tr>

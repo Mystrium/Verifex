@@ -14,7 +14,9 @@ use App\Models\Ceh;
 
 
 class MovementController extends BaseController {
-    public function view(Request $request){
+    public function view(Request $request) {
+        if (!Storage::disk('local')->exists('storage/materialceh.txt'))
+            Storage::disk('local')->put('storage/materialceh.txt', '1:1');
         $storeman = explode(':', Storage::disk('local')->get('storage/materialceh.txt'));
         
         $storage = DB::table('purchases')

@@ -114,7 +114,7 @@ class ApiController extends BaseController {
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->where('workers.id', '<>', $request->id)
-            ->where('work_types', 'like', '%1%')
+            ->where('operations', 'like', '%1%')
             ->get();
 
         return response()->json($workers);
