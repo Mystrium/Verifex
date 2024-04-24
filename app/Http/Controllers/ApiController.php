@@ -196,4 +196,44 @@ class ApiController extends BaseController {
 
         return response()->json($items_map);
     }
+
+    public function editworker(Request $request){
+        $toedit = Worker::find($request->id);
+
+        $toedit->pib = $request->pib;
+        $toedit->ceh_id = $request->ceh_id;
+        $toedit->role_id = $request->role_id;
+        $toedit->phone = $request->phone;
+        $toedit->passport = $request->passport;
+
+        if(isset($request->password))
+            $toedit->password = $request->password;
+
+        $toedit->update();
+
+        return response(null, 200);
+    }
+
+    public function produced(Request $request){
+        $produced = Worker::selectRaw('
+                transactions.id as transaction,
+                worker_to_id,
+                item_id_id as item_id,
+                color_id,
+                abs(count) as count,
+                IF(worker_to_id is not null, 1, IF(count > 0, 3, 4)) as type_id')
+            ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
+            // ->join('items', 'items.id', '=', 'transactions.item_id_id')
+            // ->join('work_types', 'work_types.id', '=', 'workers.role_id')
+            ->where('workers.id', '=', $request->id)
+            ->whereBetween('date', [$request->start, $request->end])
+            ->orderBy('date', 'asc')
+            ->get();
+
+        // $map = [];
+        // foreach($produced as $prod)
+        //     $map[$prod->date][] = ['salary' => $prod->salary];
+
+        return response()->json($produced);
+    }
 }

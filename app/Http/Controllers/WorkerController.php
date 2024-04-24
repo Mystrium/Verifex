@@ -77,26 +77,19 @@ class WorkerController extends BaseController {
     }
 
     public function update($id, Request $request){
-        if($request->password != null){
-            Worker::find($id)->update([
-                'pib' => $request->pib,
-                'ceh_id' => $request->ceh,
-                'role_id' => $request->role,
-                'phone' => substr('380', 0, 12 - strlen($request->phone)) . $request->phone,
-                'passport' => $request->passport,
-                'password' => $request->password,
-                'checked' => $request->checked ? 1 : 0
-            ]);
-        } else {
-            Worker::find($id)->update([
-                'pib' => $request->pib,
-                'ceh_id' => $request->ceh,
-                'role_id' => $request->role,
-                'phone' => substr('380', 0, 12 - strlen($request->phone)) . $request->phone,
-                'passport' => $request->passport,
-                'checked' => $request->checked ? 1 : 0
-            ]);
-        }
+        $toedit = Worker::find($request->id);
+
+        $toedit->pib = $request->pib;
+        $toedit->ceh_id = $request->ceh;
+        $toedit->role_id = $request->role;
+        $toedit->phone = $request->phone;
+        $toedit->passport = $request->passport;
+        $toedit->checked = $request->checked ? 1 : 0;
+
+        if(isset($request->password))
+            $toedit->password = $request->password;
+
+        $toedit->update();
 
         return redirect('/workers');
     }

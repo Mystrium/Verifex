@@ -15,7 +15,7 @@ class WorkHour extends Model {
     protected $fillable = [
         'worker_id', 
         'start',
-        'stop'
+        'time'
     ];
 
 }

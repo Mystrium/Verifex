@@ -14,7 +14,9 @@ Route::post('/transtypes',  [ApiController::class, 'transtypes']);
 Route::post('/transact',    [ApiController::class, 'transact']);
 Route::post('/worktime',    [ApiController::class, 'worktime']);
 Route::post('/workers',     [ApiController::class, 'workers']);
+Route::post('/profile',     [ApiController::class, 'editworker']);
+Route::post('/produced',    [ApiController::class, 'produced']);
 
-Route::post('/chart/hours', [ApiController::class, 'hours_chart']);
-Route::post('/chart/payment',[ApiController::class, 'pay_chart']);
-Route::post('/chart/items', [ApiController::class, 'items_chart']);
+Route::post('/chart/hours',     [ApiController::class, 'hours_chart']);
+Route::post('/chart/payment',   [ApiController::class, 'pay_chart']);
+Route::post('/chart/items',     [ApiController::class, 'items_chart']);
