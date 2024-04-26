@@ -1,8 +1,8 @@
 @extends('nav')
 @section('title', 'Вироби')
+@section('action', ($act=='add'?'Додати':'Змінити') . ' виріб')
 @section('content')
 
-<h1 class="mt-4">{{$act=='add'?'Додати':'Змінити'}} виріб</h1>
 <form action="/items/{{$act}}/{{$edit->id??''}}" method="POST">
     @csrf
     <div class="input-group">
@@ -37,45 +37,97 @@
         <span class="input-group-text">Інструкція</span>
         <input type="url" class="form-control" maxlength=150 name="instruction" value="{{$edit->url_instruction??''}}" placeholder="URL...">
     </div>
-    <div class="input-group pb-3" id="tagsSel">
-        <span class="input-group-text">Складники</span>
-        <select class="search-drop input-group-text" style="height:40px;" name="consist" onchange="addTag(this, 'tagsSel')">
-            <option>-</option>
-            @foreach($items as $item)
-                <option value="{{$item->id}}">{{$item->title}}</option>
+    <table class="table table-striped table-success">
+        <thead>
+            <tr>
+                <th scope="col">Складник</th>
+                <th scope="col">Кількість</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id='consist_table'>
+            @foreach($consists as $cons)
+                @foreach($items as $item)
+                    @if($item->id == $cons->have_id)
+                        <tr id="t{{$item->id}}">
+                            <td>
+                                <input name="consists[]" type="hidden" value="{{$item->id}}">
+                                <a href="/items/edit/{{$item->id}}" style="text-decoration:none" class="pe-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                    </svg>
+                                </a>
+                                {{$item->title}}
+                            </td>
+                            <td style="display: flex">
+                                <input style="width:110px; margin-right:10px" type="number" max="999" required name="counts[]" class="form-control" step="0.001" value="{{$cons->count + 0}}">
+                                @foreach($units as $unit)
+                                    @if($unit->id == $item->unit_id)
+                                        {{$unit->title}}
+                                        @break
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td><button class="input-group-text text-danger" type="button" onclick="dellTag('t{{$item->id}}')">X</button></td>
+                        </tr>
+                    @endif
+                @endforeach
             @endforeach
-        </select>
-    </div>
-    @if(isset($consists))
-        @foreach($consists as $cons)
-            @foreach($items as $item)
-                @if($item->id == $cons->have_id)
-                    <div id = "t{{$item->id}}" class="input-group mb-3">
-                        <input name="consists[]" type="hidden" value="{{$item->id}}">
-                        <a href="/items/edit/{{$item->id}}">
-                            <input class="form-control success" style="cursor:pointer" value="{{$item->title}}"readonly>
-                        </a>
-                        <input type="number" max="999" required name="counts[]" class="form-control" step="0.01" value="{{$cons->count}}">
-                        <button class="input-group-text text-danger" type="button" onclick="dellTag('t{{$item->id}}')">X</button>
-                    </div>
-                @endif
-            @endforeach
-        @endforeach
-    @endif
+            <tr>
+                <td>Додати
+                    <select class="search-drop input-group-text" style="height:40px;" name="consist" onchange="addTag(this, 'consist_table')">
+                        <option>-</option>
+                        @foreach($items as $item)
+                            <option value="{{$item->id}}">{{$item->title}}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
     <button type="submit" class="btn btn-primary m-2">{{$act=='add'?'Додати':'Змінити'}}</button>
 </form>
+
 <script>
+    var units = @json($units);
+    var items = @json($items);
+    
     window.addTag = function(sel, after_name){
-        if(sel.value!='-')
-            document.getElementById(after_name).insertAdjacentHTML("afterend",
-            '<div id = "t'+sel.value+'" class="input-group mb-3">'
-                +'<input name="consists[]" type="hidden" value="'+sel.value+'">'
-                +'<a href="/items/edit/'+sel.value+'">'
-                    +'<input class="form-control success" style="cursor:pointer" value="'+sel.options[sel.selectedIndex].text+'"readonly>'
-                +'</a>'
-                +'<input type="number" max="999" required name="counts[]" class="form-control" step="0.01" value="1">'
-                +'<button class="input-group-text text-danger" type="button" onclick="dellTag(`t'+sel.value+'`)">X</button>'
-            +'</div>')
+        if(sel.value != '-') {
+            var unit = '';
+            items.forEach((itm) => {
+                if(itm.id == sel.value){
+                    units.forEach((unt) => {
+                        if(itm.unit_id == unt.id){
+                            unit = unt.title;
+                        }
+                    });
+                }
+            });
+
+            var table = document.getElementById(after_name);
+            var newRow = table.insertRow(table.rows.length - 1);
+            newRow.innerHTML = 
+                '<td>'
+                    +'<input name="consists[]" type="hidden" value="'+sel.value+'">'
+                    +'<a href="/items/edit/' + sel.value + '" style="text-decoration:none" class="pe-1">'
+                        +'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">'
+                            +'<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>'
+                            +'<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>'
+                        +'</svg>'
+                    +'</a>'
+                    + sel.options[sel.selectedIndex].text
+                +'</td>'
+                +'<td style="display: flex">'
+                    +'<input type="number" style="width:110px; margin-right:10px" max="999" required name="counts[]" class="form-control" step="0.001" value="1">'
+                    + unit
+                +'</td>'
+                +'<td><button class="input-group-text text-danger" type="button" onclick="dellTag(`t'+sel.value+'`)">X</button></td>';
+        }
+        sel.selectedIndex = 0;
     }
     window.dellTag = function(name){ document.getElementById(name).remove(); }
 </script>

@@ -1,8 +1,8 @@
 @extends('nav')
 @section('title', 'ЗП')
+@section('action', 'Заробітня плата ' . $worker->pib . (empty(Request()->period) ? 'за минулий місяць' : ''))
 @section('content')
 
-<h1 class="mt-4">Заробітня плата {{$worker->pib}} {{empty(Request()->period) ? 'за минулий місяць' : ''}}</h1>
 <table class="table table-success">
     <thead>
         <tr>

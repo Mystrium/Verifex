@@ -1,8 +1,7 @@
 @extends('nav')
 @section('title', 'Рух')
+@section('action', 'Переміщення')
 @section('content')
-
-<h1 class="mt-4">Переміщення</h1>
 
 <form action="/movement" method="GET" class="pb-3">
     <div class="row">

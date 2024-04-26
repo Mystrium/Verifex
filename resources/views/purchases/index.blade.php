@@ -1,9 +1,9 @@
 @extends('nav')
 @section('title', 'Закуп')
+@section('action', 'Закупка матеріалів')
 @section('content')
 
-<h1 class="mt-4">Закупка матеріалів</h1>
-<a href="purchases/new" class="btn btn-success m-2">Закупити</a>
+<a href="purchases/new" class="btn btn-success">Закупити</a>
 <table class="table table-striped table-success" id="jsTable">
     <thead>
         <tr>

@@ -2,7 +2,6 @@
 @section('title', 'Цехи')
 @section('content')
 
-<h1 class="mt-4">Цехи</h1>
 <form action="{{ url('/cehs/add') }}" method="POST">
     @csrf
     <div class="input-group pt-2">

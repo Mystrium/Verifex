@@ -1,8 +1,8 @@
 @extends('nav')
 @section('title', 'Виміри')
+@section('action', 'Одиниці виміру')
 @section('content')
 
-<h1 class="mt-4">Одиниці</h1>
 <form action="{{ url('/units/add') }}" method="POST">
     @csrf
     <div class="input-group pt-2 pb-4" style="width:320px">

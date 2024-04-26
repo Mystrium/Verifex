@@ -3,8 +3,13 @@
     ??? Архівація
 
 +++++ Item
+    + type
     save images
 
+CRUD
+    items types
+        title
+        descr
 
 (СRUD)
 Admins

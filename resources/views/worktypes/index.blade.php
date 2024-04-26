@@ -2,7 +2,6 @@
 @section('title', 'Посади')
 @section('content')
 
-<h1 class="mt-4">Посади</h1>
 <a href="worktypes/new" class="btn btn-success m-2">Створити</a>
 <table class="table table-striped table-success" id="jsTable">
     <thead>

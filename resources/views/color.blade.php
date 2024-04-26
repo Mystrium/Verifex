@@ -2,7 +2,6 @@
 @section('title', 'Кольори')
 @section('content')
 
-<h1 class="mt-4">Кольори</h1>
 <form action="{{ url('/colors/add') }}" method="POST">
     @csrf
     <div class="input-group pt-2 pb-4" style="width:700px">

@@ -1,8 +1,8 @@
 @extends('nav')
 @section('title', 'Посади')
+@section('action', ($act=='add'?'Додати':'Змінити') . ' посаду')
 @section('content')
 
-<h1 class="mt-4">{{$act=='add'?'Додати':'Змінити'}} посаду</h1>
 <form action="/worktypes/{{$act}}/{{$edit->id??''}}" method="POST">
     @csrf
     <div class="input-group">

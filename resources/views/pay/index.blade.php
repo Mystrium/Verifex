@@ -1,8 +1,7 @@
 @extends('nav')
 @section('title', 'ЗП')
+@section('action', 'Заробітня плата робітників')
 @section('content')
-
-<h1 class="mt-4">Заробітня плата робітників</h1>
 
 <form method="GET" action="/pay" style="display:inline">
     <div class="row">

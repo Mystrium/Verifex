@@ -1,8 +1,8 @@
 @extends('nav')
 @section('title', 'Вартість')
+@section('action', 'Собівартість виробів')
 @section('content')
 
-<h1 class="mt-4">Собівартість продуктів</h1>
 @foreach($items as $item)
     <table class="table table-striped table-success">
         <thead>

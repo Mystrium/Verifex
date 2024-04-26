@@ -1,8 +1,8 @@
 @extends('nav')
 @section('title', 'Закуп')
+@section('action', ($act=='add'?'Додати':'Змінити') . ' закуп')
 @section('content')
 
-<h1 class="mt-4">{{$act=='add'?'Додати':'Змінити'}} закуп</h1>
 <form action="/purchases/{{$act}}/{{$edit->id??''}}" method="POST">
     @csrf
     <div class="input-group">

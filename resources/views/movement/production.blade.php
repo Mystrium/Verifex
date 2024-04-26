@@ -1,8 +1,8 @@
 @extends('nav')
 @section('title', 'Виробіток')
+@section('action', 'Виробіток')
 @section('content')
 
-<h1 class="mt-4">Виробіток</h1>
 <form action="/production" method="GET" class="pb-3">
     <div class="row">
         <div class="col-1">
