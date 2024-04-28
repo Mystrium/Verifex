@@ -50,12 +50,12 @@
                 <td><a href="/workers/edit/{{$pay->id}}">{{$pay->pib}}</a></td>
                 <td>
                     @if($pay->sum > $pay->min_pay)
-                        {{$pay->sum}}
+                        {{$pay->sum + 0}}
                         </td>
                         <td>
                             Виробіток
                     @else
-                        {{$pay->min_pay}}
+                        {{$pay->min_pay + 0}}
                         </td>
                         <td>
                             Мінімальна ЗП

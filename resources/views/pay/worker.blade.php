@@ -29,11 +29,11 @@
                     </td>
                     <td>
                         <div class="d-flex justify-content-between">
-                            <div class="text-start">{{$pay->count}}</div>
+                            <div class="text-start">{{$pay->count + 0}}</div>
                             <div class="text-end pe-5">=</div>
                         </div>
                     </td>
-                    <td>{{$pay->count * $pay->price}}₴</td>
+                    <td>{{$pay->count * $pay->price + 0}}₴</td>
                     <td>{{$pay->date}}</td>
                 </tr>
                 @php($summ += $pay->count * $pay->price)

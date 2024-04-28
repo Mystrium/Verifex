@@ -5,38 +5,58 @@
 
 <form action="/items/{{$act}}/{{$edit->id??''}}" method="POST">
     @csrf
-    <div class="input-group">
-        <span class="input-group-text">Назва</span>
-        <input type="text" class="form-control" minlength=5 maxlength=70 required name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
+    <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
+        <div class="col">
+            <span class="fw-bold">Назва</span><span class="text-danger"> *</span>
+            <input type="text" class="form-control" minlength=4 maxlength=70 required name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
+        </div>
+
+        <div class="col">
+            <span class="fw-bold">Фото</span><span class="text-danger"> *</span>
+            <br>
+            <input type="url" class="form-control" maxlength=150 required name="photo" value="{{$edit->url_photo??''}}" placeholder="URL...">
+        </div>
     </div>
-    <div class="input-group">
-        <span class="input-group-text">Одиниця</span>
-        <select class="search-drop" name="unit">
-            @foreach($units as $tp)
-                <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->unit_id?'selected':''):''}}>{{$tp->title}}</option>
-            @endforeach
-        </select>
+
+
+    <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
+        <div class="col-md-auto">
+            <span class="fw-bold">Має колір</span>
+            <br>
+            <input type="checkbox" name="hascolor" {{isset($edit)?($edit->hascolor==1?'checked':''):''}}>
+        </div>
+
+        <div class="col-md-auto">
+            <span class="fw-bold">Одиниця</span><span class="text-danger"> *</span>
+            <br>
+            <select class="search-drop" name="unit">
+                @foreach($units as $tp)
+                    <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->unit_id?'selected':''):''}}>{{$tp->title}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col">
+            <span class="fw-bold">Оплата</span>
+            <br>
+            <input type="number" style="width:140px" class="form-control" max="9999" name="price" value="{{$edit->price??''}}" placeholder="за одиницю">
+        </div>
     </div>
-    <div class="input-group">
-        <span class="input-group-text">Оплата</span>
-        <input type="number" class="form-control" max="9999" required name="price" value="{{$edit->price??''}}" placeholder="за зроблену одиницю">
+
+    <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
+        <div class="col">
+            <span class="fw-bold">Опис</span>
+            <br>
+            <input type="text" class="form-control" maxlength=200 name="description" value="{{$edit->description??''}}" placeholder="Розкрієчний...">
+        </div>
+        <div class="col">
+            <span class="fw-bold">Інструкція</span>
+            <br>
+            <input type="url" class="form-control" maxlength=150 name="instruction" value="{{$edit->url_instruction??''}}" placeholder="URL...">
+        </div>
     </div>
-    <div class="input-group">
-        <span class="input-group-text">Фото</span>
-        <input type="url" class="form-control" maxlength=150 required name="photo" value="{{$edit->url_photo??''}}" placeholder="URL...">
-    </div>
-    <div class="input-group">
-        <span class="input-group-text">Має колір</span>
-        <input type="checkbox" name="hascolor" {{isset($edit)?($edit->hascolor==1?'checked':''):''}}>
-    </div>
-    <div class="input-group">
-        <span class="input-group-text">Опис</span>
-        <input type="text" class="form-control" maxlength=200 name="description" value="{{$edit->description??''}}" placeholder="Розкрієчний...">
-    </div>
-    <div class="input-group">
-        <span class="input-group-text">Інструкція</span>
-        <input type="url" class="form-control" maxlength=150 name="instruction" value="{{$edit->url_instruction??''}}" placeholder="URL...">
-    </div>
+
+    <span class="fw-bold">Тех. карта</span>
     <table class="table table-striped table-success">
         <thead>
             <tr>
@@ -46,7 +66,7 @@
             </tr>
         </thead>
         <tbody id='consist_table'>
-            @foreach($consists as $cons)
+            @foreach($consists??[] as $cons)
                 @foreach($items as $item)
                     @if($item->id == $cons->have_id)
                         <tr id="t{{$item->id}}">
@@ -88,7 +108,7 @@
             </tr>
         </tbody>
     </table>
-    <button type="submit" class="btn btn-primary m-2">{{$act=='add'?'Додати':'Змінити'}}</button>
+    <button type="submit" class="btn btn-success">{{$act=='add'?'Додати':'Змінити'}}</button>
 </form>
 
 <script>

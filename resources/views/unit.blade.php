@@ -45,7 +45,7 @@
                 <th scope="row">{{ $loop->iteration }}</th>
                 <form action="{{ url('/units/update/' . $unit->id) }}" method="POST">
                     @csrf
-                    <td><input type="text" class="form-control" maxlength=20 name="title" onchange="toedit(this,'{{$unit->title}}','edt{{$unit->id}}')" value="{{$unit->title}}"></td>
+                    <td><input type="text" class="form-control" maxlength=20 name="title" oninput="toedit(this,'{{$unit->title}}','edt{{$unit->id}}')" value="{{$unit->title}}"></td>
                     <td>
                     <button disabled id="edt{{$unit->id}}" type="submit" class="btn btn-warning btn-sm m-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

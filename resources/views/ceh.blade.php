@@ -4,7 +4,7 @@
 
 <form action="{{ url('/cehs/add') }}" method="POST">
     @csrf
-    <div class="input-group pt-2">
+    <div class="input-group">
         <span class="input-group-text" style="height:28px">Тип</span>
         <select class="search-drop" name="type">
             @foreach($types as $tp)
@@ -69,7 +69,7 @@
                             @endforeach
                         </select>
                     </td>
-                    <td><input type="text" class="form-control" onchange="toedit(this,'{{$tp->id}}','edt{{$ceh->id}}')" maxlength=20 name="title" value="{{$ceh->title}}"></td>
+                    <td><input type="text" class="form-control" oninput="toedit(this,'{{$tp->id}}','edt{{$ceh->id}}')" maxlength=20 name="title" value="{{$ceh->title}}"></td>
                     <td>
                     <button disabled id="edt{{$ceh->id}}" type="submit" class="btn btn-warning btn-sm m-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

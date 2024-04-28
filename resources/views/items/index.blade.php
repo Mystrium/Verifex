@@ -1,6 +1,5 @@
 @extends('nav')
 @section('title', $title)
-@section('action', $title)
 @section('content')
 
 <a href="items/new" class="btn btn-success">Створити</a>

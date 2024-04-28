@@ -1,6 +1,5 @@
 @extends('nav')
 @section('title', 'Виробіток')
-@section('action', 'Виробіток')
 @section('content')
 
 <form action="/production" method="GET" class="pb-3">

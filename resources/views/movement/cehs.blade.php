@@ -1,6 +1,5 @@
 @extends('nav')
 @section('title', 'Залишки')
-@section('action', 'Залишки')
 @section('content')
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">

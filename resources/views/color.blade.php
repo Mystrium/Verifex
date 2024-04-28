@@ -49,8 +49,8 @@
                 <th scope="row">{{ $loop->iteration }}</th>
                 <form action="{{ url('/colors/update/' . $color->id) }}" method="POST">
                     @csrf
-                    <td><input type="color" style="width:200px; height:40px" name="hex" onchange="toedit(this,'{{$color->hex}}','edt{{$color->id}}')" value="#{{$color->hex}}"></td>
-                    <td><input type="text" class="form-control" maxlength=20 name="title" onchange="toedit(this,'{{$color->title}}','edt{{$color->id}}')" value="{{$color->title}}"></td>
+                    <td><input type="color" style="width:200px; height:40px" name="hex" oninput="toedit(this,'{{$color->hex}}','edt{{$color->id}}')" value="#{{$color->hex}}"></td>
+                    <td><input type="text" class="form-control" maxlength=20 name="title" oninput="toedit(this,'{{$color->title}}','edt{{$color->id}}')" value="{{$color->title}}"></td>
                     <td>
                     <button disabled id="edt{{$color->id}}" type="submit" class="btn btn-warning btn-sm m-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

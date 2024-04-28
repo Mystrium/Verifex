@@ -50,7 +50,7 @@
                             <img src="{{$sub->url_photo}}" style="max-width:100px; max-height:100px">
                         </a>
                     </td>
-                    <td>{{round($sub->price, 2)}}</td>
+                    <td>{{round($sub->price, 2)}}₴</td>
                     <td>{{$sub->count + 0}}</td>
                     <td>{{round($sub->count * $sub->price, 2)}}₴</td>
                 </tr>

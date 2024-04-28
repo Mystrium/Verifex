@@ -68,8 +68,8 @@ class ItemController extends BaseController {
         $newitm = Item::create([
             'title' => $request->title,
             'unit_id' => $request->unit,
-            'hascolor' => $request->hascolor?1:0,
-            'price' => $request->price,
+            'hascolor' => $request->hascolor ? 1 : 0,
+            'price' => $request->price ?? 0,
             'url_photo' => $request->photo,
             'url_instruction' => $request->instruction,
             'description' => $request->description
@@ -105,8 +105,8 @@ class ItemController extends BaseController {
         Item::find($id)->update([
             'title' => $request->title,
             'unit_id' => $request->unit,
-            'hascolor' => $request->hascolor?1:0,
-            'price' => $request->price,
+            'hascolor' => $request->hascolor ? 1 : 0,
+            'price' => $request->price ?? 0,
             'url_photo' => $request->photo,
             'url_instruction' => $request->instruction,
             'description' => $request->description

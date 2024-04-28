@@ -4,7 +4,7 @@
 
 <form action="{{ url('/cehtypes/add') }}" method="POST">
     @csrf
-    <div class="input-group pt-2 pb-4" style="width:500px">
+    <div class="input-group pb-4" style="width:500px">
         <span class="input-group-text">Назва</span>    
         <input type="text" class="form-control" minlength=5 maxlength=30 required name="title" placeholder="Розкрієчний...">
         <button type="submit" class="btn btn-primary">Додати</button>
@@ -44,7 +44,7 @@
                     <th scope="row">{{ $loop->iteration }}</th>
                     <form action="{{ url('/cehtypes/update/' . $opr->id) }}" method="POST">
                         @csrf
-                        <td><input type="text" class="form-control" maxlength=20 onchange="toedit(this,'{{$opr->title}}','edt{{$opr->id}}')" name="title" value="{{$opr->title}}"></td>
+                        <td><input type="text" class="form-control" maxlength=20 oninput="toedit(this,'{{$opr->title}}','edt{{$opr->id}}')" name="title" value="{{$opr->title}}"></td>
                         <td>
                         <button disabled id="edt{{$opr->id}}" type="submit" class="btn btn-warning btn-sm m-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

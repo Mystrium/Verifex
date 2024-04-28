@@ -1,9 +1,8 @@
 @extends('nav')
 @section('title', 'Робітники')
-@section('action', 'Робітники')
 @section('content')
 
-<a href="workers/new" class="btn btn-success m-2">Створити</a>
+<a href="workers/new" class="btn btn-success">Створити</a>
 <table class="table table-striped table-success" id="jsTable">
     <thead>
         <tr>
