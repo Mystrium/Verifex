@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Виміри')
 @section('action', 'Одиниці виміру')
 @section('content')

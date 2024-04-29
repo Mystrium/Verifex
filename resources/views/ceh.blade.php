@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Цехи')
 @section('content')
 

@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Посади')
 @section('action', ($act=='add'?'Додати':'Змінити') . ' посаду')
 @section('content')
@@ -41,7 +41,7 @@
             @endforeach
         </select>
     </div>
-    <button type="submit" class="btn btn-primary m-2">{{$act=='add'?'Додати':'Змінити'}}</button>
+    <button type="submit" class="btn btn-success m-2">{{$act=='add'?'Додати':'Змінити'}}</button>
 </form>
 <script>
     $("#itm").select2({placeholder: "Оберіть вироби"});

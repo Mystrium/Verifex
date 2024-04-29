@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Закуп')
 @section('action', ($act=='add'?'Додати':'Змінити') . ' закуп')
 @section('content')

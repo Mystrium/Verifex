@@ -217,7 +217,7 @@ class ApiController extends BaseController {
     public function produced(Request $request){
         $produced = Worker::selectRaw('
                 transactions.id as transaction,
-                worker_to_id,
+                worker_to_id as worker_to,
                 item_id_id as item_id,
                 color_id,
                 abs(count) as count,

@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Вартість')
 @section('action', 'Собівартість виробів')
 @section('content')
@@ -30,7 +30,7 @@
                 <td>{{$item->unit}}</td>
                 <td>-</td>
             </tr>
-            <tr>
+            <tr class="collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a{{$item->id}}">
                 <th scope="col">#</th>
                 <th scope="col">Операції</th>
                 <th scope="col">Опис</th>
@@ -41,7 +41,7 @@
             </tr>
             @php($total = 0)
             @foreach($item->work as $sub)
-                <tr>
+                <tr id="a{{$item->id}}" class="accordion-collapse collapse accordion-body">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{$sub->title}}</td>
                     <td>{{$sub->description}}</td>
@@ -56,7 +56,7 @@
                 </tr>
                 @php($total += $sub->count * $sub->price)
             @endforeach
-            <tr>
+            <tr class="collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b{{$item->id}}">
                 <th scope="col">#</th>
                 <th scope="col">Матеріали</th>
                 <th scope="col">Опис</th>
@@ -66,7 +66,7 @@
                 <th scope="col">Сума</th>
             </tr>
             @foreach($item->subitems as $sub)
-                <tr>
+                <tr id="b{{$item->id}}" class="accordion-collapse collapse accordion-body">
                     <td>{{ $loop->iteration }}</td>
                     <td>{{$sub->title}}</td>
                     <td>{{$sub->description}}</td>

@@ -1,9 +1,9 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Робітники')
+@section('btnroute', 'workers/new')
 @section('content')
 
-<a href="workers/new" class="btn btn-success">Створити</a>
-<table class="table table-striped table-success" id="jsTable">
+<table class="table table-striped table-success" name="jsTable">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -28,7 +28,10 @@
                 <td>
                     <form action="/workers/check/{{$worker->id}}" method="POST">
                         @csrf
-                        <input type="checkbox" name="status" {{$worker->checked==1?'checked':''}} onchange="this.form.submit()"/>
+                        <label class="switch">
+                            <input type="checkbox" name="status" {{$worker->checked==1?'checked':''}} onchange="this.form.submit()"/>
+                            <span class="slider round"></span>
+                        </label>
                     </form>
                 </td>
                 <td>

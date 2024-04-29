@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Сировина')
 @section('action', 'Цех сировини')
 @section('content')

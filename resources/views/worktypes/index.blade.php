@@ -1,9 +1,9 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Посади')
+@section('btnroute', 'worktypes/new')
 @section('content')
 
-<a href="worktypes/new" class="btn btn-success">Створити</a>
-<table class="table table-striped table-success" id="jsTable">
+<table class="table table-striped table-success" name="jsTable">
     <thead>
         <tr>
             <th scope="col">#</th>

@@ -256,7 +256,7 @@ POST    /api/produced
     out
         [
             transaction     - id запису
-            worker_to_id    - null
+            worker_to       - null
             item_id
             color_id
             count

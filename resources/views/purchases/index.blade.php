@@ -1,10 +1,11 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Закуп')
 @section('action', 'Закупка матеріалів')
+@section('btntext', 'Закупити')
+@section('btnroute', 'purchases/new')
 @section('content')
 
-<a href="purchases/new" class="btn btn-success">Закупити</a>
-<table class="table table-striped table-success" id="jsTable">
+<table class="table table-striped table-success" name="jsTable">
     <thead>
         <tr>
             <th scope="col">#</th>

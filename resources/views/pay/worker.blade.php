@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'ЗП')
 @section('action', 'Заробітня плата ' . $worker->pib . (empty(Request()->period) ? 'за минулий місяць' : ''))
 @section('content')

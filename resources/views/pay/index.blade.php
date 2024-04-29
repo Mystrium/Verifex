@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'ЗП')
 @section('action', 'Заробітня плата робітників')
 @section('content')
@@ -32,7 +32,7 @@
     <h5>за минулий тиждень</h5>
 @endif
 
-<table class="table table-striped table-success" id="jsTable">
+<table class="table table-striped table-success" name="jsTable">
     <thead>
         <tr>
             <th scope="col">#</th>

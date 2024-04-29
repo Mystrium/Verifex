@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Залишки')
 @section('content')
 
@@ -19,7 +19,7 @@
 
 <div class="tab-content" id="myTabContent">
     @foreach($workers as $worker => $items)
-        <div class="tab-pane fade show {{$loop->index == 0 ? 'active' : ''}}" id="w{{$worker}}" role="tabpanel">
+        <div class="tab-pane show {{$loop->index == 0 ? 'active' : ''}}" id="w{{$worker}}" role="tabpanel">
             <ul class="list-group list-group-flush">
                     @foreach($items as $item => $colors)
                         <li class="list-group-item">

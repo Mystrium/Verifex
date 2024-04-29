@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Робітники')
 @section('action', ($act=='add'?'Додати':'Змінити') . ' робітника')
 @section('content')
@@ -43,7 +43,7 @@
             <input type="checkbox" name="checked" {{$edit->checked==1?'checked':''}}>
         </div>
     @endif
-    <button type="submit" class="btn btn-primary m-2">{{$act=='add'?'Додати':'Змінити'}} </button>
+    <button type="submit" class="btn btn-success m-2">{{$act=='add'?'Додати':'Змінити'}} </button>
 </form>
 
 <script>

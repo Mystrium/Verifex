@@ -1,4 +1,4 @@
-@extends('nav')
+@extends('navbar/main')
 @section('title', 'Вироби')
 @section('action', ($act=='add'?'Додати':'Змінити') . ' виріб')
 @section('content')
@@ -18,12 +18,14 @@
         </div>
     </div>
 
-
     <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
         <div class="col-md-auto">
             <span class="fw-bold">Має колір</span>
             <br>
-            <input type="checkbox" name="hascolor" {{isset($edit)?($edit->hascolor==1?'checked':''):''}}>
+            <label class="switch">
+                <input type="checkbox" name="hascolor" {{isset($edit)?($edit->hascolor==1?'checked':''):''}}>
+                <span class="slider round"></span>
+            </label>
         </div>
 
         <div class="col-md-auto">

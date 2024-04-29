@@ -41,8 +41,6 @@ Route::post('/colors/update/{id}',      [ColorController::class,    'edit']);
 Route::get( '/colors/delete/{id}',      [ColorController::class,    'delete']);
 
 Route::get( '/items',                   [ItemController::class,     'items']);
-Route::get( '/operations',              [ItemController::class,     'operations']);
-Route::get( '/materials',               [ItemController::class,     'materials']);
 Route::get( '/items/new',               [ItemController::class,     'new']);
 Route::post('/items/add',               [ItemController::class,     'add']);
 Route::get( '/items/edit/{id}',         [ItemController::class,     'edit']);
