@@ -5,44 +5,58 @@
 
 <form action="/workers/{{$act}}/{{$edit->id??''}}" method="POST">
     @csrf
-    <div class="input-group">
-        <span class="input-group-text">ПІБ</span>
-        <input type="text" class="form-control" minlength=8 maxlength=70 required name="pib" value="{{$edit->pib??''}}" placeholder="Іваненко В...">
+    <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
+        <div class="col-md-auto">
+            <span class="fw-bold">ПІБ</span><span class="text-danger"> *</span>
+            <br>
+            <input type="text" class="form-control" minlength=8 maxlength=70 required name="pib" value="{{$edit->pib??''}}" placeholder="Іваненко В...">
+        </div>
+        <div class="col-md-auto">
+            <span class="fw-bold">Телефон</span><span class="text-danger"> *</span>
+            <br>
+            <input type="number" class="form-control" name="phone" min="100000000" max="380999999999" required value="{{$edit->phone??''}}" placeholder="+380...">
+        </div>
     </div>
-    <div class="input-group">
-        <span class="input-group-text">Цех</span>
-        <select class="search-drop input-group-text" style="height:40px;" name="ceh" id="ceh_select" onchange="updateOptions(this.value);">
-            @foreach($cehs as $tp)
-                <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->ceh_id?'selected':''):''}}>{{$tp->ctitle}} {{$tp->title}}</option>
-            @endforeach
-        </select>
+    <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
+        <div class="col-md-auto">
+            <span class="fw-bold">Цех</span><span class="text-danger"> *</span>
+            <br>
+            <select class="search-drop input-group-text" style="height:40px;" name="ceh" id="ceh_select" onchange="updateOptions(this.value);">
+                @foreach($cehs as $tp)
+                    <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->ceh_id?'selected':''):''}}>{{$tp->ctitle}} {{$tp->title}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-auto">
+            <span class="fw-bold">Посада</span><span class="text-danger"> *</span>
+            <br>
+            <select class="search-drop input-group-text" style="width:200px" name="role" id="role_select">
+                @foreach($types as $tp)
+                    <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->role_id?'selected':''):''}}>{{$tp->title}}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
-    <div class="input-group">
-        <span class="input-group-text">Посада</span>
-        <select class="search-drop input-group-text" style="width:200px" name="role" id="role_select">
-            @foreach($types as $tp)
-                <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->role_id?'selected':''):''}}>{{$tp->title}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="input-group">
-        <span class="input-group-text">Телефон</span>
-        <input type="number" class="form-control" name="phone" min="100000000" max="380999999999" required value="{{$edit->phone??''}}" placeholder="+380...">
-    </div>
-    <div class="input-group">
-        <span class="input-group-text">Паспорт</span>
-        <input type="text" class="form-control" name="passport" minlength=9 maxlength=9 required value="{{$edit->passport??''}}" placeholder="AR3245322">
-    </div>
-    <div class="input-group">
-        <span class="input-group-text">{{$act=='add'?'П':'Новий п'}}ароль</span>
-        <input type="text" class="form-control" minlength=4 maxlength=8 {{$act=='add'?'required':''}} name="password">
+
+    <div class="md-auto mb-4">
+        <span class="fw-bold">Паспорт</span><span class="text-danger"> *</span>
+        <br>
+        <input type="text" style="width:120px" class="form-control" name="passport" minlength=9 maxlength=9 required value="{{$edit->passport??''}}" placeholder="AR3245322">
     </div>
     @if(isset($edit))
-        <div class="input-group">
-            <span class="input-group-text">Перевірений</span>
-            <input type="checkbox" name="checked" {{$edit->checked==1?'checked':''}}>
+        <div class="md-auto  mb-4">
+            <span class="fw-bold">Статус</span>
+            <label class="switch">
+                <input type="checkbox" name="checked" {{$edit->checked==1?'checked':''}}>
+                <span class="slider round"></span>
+            </label>
         </div>
     @endif
+    <div class="md-auto  mb-4">
+        <span class="fw-bold">{{$act=='add'?'П':'Новий п'}}ароль</span>
+        <br>
+        <input type="text" style="width:120px" class="form-control" minlength=4 maxlength=10 {{$act=='add'?'required':''}} name="password">
+    </div>
     <button type="submit" class="btn btn-success m-2">{{$act=='add'?'Додати':'Змінити'}} </button>
 </form>
 

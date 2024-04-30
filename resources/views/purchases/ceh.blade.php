@@ -5,23 +5,29 @@
 
 <form action="/purchases/materials/update" method="POST">
     @csrf
-    <div class="input-group">
-        <span class="input-group-text">Цех</span>
-        <select class="search-drop input-group-text" style="height:40px;" name="initceh" id="ceh_select" onchange="updateOptions(this.value);">
-            @foreach($cehs as $tp)
-                <option value="{{$tp->id}}" {{isset($save[0])?($tp->id==$save[0]?'selected':''):''}}>{{$tp->type}} {{$tp->title}}</option>
-            @endforeach
-        </select>
+    <div class="row pt-2 pb-3 my-2 mx-1 border rounded ">
+        <div class="col-md-auto">
+            <span class="fw-bold">Цех</span>
+            <br>
+            <select class="search-drop input-group-text" style="height:40px;" name="initceh" id="ceh_select" onchange="updateOptions(this.value);">
+                @foreach($cehs as $tp)
+                    <option value="{{$tp->id}}" {{isset($save[0])?($tp->id==$save[0]?'selected':''):''}}>{{$tp->type}} {{$tp->title}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-auto">
+            <span class="fw-bold">Посада</span>
+            <br>
+            <select class="search-drop input-group-text" style="width:200px" name="initworker" id="role_select">
+                @foreach($workers as $tp)
+                    <option value="{{$tp->id}}" {{isset($save[1])?($tp->id==$save[1]?'selected':''):''}}>{{$tp->pib}} {{$tp->title}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-auto">
+            <button type="submit" class="btn btn-warning m-2 mt-3">Змінити</button>
+        </div>
     </div>
-    <div class="input-group">
-        <span class="input-group-text">Посада</span>
-        <select class="search-drop input-group-text" style="width:200px" name="initworker" id="role_select">
-            @foreach($workers as $tp)
-                <option value="{{$tp->id}}" {{isset($save[1])?($tp->id==$save[1]?'selected':''):''}}>{{$tp->pib}} {{$tp->title}}</option>
-            @endforeach
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary m-2">Змінити</button>
 </form>
 
 <script>

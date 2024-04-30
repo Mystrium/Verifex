@@ -49,7 +49,7 @@ class PurchaseController extends BaseController {
             'item_id' => explode('|', $request->item)[0],
             'color_id' => explode('|', $request->item)[1] == 1 ? $request->color : null,
             'count' => $request->count,
-            'price' => $request->price * $this->exchange($request->currency),
+            'price' => $request->price * $this->exchange($request->currency) / ($request->priceby ? $request->count : 1),
             'date' => $request->date == Carbon::now()->format('Y-m-d') ? Carbon::now() : $request->date
         ]);
 
@@ -81,7 +81,7 @@ class PurchaseController extends BaseController {
             'item_id' => explode('|', $request->item)[0],
             'color_id' => explode('|', $request->item)[1] == 1 ? $request->color : null,
             'count' => $request->count,
-            'price' => $request->price * $this->exchange($request->currency),
+            'price' => $request->price * $this->exchange($request->currency) / ($request->priceby ? $request->count : 1),
             'date' => $request->date == Carbon::now()->format('Y-m-d') ? Carbon::now() : $request->date
         ]);
 
