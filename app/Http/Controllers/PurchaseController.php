@@ -5,6 +5,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\Consist;
@@ -49,7 +50,7 @@ class PurchaseController extends BaseController {
             'item_id' => explode('|', $request->item)[0],
             'color_id' => explode('|', $request->item)[1] == 1 ? $request->color : null,
             'count' => $request->count,
-            'price' => $request->price * $this->exchange($request->currency) / ($request->priceby ? $request->count : 1),
+            'price' => $request->price * $this->exchange($request->currency) * ($request->priceby ? 1 : $request->count),
             'date' => $request->date == Carbon::now()->format('Y-m-d') ? Carbon::now() : $request->date
         ]);
 
@@ -81,7 +82,7 @@ class PurchaseController extends BaseController {
             'item_id' => explode('|', $request->item)[0],
             'color_id' => explode('|', $request->item)[1] == 1 ? $request->color : null,
             'count' => $request->count,
-            'price' => $request->price * $this->exchange($request->currency) / ($request->priceby ? $request->count : 1),
+            'price' => $request->price * $this->exchange($request->currency) * ($request->priceby ? 1 : $request->count),
             'date' => $request->date == Carbon::now()->format('Y-m-d') ? Carbon::now() : $request->date
         ]);
 
@@ -126,6 +127,24 @@ class PurchaseController extends BaseController {
 
     public function ceh_update(Request $request) {
         Storage::disk('local')->put('storage/materialceh.txt', $request->initceh . ':' . $request->initworker);
+        return redirect()->back();
+    }
+
+    public function archivate() {
+        $ziped = Purchase::selectRaw(
+            'item_id,
+            color_id,
+            sum(count) as count,
+            sum(purchases.price) as price,
+            min(date) as date')
+            ->groupBy('purchases.item_id', 'purchases.color_id')
+            ->get()
+            ->toArray();
+
+        Purchase::truncate();
+
+        Purchase::insert($ziped);
+
         return redirect()->back();
     }
 }

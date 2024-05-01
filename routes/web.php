@@ -67,6 +67,7 @@ Route::get( '/purchases/new',               [PurchaseController::class, 'new']);
 Route::post('/purchases/add',               [PurchaseController::class, 'add']);
 Route::get( '/purchases/edit/{id}',         [PurchaseController::class, 'edit']);
 Route::post('/purchases/update/{id}',       [PurchaseController::class, 'update']);
+Route::get( '/purchases/arhivate',          [PurchaseController::class, 'archivate']);
 Route::get( '/purchases/materials',         [PurchaseController::class, 'material_ceh']);
 Route::post('/purchases/materials/update',  [PurchaseController::class, 'ceh_update']);
 

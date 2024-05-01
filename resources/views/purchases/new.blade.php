@@ -45,7 +45,7 @@
             <br>
             <span class="fw-bold">одиниці</span>
             <label class="switch">
-                <input type="checkbox" name="priceby"/>
+                <input type="checkbox" checked name="priceby"/>
                 <span class="slider round"></span>
             </label>
             <span class="fw-bold">загальна</span>

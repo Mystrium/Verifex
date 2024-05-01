@@ -31,7 +31,7 @@
                     <th scope="col">Назва</th>
                     <th scope="col">Одиниця</th>
                     <th scope="col">Оплата ₴</th>
-                    <th scope="col">Колір</th>
+                    <th scope="col">Кольоровий</th>
                     <th scope="col">Опис</th>
                     <th scope="col">Дії</th>
                 </tr>
@@ -44,8 +44,8 @@
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
                         <td>{{$item->price}}</td>
-                        <td>{{$item->hascolor==1?'Має':'---'}}</td>
-                        <td>{{$item->description??'---'}}</td>
+                        <td>{{$item->hascolor==1?'Так':'Ні'}}</td>
+                        <td>{{substr($item->description, 0, 50)}}</td>
                         <td>
                             <a href="/items/edit/{{$item->id}}" class="btn btn-warning btn-sm m-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -72,8 +72,8 @@
                     <th scope="col" class="text-center">Фото</th>
                     <th scope="col">Назва</th>
                     <th scope="col">Одиниця</th>
-                    <th scope="col">Оплата</th>
-                    <th scope="col">Колір</th>
+                    <th scope="col">Оплата ₴</th>
+                    <th scope="col">Кольоровий</th>
                     <th scope="col">Опис</th>
                     <th scope="col">Дії</th>
                 </tr>
@@ -86,8 +86,8 @@
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
                         <td>{{$item->price}}</td>
-                        <td>{{$item->hascolor==1?'Має':'---'}}</td>
-                        <td>{{$item->description??'---'}}</td>
+                        <td>{{$item->hascolor==1?'Так':'Ні'}}</td>
+                        <td>{{$item->description}}</td>
                         <td>
                             <a href="/items/edit/{{$item->id}}" class="btn btn-warning btn-sm m-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -115,7 +115,7 @@
                     <th scope="col" class="text-center">Фото</th>
                     <th scope="col">Назва</th>
                     <th scope="col">Одиниця</th>
-                    <th scope="col">Колір</th>
+                    <th scope="col">Кольоровий</th>
                     <th scope="col">Опис</th>
                     <th scope="col">Дії</th>
                 </tr>
@@ -127,8 +127,8 @@
                         <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:100px;max-height:100px"></td>
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
-                        <td>{{$item->hascolor==1?'Має':'---'}}</td>
-                        <td>{{$item->description??'---'}}</td>
+                        <td>{{$item->hascolor==1?'Так':'Ні'}}</td>
+                        <td>{{$item->description}}</td>
                         <td>
                             <a href="/items/edit/{{$item->id}}" class="btn btn-warning btn-sm m-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

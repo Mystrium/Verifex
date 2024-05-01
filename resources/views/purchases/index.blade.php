@@ -13,7 +13,7 @@
             <th scope="col">Колір</th>
             <th scope="col">Кількість</th>
             <th scope="col">Одиниця</th>
-            <th scope="col">Ціна ₴</th>
+            <th scope="col">Ціна одиниці ₴</th>
             <th scope="col">Вартість ₴</th>
             <th scope="col">Дата</th>
             <th scope="col">Дії</th>
@@ -31,10 +31,10 @@
                         </span>
                     </div>
                 </td>
-                <td>{{$purchase->count}}</td>
+                <td>{{$purchase->count + 0}}</td>
                 <td>{{$purchase->unit}}</td>
-                <td>{{$purchase->price}}</td>
-                <td>{{$purchase->count * $purchase->price}}</td>
+                <td>{{round($purchase->price / $purchase->count, 4)}}</td>
+                <td>{{$purchase->price + 0}}</td>
                 <td>{{substr($purchase->date, 0, 10)}}</td>
                 <td>
                     <a href="/purchases/edit/{{$purchase->id}}" class="btn btn-warning btn-sm m-2">
@@ -47,6 +47,8 @@
         @endforeach
     </tbody>
 </table>
+<a href="/purchases/arhivate" class="btn btn-danger ms-3">НЕ ТИКАТИ, ЕКСПЕРЕМЕНТАЛЬНА ФІЧА</a>
+
 @endsection
 
 

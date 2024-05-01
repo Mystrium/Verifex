@@ -9,7 +9,7 @@
             <th scope="col">#</th>
             <th scope="col">Назва</th>
             <th scope="col">Цех</th>
-            <th scope="col">Мін ЗП</th>
+            <th scope="col">Мін ЗП ₴</th>
             <th scope="col">Вироби</th>
             <th scope="col">Права</th>
             <th scope="col">Дії</th>

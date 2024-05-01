@@ -37,7 +37,7 @@ class SelfcostController extends BaseController {
                     INNER JOIN TreeTraversal tt ON c.what_id = tt.have_id
                 )
                 
-                SELECT itms.*, avg(price) as price
+                SELECT itms.*, avg(price) / sum(purchases.count) as price
                 FROM (
                     SELECT items.title, have_id, items.url_photo, items.description, units.title as unit, sum(total_count) as cnt
                     FROM TreeTraversal
