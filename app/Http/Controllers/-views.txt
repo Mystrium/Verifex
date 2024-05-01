@@ -6,6 +6,8 @@
     + type
     save images
 
+??? Переміщення архівація ???
+
 CRUD
     items types
         title

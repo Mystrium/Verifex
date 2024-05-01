@@ -231,11 +231,11 @@ class MovementController extends BaseController {
             ->whereNull('worker_to_id')
             ->whereBetween('date', [$start, $end])
             ->groupBy('ceh_id', 'item_id_id')
-            ->when(empty($request->byworker), function ($q) {
-                return $q->groupBy( 'worker_from_id');
+            ->when(!empty($request->byworker), function ($q) {
+                return $q->groupBy('worker_from_id');
             })
-            ->when(empty($request->bycolor), function ($q) {
-                return $q->groupBy( 'color_id');
+            ->when(!empty($request->bycolor), function ($q) {
+                return $q->groupBy('color_id');
             })
             ->orderBy('ceh_id')
             ->get();
