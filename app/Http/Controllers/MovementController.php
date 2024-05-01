@@ -183,6 +183,7 @@ class MovementController extends BaseController {
                 colors.hex,
                 colors.title as color,
                 transactions.count,
+                units.title as unit,
                 date')
             ->join('items',                     'items.id',         '=', 'transactions.item_id_id')
             ->join('workers',                   'workers.id',       '=', 'transactions.worker_from_id')
@@ -192,6 +193,7 @@ class MovementController extends BaseController {
             ->join('ceh as ceh_to',             'workerto.ceh_id',  '=', 'ceh_to.id')
             ->join('ceh_types as ceh_type_to',  'ceh_to.type_id',   '=', 'ceh_type_to.id')
             ->join('colors',                    'colors.id',        '=', 'transactions.color_id')
+            ->join('units',                     'units.id',         '=', 'items.unit_id')
             ->whereBetween('date', [$start, $end])
             ->whereNotNull('worker_to_id')
             ->orderBy('date', 'desc')
@@ -213,9 +215,11 @@ class MovementController extends BaseController {
                 ceh.title as ceh,
                 ceh_types.title as type,
                 transactions.color_id,
+                workers.id as worker,
                 workers.pib,
                 colors.hex,
                 colors.title as color,
+                units.title as unit,
                 sum(transactions.count) as count
                 ')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
@@ -223,6 +227,7 @@ class MovementController extends BaseController {
             ->join('ceh', 'ceh.id', '=', 'workers.ceh_id')
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->join('colors', 'colors.id', '=', 'transactions.color_id', 'left outer')
+            ->join('units',                     'units.id',         '=', 'items.unit_id')
             ->whereNull('worker_to_id')
             ->whereBetween('date', [$start, $end])
             ->groupBy('ceh_id', 'item_id_id')

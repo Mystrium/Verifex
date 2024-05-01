@@ -5,8 +5,8 @@
 
 <form action="/purchases/materials/update" method="POST">
     @csrf
-    <div class="row pt-2 pb-3 my-2 mx-1 border rounded ">
-        <div class="col-md-auto">
+    <div style="display: flex; flex-direction: row; justify-content: row; align-items: flex-end; flex-wrap: wrap" class="pb-3">
+        <div class="pe-2">
             <span class="fw-bold">Цех</span>
             <br>
             <select class="search-drop input-group-text" style="height:40px;" name="initceh" id="ceh_select" onchange="updateOptions(this.value);">
@@ -15,7 +15,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-auto">
+        <div class="pe-2">
             <span class="fw-bold">Посада</span>
             <br>
             <select class="search-drop input-group-text" style="width:200px" name="initworker" id="role_select">
@@ -24,8 +24,8 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-auto">
-            <button type="submit" class="btn btn-warning m-2 mt-3">Змінити</button>
+        <div class="pt-1">
+            <button type="submit" class="btn btn-warning">Змінити</button>
         </div>
     </div>
 </form>

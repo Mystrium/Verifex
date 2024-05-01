@@ -23,7 +23,7 @@
 
 <div class="tab-content pt-1">
     <div class="tab-pane active show" id="titems" role="tabpanel">
-        <table name="jsTable" class="table table-success">
+        <table name="jsTable" class="table table-success w-100">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -40,8 +40,8 @@
                 @foreach($items as $item)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:200px;max-height:200px"></td>
-                        <td><h5 class="fw-bold">{{$item->title}}</h5></td>
+                        <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:100px;max-height:100px"></td>
+                        <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
                         <td>{{$item->price}}</td>
                         <td>{{$item->hascolor==1?'Має':'---'}}</td>
@@ -82,7 +82,7 @@
                 @foreach($operations as $item)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:200px;max-height:200px"></td>
+                        <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:100px;max-height:100px"></td>
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
                         <td>{{$item->price}}</td>
@@ -124,7 +124,7 @@
                 @foreach($materials as $item)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:200px;max-height:200px"></td>
+                        <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:100px;max-height:100px"></td>
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
                         <td>{{$item->hascolor==1?'Має':'---'}}</td>

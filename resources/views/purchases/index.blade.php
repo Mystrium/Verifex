@@ -24,7 +24,13 @@
             <tr>
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>{{$purchase->title}}</td>
-                <td><div style="background-color:#{{$purchase->hex}};">{{$purchase->ctitle}}</div></td>
+                <td>
+                    <div style="background-color:#{{$purchase->hex}};">
+                        <span style="mix-blend-mode: difference; color:white">
+                            {{$purchase->ctitle}}
+                        </span>
+                    </div>
+                </td>
                 <td>{{$purchase->count}}</td>
                 <td>{{$purchase->unit}}</td>
                 <td>{{$purchase->price}}</td>

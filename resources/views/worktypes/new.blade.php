@@ -12,8 +12,9 @@
             <input type="text" class="form-control" minlength=5 maxlength=40 required name="title" value="{{$edit->title??''}}" placeholder="Швея...">
         </div>
         <div class="col-md-auto">
-            <span class="fw-bold">Тип цеху</span><span class="text-danger"> *</span>
-            <br>
+            <div class="pb-2">
+                <span class="fw-bold">Тип цеху</span><span class="text-danger"> *</span>
+            </div>
             <select class="search-drop input-group-text" name="type">
                 @foreach($cehtypes as $tp)
                     <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->cehtype_id?'selected':''):''}}>{{$tp->title}}</option>

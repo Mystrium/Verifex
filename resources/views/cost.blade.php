@@ -32,7 +32,12 @@
             </tr>
             <tr type="button" onclick="hiderows('a{{$item->id}}')">
                 <th>Операції</th>
-                <th colspan=6 id="1a{{$item->id}}">[ + ]</th>
+                <th id="1a{{$item->id}}">[ + ]</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             <tr name="a{{$item->id}}" hidden>
                 <th scope="col">#</th>
@@ -62,7 +67,12 @@
             @endforeach
             <tr type="button" onclick="hiderows('b{{$item->id}}')">
                 <th>Матеріали</th>
-                <th colspan=6 id="1b{{$item->id}}">[ + ]</th>
+                <th id="1b{{$item->id}}">[ + ]</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             <tr name="b{{$item->id}}" hidden>
                 <th scope="col">#</th>

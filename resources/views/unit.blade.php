@@ -5,12 +5,18 @@
 
 <form action="{{ url('/units/add') }}" method="POST">
     @csrf
-    <div class="input-group pt-2 pb-4" style="width:320px">
-        <span class="input-group-text">Назва</span>    
-        <input type="text" class="form-control" required maxlength=15 name="title" placeholder="кг...">
-        <button type="submit" class="btn btn-primary">Додати</button>
+    <div style="display: flex; flex-direction: row; justify-content: row; align-items: flex-end; flex-wrap: wrap" class="pb-3">
+        <div class="pe-2">
+            <span class="fw-bold">Назва</span>
+            <br>
+            <input type="text" class="form-control" required maxlength=15 name="title" placeholder="кг...">
+        </div>
+        <div class="pt-1">
+            <button type="submit" class="btn btn-success">Додати</button>
+        </div>
     </div>
 </form>
+
 <table class="table table-striped table-success">
     <thead>
         <tr>

@@ -4,19 +4,26 @@
 
 <form action="{{ url('/cehs/add') }}" method="POST">
     @csrf
-    <div class="input-group">
-        <span class="input-group-text" style="height:28px">Тип</span>
-        <select class="search-drop" name="type">
-            @foreach($types as $tp)
-                <option value="{{$tp->id}}">{{$tp->title}}</option>
-            @endforeach
-        </select>
+    <div style="display: flex; flex-direction: row; justify-content: row; align-items: flex-start; flex-wrap: wrap" class="pb-3">
+        <div class="pe-2">
+            <div class="pb-2">
+                <span class="fw-bold">Тип</span>
+            </div>
+            <select class="search-drop" name="type">
+                @foreach($types as $tp)
+                    <option value="{{$tp->id}}">{{$tp->title}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="pe-2">
+            <span class="fw-bold">Назва</span>
+            <br>
+            <input type="text" class="form-control" maxlength=20 name="title" placeholder="Розкрієчний...">
+        </div>
+        <div style="align-self: flex-end" class="pt-1">
+            <button type="submit" class="btn btn-success">Додати</button>
+        </div>
     </div>
-    <div class="input-group pt-2 pb-2" style="width:300px">
-        <span class="input-group-text">Назва</span>
-        <input type="text" class="form-control" maxlength=20 name="title" placeholder="Розкрієчний...">
-    </div>
-    <button type="submit" class="btn btn-primary mb-3">Додати</button>
 </form>
 <table class="table table-striped table-success">
     <thead>

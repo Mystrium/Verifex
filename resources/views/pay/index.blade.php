@@ -3,30 +3,31 @@
 @section('action', 'Заробітня плата робітників')
 @section('content')
 
-<form method="GET" action="/pay" style="display:inline">
-    <div class="input-group">
-        <h5>Період</h5>
-    </div>
-    <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
-        <div class="col-md-auto">
+<form method="GET" action="/pay">
+    <div style="display: flex; flex-direction: row; justify-content: row; align-items: center">
+        <div class="pe-2">
+            <h5>Період</h5>
+        </div>    
+        <div class="pe-2">
             <div class="input-group">
                 <span class="input-group-text">Від</span>    
                 <input type="date" class="form-control" name="period[]" value="{{$period[0]??''}}" onchange="this.form.submit()">
             </div>
         </div>
-        <div class="col-md-auto">
+        <div class="pe-2">
             <div class="input-group">
                 <span class="input-group-text">До</span>    
                 <input type="date" class="form-control" name="period[]" value="{{$period[1]??''}}" onchange="this.form.submit()">
             </div>
         </div>
+        <div>
+            @if(empty(Request()->period))
+                <h5>(за минулий тиждень)</h5>
+            @endif
+        </div>
     </div>
 </form>
-
-@if(empty(Request()->period))
-    <h5>за минулий тиждень</h5>
-@endif
-
+<hr>
 <table class="table table-striped table-success" name="jsTable">
     <thead>
         <tr>
