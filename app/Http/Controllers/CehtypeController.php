@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 class CehtypeController extends BaseController {
 
     public function view(Request $request){
-        $types = CehType::where('title', 'like', '%' . ($request->search??'') . '%')->get();
+        $types = CehType::where('title', 'like', '%' . ($request->search??'') . '%')
+            ->orderBy('id', 'desc')
+            ->get();
         return view('cehtype')
             ->withSearch($request->search)
             ->withTypes($types);

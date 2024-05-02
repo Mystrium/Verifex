@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Consist;
 use App\Models\Item;
 use App\Models\Unit;
+use Illuminate\Support\Facades\File;
 
 class ItemController extends BaseController {
     public function items(){
@@ -57,12 +58,21 @@ class ItemController extends BaseController {
     }
 
     public function add(Request $request){
+        $photo = '';
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $fileName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('images', $fileName, 'public');
+            $photo = asset('images/' . $fileName);
+        } else
+            $photo = $request->image;
+
         $newitm = Item::create([
             'title' => $request->title,
             'unit_id' => $request->unit,
             'hascolor' => $request->hascolor ? 1 : 0,
             'price' => $request->price ?? 0,
-            'url_photo' => $request->photo,
+            'url_photo' => $photo,
             'url_instruction' => $request->instruction,
             'description' => $request->description
         ]);
@@ -94,12 +104,21 @@ class ItemController extends BaseController {
     }
 
     public function update($id, Request $request){
+        $photo = '';
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $fileName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('images', $fileName, 'public');
+            $photo = asset('images/' . $fileName);
+        } else
+            $photo = $request->image;
+
         Item::find($id)->update([
             'title' => $request->title,
             'unit_id' => $request->unit,
             'hascolor' => $request->hascolor ? 1 : 0,
             'price' => $request->price ?? 0,
-            'url_photo' => $request->photo,
+            'url_photo' => $photo,
             'url_instruction' => $request->instruction,
             'description' => $request->description
         ]);
@@ -121,7 +140,11 @@ class ItemController extends BaseController {
     public function delete($id){
         $mess = '';
         try {
-            Item::destroy($id);
+            $to_dell = Item::find($id);
+            $filename = explode('/', $to_dell->url_photo);
+            if(file_exists(public_path('images/' . end($filename))))
+                File::delete(public_path('images/' . end($filename)));
+            $to_dell->delete();
         } catch(\Illuminate\Database\QueryException $ex) {
             $mess = $ex->getCode();
         }

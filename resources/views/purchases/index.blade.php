@@ -47,7 +47,7 @@
         @endforeach
     </tbody>
 </table>
-<a href="/purchases/arhivate" class="btn btn-danger ms-3">НЕ ТИКАТИ, ЕКСПЕРЕМЕНТАЛЬНА ФІЧА</a>
+<a href="/purchases/arhivate" class="btn btn-danger ms-3">Архівувати</a>
 
 @endsection
 

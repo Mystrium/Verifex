@@ -3,58 +3,77 @@
 @section('action', ($act=='add'?'Додати':'Змінити') . ' виріб')
 @section('content')
 
-<form action="/items/{{$act}}/{{$edit->id??''}}" method="POST">
+<form action="/items/{{$act}}/{{$edit->id??''}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
         <div class="col">
-            <span class="fw-bold">Назва</span><span class="text-danger"> *</span>
-            <input type="text" class="form-control" minlength=4 maxlength=70 required name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
-        </div>
+            <div class="ps-1 pb-2">
+                <span class="fw-bold">Назва</span><span class="text-danger"> *</span>
+                <input type="text" class="form-control" minlength=4 maxlength=70 required name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
+            </div>
 
-        <div class="col">
+            <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
+                <div class="col-md-auto">
+                    <span class="fw-bold">Має колір</span>
+                    <br>
+                    <label class="switch">
+                        <input type="checkbox" name="hascolor" {{isset($edit)?($edit->hascolor==1?'checked':''):''}}>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="col-md-auto">
+                    <span class="fw-bold">Одиниця</span><span class="text-danger"> *</span>
+                    <br>
+                    <select class="search-drop" name="unit">
+                        @foreach($units as $tp)
+                            <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->unit_id?'selected':''):''}}>{{$tp->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col">
+                    <span class="fw-bold">Оплата</span>
+                    <br>
+                    <input type="number" style="width:140px" class="form-control" max="9999" name="price" value="{{$edit->price??''}}" placeholder="за одиницю">
+                </div>
+            </div>
+
+            <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
+                <div class="col">
+                    <span class="fw-bold">Опис</span>
+                    <br>
+                    <input type="text" class="form-control" maxlength=200 name="description" value="{{$edit->description??''}}" placeholder="Розкрієчний...">
+                </div>
+                <div class="col">
+                    <span class="fw-bold">Інструкція</span>
+                    <br>
+                    <input type="url" class="form-control" maxlength=150 name="instruction" value="{{$edit->url_instruction??''}}" placeholder="URL...">
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
             <span class="fw-bold">Фото</span><span class="text-danger"> *</span>
-            <br>
-            <input type="url" class="form-control" maxlength=150 required name="photo" value="{{$edit->url_photo??''}}" placeholder="URL...">
-        </div>
-    </div>
-
-    <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
-        <div class="col-md-auto">
-            <span class="fw-bold">Має колір</span>
-            <br>
-            <label class="switch">
-                <input type="checkbox" name="hascolor" {{isset($edit)?($edit->hascolor==1?'checked':''):''}}>
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div class="col-md-auto">
-            <span class="fw-bold">Одиниця</span><span class="text-danger"> *</span>
-            <br>
-            <select class="search-drop" name="unit">
-                @foreach($units as $tp)
-                    <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->unit_id?'selected':''):''}}>{{$tp->title}}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col">
-            <span class="fw-bold">Оплата</span>
-            <br>
-            <input type="number" style="width:140px" class="form-control" max="9999" name="price" value="{{$edit->price??''}}" placeholder="за одиницю">
-        </div>
-    </div>
-
-    <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
-        <div class="col">
-            <span class="fw-bold">Опис</span>
-            <br>
-            <input type="text" class="form-control" maxlength=200 name="description" value="{{$edit->description??''}}" placeholder="Розкрієчний...">
-        </div>
-        <div class="col">
-            <span class="fw-bold">Інструкція</span>
-            <br>
-            <input type="url" class="form-control" maxlength=150 name="instruction" value="{{$edit->url_instruction??''}}" placeholder="URL...">
+            <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
+                <div class="col-auto">
+                    <span class="fw-bold">Завантажити</span><span class="text-danger"></span>
+                    <br>
+                    <label class="switch">
+                        <input type="checkbox" onchange="photoupload(this)">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="col">
+                    <span id="uploadtext" class="fw-bold">Посилання</span>
+                    <br>
+                    <input id="image" type="url" class="form-control" maxlength=150 required name="image" value="{{$edit->url_photo??''}}" placeholder="URL...">
+                </div>
+            </div>
+            @if(isset($edit->url_photo))
+                <div class="text-center">
+                    <img src="{{$edit->url_photo}}" style="max-width:200px; max-height:200px">
+                </div>
+            @endif
         </div>
     </div>
 
@@ -152,5 +171,15 @@
         sel.selectedIndex = 0;
     }
     window.dellTag = function(name){ document.getElementById(name).remove(); }
+
+    window.photoupload = function(check){
+        if(check.checked){
+            document.getElementById('image').type = "file";
+            document.getElementById('uploadtext').innerHTML='Фото';
+        } else {
+            document.getElementById('image').type = "url";
+            document.getElementById('uploadtext').innerHTML='Посилання';
+        }
+    }
 </script>
 @endsection

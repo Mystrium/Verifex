@@ -12,9 +12,13 @@ class CehController extends BaseController {
         $types = CehType::all();
         if($request->search){
             if($request->search[0] == 0)
-                $cehs = Ceh::where('title', 'like', '%' . ($request->search[1]??'') . '%')->get();
+                $cehs = Ceh::where('title', 'like', '%' . ($request->search[1]??'') . '%')
+                    ->orderBy('id', 'desc')
+                    ->get();
             else
-                $cehs = Ceh::where([['title', 'like', '%' . ($request->search[1]??'') . '%'], ['type_id', '=', $request->search[0]]])->get();
+                $cehs = Ceh::where([['title', 'like', '%' . ($request->search[1]??'') . '%'], ['type_id', '=', $request->search[0]]])
+                    ->orderBy('id', 'desc')
+                    ->get();
         } else
             $cehs = Ceh::all();
         return view('ceh')

@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 class ColorController extends BaseController {
 
     public function view(Request $request){
-        $colors = Color::where('title', 'like', '%' . ($request->search??'') . '%')->get();
+        $colors = Color::where('title', 'like', '%' . ($request->search??'') . '%')
+            ->orderBy('id', 'desc')
+            ->get();
         return view('color')
             ->withSearch($request->search)
             ->withColors($colors);
