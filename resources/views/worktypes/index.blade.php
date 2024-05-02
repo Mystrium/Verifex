@@ -6,19 +6,19 @@
 <table class="table table-striped table-success" name="jsTable">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col" class="text-start">#</th>
             <th scope="col">Назва</th>
             <th scope="col">Цех</th>
             <th scope="col">Мін ЗП ₴</th>
             <th scope="col">Вироби</th>
             <th scope="col">Права</th>
-            <th scope="col">Дії</th>
+            <th scope="col" class="col-md-1 text-center">Дії</th>
         </tr>
     </thead>
     <tbody>
         @foreach($worktypes as $type)
             <tr>
-                <th scope="row">{{ $loop->iteration }}</th>
+                <th scope="row" class="text-start">{{ $loop->iteration }}</th>
                 <td>{{$type->title}}</td>
                 <td>{{$type->cehtype}}</td>
                 <td>{{$type->min_pay}}</td>

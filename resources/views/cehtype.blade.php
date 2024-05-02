@@ -41,7 +41,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Назва</th>
-                <th scope="col">Дії</th>
+                <th scope="col" class="col-md-1 text-center">Дії</th>
             </tr>
         </thead>
         <tbody>

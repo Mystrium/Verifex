@@ -59,8 +59,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Тип</th>
-                <th scope="col">Назва</th>
-                <th scope="col">Дії</th>
+                <th scope="col" class="text-center">Назва</th>
+                <th scope="col" class="col-md-1 text-center">Дії</th>
             </tr>
         </thead>
         <tbody>
@@ -70,13 +70,13 @@
                 <form action="{{ url('/cehs/update/' . $ceh->id) }}" method="POST">
                     @csrf
                     <td>
-                        <select onchange="toedit(this,'{{$tp->id}}','edt{{$ceh->id}}')" class="search-drop" name="type">
+                        <select onchange="toedit(this,'{{$ceh->type_id}}','edt{{$ceh->id}}')" class="search-drop" name="type">
                             @foreach($types as $tp)
                                 <option value="{{$tp->id}}" {{$tp->id==$ceh->type_id?'selected':''}}>{{$tp->title}}</option>
                             @endforeach
                         </select>
                     </td>
-                    <td><input type="text" class="form-control" oninput="toedit(this,'{{$tp->id}}','edt{{$ceh->id}}')" maxlength=20 name="title" value="{{$ceh->title}}"></td>
+                    <td><input type="text" class="form-control" oninput="toedit(this,'{{$ceh->title}}','edt{{$ceh->id}}')" maxlength=20 name="title" value="{{$ceh->title}}"></td>
                     <td>
                     <button disabled id="edt{{$ceh->id}}" type="submit" class="btn btn-warning btn-sm m-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">

@@ -8,6 +8,7 @@
 
 (CRUD)
     items types
+        ??? subtype ???
         title
         descr
 
@@ -239,13 +240,13 @@ POST    /api/produced
         end     - кінець періода
     
     out
-        [
+        date {
             id              - id запису
             worker_to       - null
             item_id
             color_id
             count
             type_id         - id типу (виробив, пеердав, брак)
-        ]
+        }
 
 -----------------------------------------------------

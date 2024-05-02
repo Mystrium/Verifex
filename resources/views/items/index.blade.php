@@ -26,20 +26,20 @@
         <table name="jsTable" class="table table-success w-100">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col" class="text-start">#</th>
                     <th scope="col" class="text-center">Фото</th>
                     <th scope="col">Назва</th>
                     <th scope="col">Одиниця</th>
                     <th scope="col">Оплата ₴</th>
                     <th scope="col">Кольоровий</th>
                     <th scope="col">Опис</th>
-                    <th scope="col">Дії</th>
+                    <th scope="col" class="col-md-1 text-center">Дії</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($items as $item)
                     <tr>
-                        <th scope="row">{{ $loop->iteration }}</th>
+                        <th scope="row" class="text-start">{{ $loop->iteration }}</th>
                         <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:100px;max-height:100px"></td>
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
@@ -68,20 +68,20 @@
         <table name="jsTable" class="table table-success w-100">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col" class="text-start">#</th>
                     <th scope="col" class="text-center">Фото</th>
                     <th scope="col">Назва</th>
                     <th scope="col">Одиниця</th>
                     <th scope="col">Оплата ₴</th>
                     <th scope="col">Кольоровий</th>
                     <th scope="col">Опис</th>
-                    <th scope="col">Дії</th>
+                    <th scope="col" class="col-md-1 text-center">Дії</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($operations as $item)
                     <tr>
-                        <th scope="row">{{ $loop->iteration }}</th>
+                        <th scope="row" class="text-start">{{ $loop->iteration }}</th>
                         <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:100px;max-height:100px"></td>
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>
@@ -111,19 +111,19 @@
         <table name="jsTable" class="table table-success w-100">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col" class="text-start">#</th>
                     <th scope="col" class="text-center">Фото</th>
                     <th scope="col">Назва</th>
                     <th scope="col">Одиниця</th>
                     <th scope="col">Кольоровий</th>
                     <th scope="col">Опис</th>
-                    <th scope="col">Дії</th>
+                    <th scope="col" class="col-md-1 text-center">Дії</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($materials as $item)
                     <tr>
-                        <th scope="row">{{ $loop->iteration }}</th>
+                        <th scope="row" class="text-start">{{ $loop->iteration }}</th>
                         <td class="text-center"><img src="{{$item->url_photo}}" style="max-width:100px;max-height:100px"></td>
                         <td>{{$item->title}}</td>
                         <td>{{$item->unit}}</td>

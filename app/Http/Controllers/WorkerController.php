@@ -7,9 +7,7 @@ use App\Models\WorkType;
 use App\Models\Worker;
 use App\Models\Ceh;
 
-
 class WorkerController extends BaseController {
-
     public function view(){
         $workers = Worker::select('workers.*', 'ceh.title','ceh_types.title as ctitle', 'work_types.title as role')
             ->leftJoin('ceh', 'ceh.id', '=', 'workers.ceh_id')

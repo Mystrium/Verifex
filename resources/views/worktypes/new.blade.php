@@ -24,15 +24,14 @@
         <div class="col-md-auto">
             <span class="fw-bold">Мінімальна плата</span><span class="text-danger"> *</span>
             <br>
-            <input type="number" class="form-control" maxlength=4 maxlength=7 name="minpay" required value="{{$edit->min_pay??''}}" placeholder="3000">
+            <input type="number" class="form-control" min="100" max="99999" step="0.01" name="minpay" required value="{{$edit->min_pay??''}}" placeholder="3000">
         </div>
     </div>
     <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
-        <div class="col col-lg-4">
-    <!-- <div class="input-group" id="tagsSel1"> -->
+        <div class="col col-lg-3">
             <span class="fw-bold">Дозволи</span><span class="text-danger"> *</span>
             <br>
-            <select class="multiple-search input-group-text w-100" id="opr"  multiple="multiple" name="operations[]">
+            <select class="multiple-search input-group-text w-100" id="opr" multiple="multiple" name="operations[]">
                 @foreach($permisions as $item)
                     <option value="{{$item->id}}" {{ (isset($edit) && in_array($item->id, explode(',', $edit->operations))) ? 'selected' : '' }}>
                         {{$item->title}}
@@ -41,7 +40,6 @@
             </select>
         </div>
         <div class="col">
-    <!-- <div class="input-group" id="tagsSel"> -->
             <span class="fw-bold">Доступні вироби</span><span class="text-danger"> *</span>
             <br>
             <select class="multiple-search input-group-text w-100" id="itm" multiple="multiple" name="items[]">
