@@ -215,25 +215,43 @@ class ApiController extends BaseController {
     }
 
     public function produced(Request $request){
-        $produced = Worker::selectRaw('
-                transactions.id as id,
-                worker_to_id as worker_to,
-                item_id_id as item_id,
+        $produced = Transaction::selectRaw('
+                id,
+                worker_to_id,
+                item_id_id,
                 color_id,
                 abs(count) as count,
+                DATE(date) as date,
                 IF(worker_to_id is not null, 1, IF(count > 0, 3, 4)) as type_id')
-            ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
-            // ->join('items', 'items.id', '=', 'transactions.item_id_id')
-            // ->join('work_types', 'work_types.id', '=', 'workers.role_id')
-            ->where('workers.id', '=', $request->id)
+            ->where('worker_from_id', '=', $request->id)
             ->whereBetween('date', [$request->start, $request->end])
             ->orderBy('date', 'asc')
             ->get();
 
-        // $map = [];
-        // foreach($produced as $prod)
-        //     $map[$prod->date][] = ['salary' => $prod->salary];
+        $map = [];
+        foreach($produced as $prod)
+            $map[$prod->date][] = [
+                'id' => $prod->id,
+                'worker_to' => $prod->worker_to_id,
+                'item_id' => $prod->item_id_id,
+                'color_id' => $prod->color_id,
+                'count' => $prod->count,
+                'type_id' => $prod->type_id,
+            ];
 
-        return response()->json($produced);
+        return response()->json($map);
+    }
+
+    public function edittrans(Request $request){
+        $toedit = Transaction::find($request->id);
+
+        $toedit->worker_to_id   = $request->worker_to;
+        $toedit->item_id_id     = $request->item_id;
+        $toedit->color_id       = $request->color_id;
+        $toedit->count          = $request->count;
+
+        $toedit->update();
+
+        return response(null, 200);
     }
 }
