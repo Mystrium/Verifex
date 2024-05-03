@@ -68,7 +68,8 @@ class ItemController extends BaseController {
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $photo = asset($image->storeAs('images', $fileName, 'public'));
+            $image->storeAs('/images/', $fileName, 'public');
+            $photo = asset('/images/' . $fileName);
         } else
             $photo = $request->image;
 
@@ -92,7 +93,7 @@ class ItemController extends BaseController {
                 ]);
             }
         }
-
+        
         return redirect('/items');
     }
 
@@ -116,7 +117,8 @@ class ItemController extends BaseController {
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $photo = asset($image->storeAs('images', $fileName, 'public'));
+            $image->storeAs('images/', $fileName, 'public');
+            $photo = asset('images/' . $fileName);
         } else
             $photo = $request->image;
 
