@@ -7,9 +7,21 @@
     @csrf
     <div class="row pt-2 pb-3 my-2 mx-1 border rounded">
         <div class="col">
-            <div class="ps-1 pb-2">
-                <span class="fw-bold">Назва</span><span class="text-danger"> *</span>
-                <input type="text" class="form-control" minlength=4 maxlength=70 required name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
+            <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">
+                <div class="col">
+                    <span class="fw-bold">Назва</span><span class="text-danger"> *</span>
+                    <input type="text" class="form-control" minlength=4 maxlength=70 required name="title" value="{{$edit->title??''}}" placeholder="Тканина...">
+                </div>
+                <div class="col-md-auto">
+                    <span class="fw-bold">Категорія</span><span class="text-danger"> *</span>
+                    <br>
+                    <select class="search-drop" name="category">
+                        <option>-</option>
+                        @foreach($categoryes as $tp)
+                            <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->category_id?'selected':''):''}}>{{$tp->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <div class="row pt-2 pb-3 mb-2 mx-1 border rounded">

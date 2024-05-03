@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Consist;
@@ -10,8 +11,9 @@ use Illuminate\Support\Facades\File;
 
 class ItemController extends BaseController {
     public function items(){
-        $items = Item::select('items.*', 'units.title as unit')
+        $items = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
             ->join('units', 'units.id', '=', 'items.unit_id')
+            ->join('categoryes', 'categoryes.id', '=', 'items.category_id', 'left outer')
             ->whereNotIn('items.id', 
                 Consist::select('have_id')
                     ->get()
@@ -22,8 +24,9 @@ class ItemController extends BaseController {
                     ->toArray())
             ->get();
 
-        $operations = Item::select('items.*', 'units.title as unit')
+        $operations = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
             ->join('units', 'units.id', '=', 'items.unit_id')
+            ->join('categoryes', 'categoryes.id', '=', 'items.category_id', 'left outer')
             ->whereIn('items.id', 
                 Consist::select('have_id')
                     ->get()
@@ -34,8 +37,9 @@ class ItemController extends BaseController {
                     ->toArray())
             ->get();
 
-        $materials = Item::select('items.*', 'units.title as unit')
+        $materials = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
             ->join('units', 'units.id', '=', 'items.unit_id')
+            ->join('categoryes', 'categoryes.id', '=', 'items.category_id', 'left outer')
             ->whereNotIn('items.id',
                 Consist::select('what_id')
                     ->get()
@@ -51,9 +55,11 @@ class ItemController extends BaseController {
     public function new() {
         $types = Item::all();
         $units = Unit::all();
+        $categoryes = Category::all();
         return view('items/new')
             ->withItems($types)
             ->withUnits($units)
+            ->withCategoryes($categoryes)
             ->withAct('add');
     }
 
@@ -70,6 +76,7 @@ class ItemController extends BaseController {
         $newitm = Item::create([
             'title' => $request->title,
             'unit_id' => $request->unit,
+            'category_id' => $request->category,
             'hascolor' => $request->hascolor ? 1 : 0,
             'price' => $request->price ?? 0,
             'url_photo' => $photo,
@@ -95,11 +102,13 @@ class ItemController extends BaseController {
         $items = Item::where('id', '<>', $id)->get();
         $consist = Consist::where('what_id', '=', $id)->get();
         $units = Unit::all();
+        $categoryes = Category::all();
         return view('items/new')
             ->withItems($items)
             ->withEdit($toedit)
             ->withUnits($units)
             ->withConsists($consist)
+            ->withCategoryes($categoryes)
             ->withAct('update');
     }
 
@@ -116,6 +125,7 @@ class ItemController extends BaseController {
         Item::find($id)->update([
             'title' => $request->title,
             'unit_id' => $request->unit,
+            'category_id' => $request->category,
             'hascolor' => $request->hascolor ? 1 : 0,
             'price' => $request->price ?? 0,
             'url_photo' => $photo,

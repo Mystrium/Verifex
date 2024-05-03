@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     SelfcostController,
     PurchaseController,
     WorktypeController,
+    CategoryController,
     CehtypeController,
     WorkerController,
     ChartController,
@@ -39,6 +40,11 @@ Route::get( '/colors',                  [ColorController::class,    'view']);
 Route::post('/colors/add',              [ColorController::class,    'add']);
 Route::post('/colors/update/{id}',      [ColorController::class,    'edit']);
 Route::get( '/colors/delete/{id}',      [ColorController::class,    'delete']);
+
+Route::get( '/categoryes',              [CategoryController::class,    'view']);
+Route::post('/categoryes/add',          [CategoryController::class,    'add']);
+Route::post('/categoryes/update/{id}',  [CategoryController::class,    'edit']);
+Route::get( '/categoryes/delete/{id}',  [CategoryController::class,    'delete']);
 
 Route::get( '/items',                   [ItemController::class,     'items']);
 Route::get( '/items/new',               [ItemController::class,     'new']);

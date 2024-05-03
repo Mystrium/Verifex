@@ -35,47 +35,29 @@
                     <div class="sb-sidenav-menu-heading m-2">Core</div>
                     <ul class="nav nav-pills flex-column m-3">
                         <li>
-                            <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#statscolapse4" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                            <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#itemsnav" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                 Продукція
                             </a>
                             <div style="padding-left:20px;" class="collapse 
                                 {{$title=='Вироби'|| 
                                 $title=='Закуп' ||  
                                 $title=='Вартість' ||
-                                $title=='Операції' ||
-                                $title=='Матеріали'
+                                $title=='Категорії'
                                 ?'show':''}}" 
-                                id="statscolapse4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                id="itemsnav" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    {{-- <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#items" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                    <a class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/items">
                                         Вироби
                                     </a>
-                                    <div style="padding-left:20px;" class="collapse {{$title=='Вироби'||$title=='Вартість'?'show':''}}" id="items" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav"> --}}
-                                            <a class="nav-link {{$title=='Вироби'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/items">
-                                                Вироби
-                                            </a>
-                                            <a class="nav-link {{$title=='Вартість'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/cost">
-                                                Собівартість
-                                            </a>
-                                        {{-- </nav>
-                                    </div>
-                                    <a class="nav-link {{$title=='Операції'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/operations">
-                                        Операції
+                                    <a class="nav-link {{$title=='Вартість'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/cost">
+                                        Собівартість
                                     </a>
-                                    <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#materials" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Матеріали
+                                    <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/purchases">
+                                        Закуп
                                     </a>
-                                    <div style="padding-left:20px;" class="collapse {{$title=='Матеріали'||$title=='Закуп'?'show':''}}" id="materials" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link {{$title=='Матеріали'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/materials">
-                                                Матеріали
-                                            </a> --}}
-                                            <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/purchases">
-                                                Закуп
-                                            </a>
-                                        <!-- </nav>
-                                    </div> -->
+                                    <a class="nav-link {{$title=='Категорії'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/categoryes">
+                                        Категорії
+                                    </a>
                                 </nav>
                             </div>
                         </li>
@@ -154,7 +136,6 @@
                                 </nav>
                             </div>
                         </li>
-                        
                     </ul>
                 </div>
             </div>
