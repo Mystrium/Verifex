@@ -68,8 +68,7 @@ class ItemController extends BaseController {
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('images', $fileName, 'public');
-            $photo = asset('images/' . $fileName);
+            $photo = asset($image->storeAs('images', $fileName, 'public'));
         } else
             $photo = $request->image;
 
@@ -117,8 +116,7 @@ class ItemController extends BaseController {
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('images', $fileName, 'public');
-            $photo = asset('images/' . $fileName);
+            $photo = asset($image->storeAs('images', $fileName, 'public'));
         } else
             $photo = $request->image;
 

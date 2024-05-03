@@ -16,7 +16,7 @@
                     <span class="fw-bold">Категорія</span><span class="text-danger"> *</span>
                     <br>
                     <select class="search-drop" name="category">
-                        <option>-</option>
+                        <option value="">-</option>
                         @foreach($categoryes as $tp)
                             <option value="{{$tp->id}}" {{isset($edit)?($tp->id==$edit->category_id?'selected':''):''}}>{{$tp->title}}</option>
                         @endforeach
