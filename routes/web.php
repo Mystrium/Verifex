@@ -17,6 +17,7 @@ use App\Http\Controllers\{
     CehController,
     PayController,
     DebugController,
+    ImageController,
 };
 
 
@@ -91,3 +92,6 @@ Route::get('/cost',                 [SelfcostController::class, 'view']);
 Route::get('/worktime',             [ChartController::class, 'hours']);
 
 Route::get('/debug/folder',         [DebugController::class, 'view']);
+Route::get('/debug/test',           [DebugController::class, 'getimg']);
+
+Route::get('/images/{name}',         [ImageController::class, 'view']);
