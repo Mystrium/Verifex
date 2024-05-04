@@ -16,6 +16,7 @@ use App\Http\Controllers\{
     ItemController,
     CehController,
     PayController,
+    DebugController,
 };
 
 
@@ -88,3 +89,5 @@ Route::get('/movement/delete/{id}', [MovementController::class, 'delete']);
 Route::get('/cost',                 [SelfcostController::class, 'view']);
 
 Route::get('/worktime',             [ChartController::class, 'hours']);
+
+Route::get('/debug/folder',         [DebugController::class, 'view']);

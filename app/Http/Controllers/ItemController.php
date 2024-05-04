@@ -56,6 +56,7 @@ class ItemController extends BaseController {
         $types = Item::all();
         $units = Unit::all();
         $categoryes = Category::all();
+
         return view('items/new')
             ->withItems($types)
             ->withUnits($units)
@@ -68,8 +69,8 @@ class ItemController extends BaseController {
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('/images/', $fileName, 'public');
-            $photo = asset('/images/' . $fileName);
+            $image->storeAs('/images', $fileName, 'public');
+            $photo = asset('/images' . $fileName);
         } else
             $photo = $request->image;
 
