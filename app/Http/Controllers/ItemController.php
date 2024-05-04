@@ -8,6 +8,7 @@ use App\Models\Consist;
 use App\Models\Item;
 use App\Models\Unit;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends BaseController {
     public function items(){
@@ -67,10 +68,13 @@ class ItemController extends BaseController {
     public function add(Request $request){
         $photo = '';
         if($request->hasFile('image')){
-            $image = $request->file('image');
-            $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $fileName);
-            $photo = asset('images/' . $fileName);
+            // $image = $request->file('image');
+            // $fileName = time() . '.' . $image->getClientOriginalExtension();
+            // $image->move(public_path('images'), $fileName);
+            // $photo = asset('images/' . $fileName);
+            // $path = $request->file('image')->store('public/images');
+            $path = $request->file('image')->store('images', 'public');
+            $photo = asset(Storage::url($path));
         } else
             $photo = $request->image;
 
@@ -116,18 +120,17 @@ class ItemController extends BaseController {
     public function update($id, Request $request){
         $photo = '';
         if($request->hasFile('image')){
-            $image = $request->file('image');
-            $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $fileName);
-            $photo = asset('images/' . $fileName);
+            $path = $request->file('image')->store('images', 'public');
+            $photo = asset(Storage::url($path));
         } else
             $photo = $request->image;
 
         $to_edit = Item::find($id);
 
         $filename = explode('/', $to_edit->url_photo);
-        if(file_exists(public_path('images/' . end($filename))))
-            File::delete(public_path('images/' . end($filename)));
+        $path = 'public/images/' . end($filename);
+        if(Storage::exists($path))
+            Storage::delete($path);
 
         $to_edit->update([
             'title' => $request->title,
@@ -159,8 +162,9 @@ class ItemController extends BaseController {
         try {
             $to_dell = Item::find($id);
             $filename = explode('/', $to_dell->url_photo);
-            if(file_exists(public_path('images/' . end($filename))))
-                File::delete(public_path('images/' . end($filename)));
+            $path = 'public/images/' . end($filename);
+            if(Storage::exists($path))
+                Storage::delete($path);
             $to_dell->delete();
         } catch(\Illuminate\Database\QueryException $ex) {
             $mess = $ex->getCode();
