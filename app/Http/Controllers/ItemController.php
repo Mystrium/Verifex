@@ -68,13 +68,10 @@ class ItemController extends BaseController {
     public function add(Request $request){
         $photo = '';
         if($request->hasFile('image')){
-            // $image = $request->file('image');
-            // $fileName = time() . '.' . $image->getClientOriginalExtension();
-            // $image->move(public_path('images'), $fileName);
-            // $photo = asset('images/' . $fileName);
-            // $path = $request->file('image')->store('public/images');
-            $path = $request->file('image')->store('images', 'public');
-            $photo = asset(Storage::url($path));
+            $image = $request->file('image');
+            $fileName = time() . '.' . $image->getClientOriginalExtension();
+            Storage::put('images/' . $fileName, file_get_contents($image));
+            $photo = asset('images/' . $fileName);
         } else
             $photo = $request->image;
 
@@ -120,8 +117,10 @@ class ItemController extends BaseController {
     public function update($id, Request $request){
         $photo = '';
         if($request->hasFile('image')){
-            $path = $request->file('image')->store('images', 'public');
-            $photo = asset(Storage::url($path));
+            $image = $request->file('image');
+            $fileName = time() . '.' . $image->getClientOriginalExtension();
+            Storage::put('images/' . $fileName, file_get_contents($image));
+            $photo = asset('images/' . $fileName);
         } else
             $photo = $request->image;
 
