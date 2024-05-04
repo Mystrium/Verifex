@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class DebugController extends BaseController {
 
     public function view(Request $request){
-        dd(scandir('./images' . $request->path??''));
+        dd(scandir('.' . $request->path??''));
     }
 }
