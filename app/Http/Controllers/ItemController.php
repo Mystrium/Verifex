@@ -69,8 +69,8 @@ class ItemController extends BaseController {
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('/images', $fileName, 'public');
-            $photo = asset('/images' . $fileName);
+            $image->storeAs('/', $fileName, 'public');
+            $photo = asset('/' . $fileName);
         } else
             $photo = $request->image;
 
@@ -123,7 +123,9 @@ class ItemController extends BaseController {
         } else
             $photo = $request->image;
 
-        Item::find($id)->update([
+        $to_edit = Item::find($id);
+
+        $to_edit->update([
             'title' => $request->title,
             'unit_id' => $request->unit,
             'category_id' => $request->category,
@@ -133,6 +135,10 @@ class ItemController extends BaseController {
             'url_instruction' => $request->instruction,
             'description' => $request->description
         ]);
+
+        $filename = explode('/', $to_edit->url_photo);
+        if(file_exists(public_path('images/' . end($filename))))
+            File::delete(public_path('images/' . end($filename)));
 
         Consist::where('what_id', '=', $id)->delete();
         if($request->consists){
