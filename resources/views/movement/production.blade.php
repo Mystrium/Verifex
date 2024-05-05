@@ -80,7 +80,7 @@
                             @if(!empty($group['worker']))
                                 <th scope="col">Робітник</th>
                             @endif
-                            <th scope="col">Виріб</th>
+                            <th scope="col">Найменування</th>
                             @if(!empty($group['color']))
                                 <th scope="col">Колір</th>
                             @endif

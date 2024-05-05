@@ -47,7 +47,7 @@
                         <td>{{$item->unit}}</td>
                         <td>{{$item->price}}</td>
                         <td>{{$item->hascolor==1?'Так':'Ні'}}</td>
-                        <td>{{substr($item->description, 0, 50)}}</td>
+                        <td>{{mb_substr($item->description, 0, 30, "utf-8")}}</td>
                         <td>
                             <a href="/items/edit/{{$item->id}}" class="btn btn-warning btn-sm m-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

@@ -13,6 +13,7 @@ class WorkerController extends BaseController {
             ->leftJoin('ceh', 'ceh.id', '=', 'workers.ceh_id')
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->leftJoin('work_types', 'work_types.id', '=', 'workers.role_id')
+            ->orderBy('id', 'desc')
             ->get();
 
         return view('workers/index')
@@ -23,6 +24,7 @@ class WorkerController extends BaseController {
         $worktypes = WorkType::all();
         $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->orderBy('type_id')
             ->get();
         $worker = Worker::all();
 
@@ -57,6 +59,7 @@ class WorkerController extends BaseController {
         $worker = Worker::find($id);
         $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
+            ->orderBy('type_id')
             ->get();
 
         $worktypes = WorkType::all();

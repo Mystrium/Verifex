@@ -23,7 +23,7 @@
             <table class="table table-success table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Виріб</th>
+                        <th scope="col">Найменування</th>
                         <th scope="col">Колір</th>
                         <th scope="col">Кількість</th>
                     </tr>

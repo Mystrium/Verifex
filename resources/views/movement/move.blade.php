@@ -32,11 +32,11 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">звідки</th>
+                <th scope="col">Звідки</th>
                 <th scope="col">Хто</th>
                 <th scope="col">Кому</th>
                 <th scope="col">Куди</th>
-                <th scope="col">Виріб</th>
+                <th scope="col">Найменування</th>
                 <th scope="col">Колір</th>
                 <th scope="col">Кількість</th>
                 <th scope="col">Дата</th>

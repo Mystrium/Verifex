@@ -194,7 +194,7 @@ class MovementController extends BaseController {
             ->join('ceh_types as ceh_type_to',  'ceh_to.type_id',   '=', 'ceh_type_to.id')
             ->join('colors',                    'colors.id',        '=', 'transactions.color_id')
             ->join('units',                     'units.id',         '=', 'items.unit_id')
-            ->whereBetween('date', [$start, $end])
+            ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
             ->whereNotNull('worker_to_id')
             ->orderBy('date', 'desc')
             ->get();
@@ -229,7 +229,7 @@ class MovementController extends BaseController {
             ->join('colors', 'colors.id', '=', 'transactions.color_id', 'left outer')
             ->join('units',                     'units.id',         '=', 'items.unit_id')
             ->whereNull('worker_to_id')
-            ->whereBetween('date', [$start, $end])
+            ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
             ->groupBy('ceh_id', 'item_id_id')
             ->when(!empty($request->byworker), function ($q) {
                 return $q->groupBy('worker_from_id');

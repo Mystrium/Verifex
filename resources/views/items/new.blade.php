@@ -44,10 +44,10 @@
                     </select>
                 </div>
 
-                <div class="col">
+                <div class="col" id="payment" {{isset($edit->price) ? ($edit->price == 0 ? 'hidden' : '') : 'hidden'}}>
                     <span class="fw-bold">Оплата</span>
                     <br>
-                    <input type="number" style="width:140px" class="form-control" max="9999" name="price" value="{{$edit->price??''}}" placeholder="за одиницю">
+                    <input type="number" style="width:140px" class="form-control" max="9999" step="0.01" name="price" value="{{$edit->price??''}}" placeholder="за одиницю">
                 </div>
             </div>
 
@@ -99,7 +99,7 @@
             </tr>
         </thead>
         <tbody id='consist_table'>
-            @foreach($consists??[] as $cons)
+            @foreach(isset($consists)?$consists:[] as $cons)
                 @foreach($items as $item)
                     @if($item->id == $cons->have_id)
                         <tr id="t{{$item->id}}">
@@ -163,6 +163,7 @@
 
             var table = document.getElementById(after_name);
             var newRow = table.insertRow(table.rows.length - 1);
+            newRow.id = 't' + sel.value;
             newRow.innerHTML = 
                 '<td>'
                     +'<input name="consists[]" type="hidden" value="'+sel.value+'">'
@@ -181,8 +182,16 @@
                 +'<td><button class="input-group-text text-danger" type="button" onclick="dellTag(`t'+sel.value+'`)">X</button></td>';
         }
         sel.selectedIndex = 0;
+        
+        document.getElementById('payment').hidden = false;
     }
-    window.dellTag = function(name){ document.getElementById(name).remove(); }
+
+    window.dellTag = function(name){ 
+        document.getElementById(name).remove();
+        console.log(document.getElementById('consist_table').rows.length)
+        if(document.getElementById('consist_table').rows.length == 1)
+            document.getElementById('payment').hidden = true;
+    }
 
     window.photoupload = function(check){
         if(check.checked){

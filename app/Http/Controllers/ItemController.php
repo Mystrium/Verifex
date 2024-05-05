@@ -23,6 +23,7 @@ class ItemController extends BaseController {
                 Consist::select('what_id')
                     ->get()
                     ->toArray())
+            ->orderBy('id', 'desc')
             ->get();
 
         $operations = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
@@ -36,6 +37,7 @@ class ItemController extends BaseController {
                 Consist::select('what_id')
                     ->get()
                     ->toArray())
+            ->orderBy('id', 'desc')
             ->get();
 
         $materials = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
@@ -45,6 +47,7 @@ class ItemController extends BaseController {
                 Consist::select('what_id')
                     ->get()
                     ->toArray())
+            ->orderBy('id', 'desc')
             ->get();
 
         return view('items/index')
@@ -54,7 +57,7 @@ class ItemController extends BaseController {
     }
 
     public function new() {
-        $types = Item::all();
+        $types = Item::orderBy('id', 'desc')->get();
         $units = Unit::all();
         $categoryes = Category::all();
 
@@ -101,7 +104,7 @@ class ItemController extends BaseController {
 
     public function edit($id) {
         $toedit = Item::where('id', '=', $id)->get()[0];
-        $items = Item::where('id', '<>', $id)->get();
+        $items = Item::where('id', '<>', $id)->orderBy('id', 'desc')->get();
         $consist = Consist::where('what_id', '=', $id)->get();
         $units = Unit::all();
         $categoryes = Category::all();
