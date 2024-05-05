@@ -58,12 +58,28 @@ class ApiController extends BaseController {
     }
 
     public function items(Request $request){
-        $items = Item::select('items.*', 'units.title as unit')
+        $items = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
             ->leftJoin('role_items', 'role_items.item_id', '=', 'items.id')
             ->join('units', 'units.id', '=', 'items.unit_id')
+            ->join('categoryes', 'categoryes.id', '=', 'items.category_id')
             ->where('role_id', '=', $request->role)
             ->get();
-        return response()->json($items);
+
+        $map = [];
+        foreach($items as $item)
+            $map[$item->category][] = 
+                [
+                    'id' => $item->id,
+                    'title' => $item->title,
+                    'url_photo' => $item->url_photo,
+                    'unit' => $item->unit,
+                    'hascolor' => $item->hascolor,
+                    'price' => $item->price,
+                    'description' => $item->description,
+                    'url_instruction' => $item->url_instruction
+                ];
+
+        return response()->json($map);
     }
 
     public function colors(){

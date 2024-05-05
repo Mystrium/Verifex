@@ -3,9 +3,6 @@
 
 ??? Переміщення архівація ??? (треба думати...)
 
-+++++ Item
-    + фіксити паблік в рєльсах
-
 items types
     ??? subtype ???
 
@@ -32,10 +29,6 @@ __________^^^^^^^^tables
 __________^^^^^^^^graphics
 
 _____________________________________________________________
-
-    типи виробів
-
-
 API doc
 
 POST    /api/login
@@ -106,14 +99,16 @@ POST    /api/items
         role         - роль з юзера
     
     out
-        id
-        title
-        unit
-        hascolor
-        price              - плата за одиницю виконану
-        url_photo
-        url_instruction    - null
-        description        - null
+        'category' : [
+            id
+            title
+            unit
+            hascolor
+            price              - плата за одиницю виконану
+            url_photo
+            url_instruction    - null
+            description        - null
+        ]
 
 -----------------------------------------------------
 
@@ -233,13 +228,13 @@ POST    /api/produced
         end     - кінець періода
     
     out
-        date {
+        'date' : [
             id              - id запису
             worker_to       - null
             item_id
             color_id
             count
             type_id         - id типу (виробив, пеердав, брак)
-        }
+        ]
 
 -----------------------------------------------------
