@@ -23,9 +23,11 @@
                 <td>{{$type->cehtype}}</td>
                 <td>{{$type->min_pay}}</td>
                 <td>
+                    @php($i = 0)
                     @foreach($workitems as $itm)
                         @if($itm->role_id == $type->id)
-                            <a href="/items/edit/{{$itm->id}}" style="text-decoration:none">{{$itm->title}}</a>,
+                            {{$i>0?',':''}}<a href="/items/edit/{{$itm->id}}" style="text-decoration:none">{{$itm->title}}</a>
+                            @php($i++)
                         @endif
                     @endforeach
                 </td>
@@ -33,7 +35,7 @@
                     @foreach(explode(',', $type->operations) as $oper)
                         @foreach($permisions as $per)
                             @if($per->id == $oper)
-                                {{$per->title}}{{$loop->last ? '' : ','}}
+                                {{$per->title}}{{count(explode(',', $type->operations)) == 1 ? '' : ($loop->last ? '' : ',')}}
                                 @break
                             @endif
                         @endforeach
