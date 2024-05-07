@@ -48,7 +48,7 @@
         <h5 class="fw-bold">За цей період нічого не виробили :(</h5>
     </div>
 @else
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
         @php($uniq = '')
         @foreach($moves as $prods)
             @if($uniq != $prods->ceh_id)

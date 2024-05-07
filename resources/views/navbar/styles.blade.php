@@ -134,6 +134,21 @@
         .slider.round { border-radius: 34px; }
 
         .slider.round:before { border-radius: 50%; }
+
+        .nav-tabs .nav-item .nav-link.active { color: orange; }
+        .nav-tabs .nav-item .nav-link { 
+            color: black;  
+            border-top: 1px solid darkgray;
+            border-left: 0.5px solid darkgray;
+            border-right: 0.5px solid darkgray;
+        }
+        .nav-tabs .nav-item .nav-link:not(.active){ 
+            color: black;  
+            border-top: 1px solid lightgray;
+            border-left: 0.5px solid lightgray;
+            border-right: 0.5px solid lightgray;
+        }
+        .nav-tabs { border-bottom: 2px solid darkgray; }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

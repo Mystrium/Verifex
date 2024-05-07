@@ -1,18 +1,18 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Consist;
 use App\Models\Item;
 use App\Models\Unit;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class ItemController extends BaseController {
     public function items(){
-        $items = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
+        $items = [];
+        $items['products'] = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
             ->join('units', 'units.id', '=', 'items.unit_id')
             ->join('categoryes', 'categoryes.id', '=', 'items.category_id', 'left outer')
             ->whereNotIn('items.id', 
@@ -26,7 +26,7 @@ class ItemController extends BaseController {
             ->orderBy('id', 'desc')
             ->get();
 
-        $operations = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
+        $items['operations'] = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
             ->join('units', 'units.id', '=', 'items.unit_id')
             ->join('categoryes', 'categoryes.id', '=', 'items.category_id', 'left outer')
             ->whereIn('items.id', 
@@ -40,7 +40,7 @@ class ItemController extends BaseController {
             ->orderBy('id', 'desc')
             ->get();
 
-        $materials = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
+        $items['materials'] = Item::select('items.*', 'units.title as unit', 'categoryes.title as category')
             ->join('units', 'units.id', '=', 'items.unit_id')
             ->join('categoryes', 'categoryes.id', '=', 'items.category_id', 'left outer')
             ->whereNotIn('items.id',
@@ -51,12 +51,10 @@ class ItemController extends BaseController {
             ->get();
 
         return view('items/index')
-            ->withItems($items)
-            ->withOperations($operations)
-            ->withMaterials($materials);
+            ->withItems($items);
     }
 
-    public function new() {
+    public function new(){
         $types = Item::orderBy('id', 'desc')->get();
         $units = Unit::all();
         $categoryes = Category::all();
@@ -102,7 +100,7 @@ class ItemController extends BaseController {
         return redirect('/items');
     }
 
-    public function edit($id) {
+    public function edit($id){
         $toedit = Item::where('id', '=', $id)->get()[0];
         $items = Item::where('id', '<>', $id)->orderBy('id', 'desc')->get();
         $consist = Consist::where('what_id', '=', $id)->get();

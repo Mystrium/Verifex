@@ -47,8 +47,10 @@
         @endforeach
     </tbody>
 </table>
-<a href="/purchases/arhivate" class="btn btn-danger ms-3">Архівувати</a>
 
+<div class="fixed-bottom text-end">
+    <a href="/purchases/arhivate" class="btn btn-danger me-3 mb-3">Архівувати</a>
+</div>
 @endsection
 
 

@@ -2,7 +2,7 @@
 @section('title', 'Залишки')
 @section('content')
 
-<ul class="mb-1 nav nav-tabs" id="myTab" role="tablist">
+<ul class="mb-1 nav nav-tabs justify-content-center" id="myTab" role="tablist">
     @foreach($workers as $worker => $items)
         <li class="nav-item" role="presentation">
             <button class="nav-link {{$loop->index == 0 ? 'active' : ''}}" id="home-tab" data-bs-toggle="tab" data-bs-target="#w{{$worker}}" type="button" role="tab" aria-controls="home" aria-selected="true">
