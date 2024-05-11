@@ -33,9 +33,9 @@
                         <th scope="col">Категорія</th>
                         <th scope="col">Одиниця</th>
                         @if($cat[0]->price > 0)
-                            <th scope="col">Оплата ₴</th>
+                            <th scope="col">Вартість пошиву ₴</th>
                         @endif
-                        <th scope="col">Кольоровий</th>
+                        <!-- <th scope="col">Кольоровий</th> -->
                         <th scope="col">Опис</th>
                         <th scope="col" class="col-md-1 text-center">Дії</th>
                     </tr>
@@ -51,7 +51,7 @@
                             @if($cat[0]->price > 0)
                                 <td>{{$item->price}}</td>
                             @endif
-                            <td>{{$item->hascolor==1?'Так':'Ні'}}</td>
+                            <!-- <td>{{$item->hascolor==1?'Так':'Ні'}}</td> -->
                             <td>{{strlen($item->description) > 30 ? mb_substr($item->description, 0, 30, "utf-8").'...' : $item->description}}</td>
                             <td>
                                 <a href="/items/edit/{{$item->id}}" class="btn btn-warning btn-sm m-2">

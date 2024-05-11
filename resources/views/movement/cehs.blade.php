@@ -20,7 +20,7 @@
 <div class="tab-content" id="myTabContent">
     @foreach($workers as $worker => $items)
         <div class="tab-pane show {{$loop->index == 0 ? 'active' : ''}}" id="w{{$worker}}" role="tabpanel">
-            <table class="table table-success table-striped">
+            <table name="jsTable" class="table table-success table-striped w-100">
                 <thead>
                     <tr>
                         <th scope="col">Найменування</th>

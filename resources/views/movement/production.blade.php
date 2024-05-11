@@ -73,7 +73,7 @@
                 </div>
             @endif
             <div class="tab-pane show {{$loop->index == 0 ? 'active' : ''}}" id="w{{$prods->ceh_id}}" role="tabpanel">
-                <table class="table table-striped table-success">
+                <table name="jsTable" class="table table-striped table-success">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

@@ -33,9 +33,9 @@
                 <th scope="col">Назва</th>
                 <th scope="col">Фото</th>
                 <th scope="col">Опис</th>
-                <th scope="col">За роботу</th>
+                <th scope="col">Вартість роботи</th>
                 <th scope="col">Кількість</th>
-                <th scope="col">Сума</th>
+                <th scope="col">Вартість</th>
             </tr>
             @php($total = 0)
             @foreach($item->work as $sub)
@@ -75,9 +75,9 @@
                 <th scope="col">Назва</th>
                 <th scope="col">Фото</th>
                 <th scope="col">Опис</th>
-                <th scope="col">Ціна</th>
+                <th scope="col">Ціна закупівлі</th>
                 <th scope="col">Кількість</th>
-                <th scope="col">Сума</th>
+                <th scope="col">Вартість</th>
             </tr>
             @foreach($item->subitems as $sub)
                 <tr name="b{{$item->id}}" hidden>

@@ -52,16 +52,15 @@
                                     <a class="nav-link {{$title=='Вартість'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/cost">
                                         Собівартість
                                     </a>
-                                    <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/purchases">
-                                        Закуп
-                                    </a>
-                                    <a class="nav-link {{$title=='Категорії'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/categoryes">
-                                        Категорії
-                                    </a>
                                 </nav>
                             </div>
                         </li>
 
+                        <hr class="nav-hr">
+                        <a class="nav-link {{$title=='Закуп'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/purchases">
+                            Закуп
+                        </a>
+                        
                         <hr class="nav-hr">
                         <li>
                             <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#cehs" aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -132,6 +131,9 @@
                                     </a>
                                     <a class="nav-link {{$title=='Сировина'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/purchases/materials">
                                         Цех сировини
+                                    </a>
+                                    <a class="nav-link {{$title=='Категорії'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/categoryes">
+                                        Категорії
                                     </a>
                                 </nav>
                             </div>
