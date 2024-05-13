@@ -69,7 +69,41 @@
     @endforeach
 </div>
 
-<div style="height:500px"></div>
+<div class="row pt-5">
+    <div class="col-auto">
+        @if(count($moves) > 1)
+            <a href="/remains?skip={{$offset + 1}}" class="btn btn-success"><</a>
+        @endif
+    </div>
+    <div class="col">
+        <table class="table table-success table-striped w-100">
+            <thead>
+                <tr>
+                    <th scope="col">{{$currentmove->from_pib}}</th>
+                    <th scope="col">{{$currentmove->t_worker < 0 ? 'Закуплено' : (isset($currentmove->to_pib)?'Передав':($currentmove->count > 0 ? 'Виробив':'Забракував'))}}</th>
+                    <th scope="col">{{$currentmove->to_pib}}</th>
+                    <th scope="col">{{$currentmove->item_title}}</th>
+                    <th scope="col">
+                        <div style="background-color:#{{$currentmove->hex}};">
+                            <span style="mix-blend-mode: difference; color:white">
+                                {{$currentmove->color}}
+                            </span>
+                        </div>
+                    </th>
+                    <th scope="col">{{abs($currentmove->count)}}</th>
+                    <th scope="col">{{$currentmove->date}}</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="col-auto">
+        @if($offset > 0)
+            <a href="/remains?skip={{$offset - 1}}" class="btn btn-success">></a>
+        @endif
+    </div>
+</div>
+
+{{--<div style="height:500px"></div>
 <table class="table table-striped table-success">
     <thead>
         <tr>
@@ -87,11 +121,11 @@
     <tbody>
         @foreach($moves as $move)
             <tr>
-                <td>{{$loop->iteration}}</td>
+                <td>{{$move->trans}}</td>
                 <td>{{$move->worker}}</td>
                 <td>{{$move->ceh}}</td>
                 <td>{{$move->worker_to_id}}</td>
-                <td>{{$move->title}}</td>
+                <td>{{$move->item}}</td>
                 <td>{{$move->color_id}}</td>
                 <td>{{$move->count + 0}}</td>
                 <td>{{$move->date}}</td>
@@ -108,6 +142,6 @@
             </tr>
         @endforeach
     </tbody>
-</table>
+</table>--}}
 
 @endsection

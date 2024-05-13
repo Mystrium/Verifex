@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\Purchase;
 use App\Models\Consist;
 use App\Models\Color;
 use App\Models\Item;
@@ -21,35 +22,72 @@ class MovementController extends BaseController {
         
         $storage = DB::table('purchases')
             ->selectRaw('
+                1 as purch,
                 purchases.id as trans,
-                items.title,
-                items.id as item,
+                purchases.item_id as item,
                 ' . $storeman[0] . ' as worker,
                 null as worker_to_id,
                 purchases.color_id,
-                ceh_types.title as ceh,
                 purchases.count, 
                 date')
-            ->join('items', 'items.id', '=', 'purchases.item_id')       //debug
-            ->join('ceh', 'ceh.id', '=', DB::raw($storeman[0]))
-            ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id');    //debug
+            ->join('ceh', 'ceh.id', '=', DB::raw($storeman[0]));
+            // ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id');    //debug
+
+        $skip = $request->skip ?? 0;
 
         $move = Transaction::selectRaw('
+                0 as purch,
                 transactions.id as trans,
-                items.title,
-                items.id as item,
+                transactions.item_id_id as item,
                 workers.ceh_id as worker,
                 worker_to.ceh_id as worker_to_id,
                 transactions.color_id,
-                workers.pib as ceh,
                 transactions.count, 
                 date')
-            ->join('items', 'items.id', '=', 'transactions.item_id_id')     //debug
             ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
             ->join('workers as worker_to', 'worker_to.id', '=', 'transactions.worker_to_id', 'left outer')
             ->union($storage)
-            ->orderBy('date', 'asc')
+            ->orderBy('date', 'desc')
+            ->skip($skip)->limit(PHP_INT_MAX)
             ->get();
+
+        if($move[0]->purch == 0){
+            $curr_move = Transaction::selectRaw('
+                    items.id as item,
+                    items.title as item_title,
+                    workers.id as f_worker,
+                    workers.pib as from_pib,
+                    worker_to.id as t_worker,
+                    worker_to.pib as to_pib,
+                    colors.title as color,
+                    colors.hex as hex,
+                    transactions.count,
+                    date')
+                ->where('transactions.id', '=', $move[0]->trans)
+                ->join('items', 'items.id', '=', 'transactions.item_id_id')
+                ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
+                ->join('workers as worker_to', 'worker_to.id', '=', 'transactions.worker_to_id', 'left outer')
+                ->join('colors', 'colors.id', '=', 'transactions.color_id', 'left outer')
+                ->get();
+        } else {
+            $curr_move = Purchase::selectRaw('
+                    items.id as item,
+                    items.title as item_title,
+                    workers.id as to_worker,
+                    workers.pib as from_pib,
+                    colors.title as color,
+                    -1 as t_worker,
+                    colors.hex as hex,
+                    purchases.count,
+                    date')
+                ->where('purchases.id', '=', $move[0]->trans)
+                ->join('items', 'items.id', '=', 'purchases.item_id')
+                ->join('workers', 'workers.id', '=', DB::raw($storeman[1]))
+                ->join('colors', 'colors.id', '=', 'purchases.color_id', 'left outer')
+                ->get();
+        }
+        // dd($curr_move);
+
 
         $consists = Consist::select('what_id', 'have_id', 'count', 'hascolor')
             ->join('items', 'items.id', '=', 'consists.have_id')
@@ -82,18 +120,18 @@ class MovementController extends BaseController {
                 else
                     $workers[$mv->worker][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
 
-                // <-
+                    // <-
                 if(isset($workers[$mv->worker_to_id][$mv->item][$mv->color_id ?? 'n']))
                     $workers[$mv->worker_to_id][$mv->item][$mv->color_id ?? 'n'] += $mv->count;
                 else
                     $workers[$mv->worker_to_id][$mv->item][$mv->color_id ?? 'n'] = $mv->count;
 
-                if($mv->worker_to_id == 1) {
-                    if(isset($workers[1][$mv->item][$mv->color_id ?? 'n']))
-                        $workers[1][$mv->item][$mv->color_id ?? 'n'] -= $mv->count;
-                    else
-                        $workers[1][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
-                }
+                // if($mv->worker_to_id == 1) {
+                //     if(isset($workers[1][$mv->item][$mv->color_id ?? 'n']))
+                //         $workers[1][$mv->item][$mv->color_id ?? 'n'] -= $mv->count;
+                //     else
+                //         $workers[1][$mv->item][$mv->color_id ?? 'n'] = -$mv->count;
+                // }
 
             } else {
                 if(isset($workers[$mv->worker][$mv->item][$mv->color_id ?? 'n']))
@@ -142,6 +180,8 @@ class MovementController extends BaseController {
             ->withNames($users)
             ->withItemsnames($items)
             ->withColornames($colors)
+            ->withOffset($skip)
+            ->withCurrentmove($curr_move[0])
             ->withMoves($move);
     }
 
