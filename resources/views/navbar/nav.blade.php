@@ -116,6 +116,7 @@
                                 </a>
                             </nav>
                         </div>
+
                         <hr class="nav-hr">
                         <li>
                             <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#units" aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -138,6 +139,24 @@
                                 </nav>
                             </div>
                         </li>
+
+                        <hr class="nav-hr">
+                        <li>
+                            <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#admins" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                Користувачі
+                            </a>
+                            <div style="padding-left:20px;"class="collapse {{$title=='Користувачі'|| $title=='Ролі' ?'show':''}}" id="admins" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link {{$title=='Користувачі'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/admins">
+                                        Користувачі
+                                    </a>
+                                    <a class="nav-link {{$title=='Ролі'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/roles">
+                                        Ролі
+                                    </a>
+                                </nav>
+                            </div>
+                        </li>
+
                     </ul>
                 </div>
             </div>

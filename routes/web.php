@@ -10,9 +10,11 @@ use App\Http\Controllers\{
     CategoryController,
     CehtypeController,
     WorkerController,
+    AdminsController,
     ChartController,
     ColorController,
     ImageController,
+    RolesController,
     UnitController,
     ItemController,
     CehController,
@@ -77,6 +79,21 @@ Route::post('/purchases/update/{id}',       [PurchaseController::class, 'update'
 Route::get( '/purchases/arhivate',          [PurchaseController::class, 'archivate']);
 Route::get( '/purchases/materials',         [PurchaseController::class, 'material_ceh']);
 Route::post('/purchases/materials/update',  [PurchaseController::class, 'ceh_update']);
+
+Route::get( '/roles',               [RolesController::class, 'view']);
+Route::get( '/roles/new',           [RolesController::class, 'new']);
+Route::post('/roles/add',           [RolesController::class, 'add']);
+Route::get( '/roles/edit/{id}',     [RolesController::class, 'edit']);
+Route::post('/roles/update/{id}',   [RolesController::class, 'update']);
+Route::get( '/roles/delete/{id}',   [RolesController::class, 'delete']);
+
+Route::get( '/admins',                 [AdminsController::class,   'view']);
+Route::get( '/admins/new',             [AdminsController::class,   'new']);
+Route::post('/admins/add',             [AdminsController::class,   'add']);
+Route::get( '/admins/edit/{id}',       [AdminsController::class,   'edit']);
+Route::post('/admins/update/{id}',     [AdminsController::class,   'update']);
+Route::post('/admins/check/{id}',      [AdminsController::class,   'check']);
+Route::get( '/admins/delete/{id}',     [AdminsController::class,   'delete']);
 
 Route::get('/pay',                  [PayController::class,      'view']);
 Route::get('/pay/{id}',             [PayController::class,      'byworker']);

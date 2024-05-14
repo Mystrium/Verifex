@@ -8,13 +8,13 @@ return new class extends Migration{
 
     public function up(): void {
         Schema::table('consists', function (Blueprint $table) {
-            $table->decimal('count', 6, 3, true)->default(1)->change();;
+            $table->decimal('count', 6, 3, true)->default(1)->change();
         });
     }
 
     public function down(): void {
         Schema::table('consists', function (Blueprint $table) {
-            $table->decimal('count', 6, 3, true)->default(1)->change();;
+            $table->decimal('count', 6, 3, true)->default(1)->change();
         });
     }
 };

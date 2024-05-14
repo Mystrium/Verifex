@@ -16,7 +16,7 @@ class Admin extends Authenticatable {
         'pib',
         'phone',
         'password',
-        'role',
+        'role_id',
         'allowed'
     ];
 

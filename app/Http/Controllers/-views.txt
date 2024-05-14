@@ -14,11 +14,26 @@ Admins
     check>allowed
     inp>password
 
-[F pib, phone]
-[Fil role, allowed]
 + Edit View
 + allow
 Valid 3
+                AUTH !!!
+
+
+accesses +
+    id
+    title   30
+    slug    20
+
+roles +
+    id
+    title       15
+    priority    tinyint
+
+role_access +
+    id
+    role_id
+    access_id
 
 
 __________^^^^^^^^tables

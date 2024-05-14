@@ -26,7 +26,6 @@ class WorkerController extends BaseController {
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->orderBy('type_id')
             ->get();
-        $worker = Worker::all();
 
         $position_cehs = Ceh::selectRaw('ceh.id as cehid, work_types.id, work_types.title')
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
@@ -37,8 +36,7 @@ class WorkerController extends BaseController {
             ->withAct('add')
             ->withTypes($worktypes)
             ->withCehs($cehs)
-            ->withPosistionmap($position_cehs)
-            ->withWorkers($worker);
+            ->withPosistionmap($position_cehs);
     }
 
     public function add(Request $request){
