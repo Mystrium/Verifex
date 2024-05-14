@@ -198,8 +198,7 @@ POST    /api/chart/payment
 POST    /api/chart/items
     in
         id      - id з юзера
-        start   - період початок
-        end     - кінець періода
+
     out
         'date': [
             'item':'count',
@@ -238,3 +237,10 @@ POST    /api/produced
         ]
 
 -----------------------------------------------------
+
+POST    /api/hours
+    in
+        id      - id з юзера
+
+    out
+        'date':'hours'

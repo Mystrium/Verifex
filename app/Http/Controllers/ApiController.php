@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Hash;
@@ -231,6 +232,9 @@ class ApiController extends BaseController {
     }
 
     public function produced(Request $request){
+        $start = Carbon::now()->subDays(30)->toDateString();
+        $end = Carbon::now()->toDateString();
+
         $produced = Transaction::selectRaw('
                 id,
                 worker_to_id,
@@ -240,8 +244,8 @@ class ApiController extends BaseController {
                 DATE(date) as date,
                 IF(worker_to_id is not null, 1, IF(count > 0, 3, 4)) as type_id')
             ->where('worker_from_id', '=', $request->id)
-            ->whereBetween('date', [$request->start, $request->end])
-            ->orderBy('date', 'asc')
+            ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
+            ->orderBy('date', 'desc')
             ->get();
 
         $map = [];
@@ -270,4 +274,17 @@ class ApiController extends BaseController {
 
         return response(null, 200);
     }
+
+    public function hours(Request $request){
+        $start = Carbon::now()->subDays(30)->toDateString();
+        $end = Carbon::now()->toDateString();
+
+        $hours = WorkHour::select('start', 'time as hours')
+            ->where('worker_id', '=', $request->id)
+            ->whereBetween(DB::raw('DATE(start)'), [$start, $end])
+            ->get();
+
+        return response()->json($hours);
+    }
+
 }

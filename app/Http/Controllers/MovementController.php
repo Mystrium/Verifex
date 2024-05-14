@@ -106,7 +106,6 @@ class MovementController extends BaseController {
         $colors = Color::whereIn('id', $move->pluck('color_id'))->get();
         $users = Ceh::select('ceh.id', 'ceh.title', 'ceh_types.title as type')
             ->join('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
-            ->whereIn('ceh.id', $move->pluck('worker'))
             ->get();
         
         $items_ids = [];

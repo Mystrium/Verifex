@@ -17,6 +17,8 @@ Route::post('/workers',     [ApiController::class, 'workers']);
 Route::post('/profile',     [ApiController::class, 'editworker']);
 Route::post('/produced',    [ApiController::class, 'produced']);
 Route::post('/transaction/edit',    [ApiController::class, 'edittrans']);
+Route::post('/hours',       [ApiController::class, 'hours']);
+
 
 Route::post('/chart/hours',     [ApiController::class, 'hours_chart']);
 Route::post('/chart/payment',   [ApiController::class, 'pay_chart']);

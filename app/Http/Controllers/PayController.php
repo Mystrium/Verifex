@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Worker;
@@ -22,7 +23,7 @@ class PayController extends BaseController {
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->whereNull('transactions.worker_to_id')
-            ->whereBetween('date', [$start, $end])
+            ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
             ->orderBy('date', 'asc')
             ->groupByRaw('workers.id, WEEK(date)')
             ->get();
@@ -48,7 +49,7 @@ class PayController extends BaseController {
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
             ->where('workers.id', '=', $id)
-            ->whereBetween('date', [$start, $end])
+            ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
             ->whereNull('transactions.worker_to_id')
             ->orderBy('date', 'asc')
             ->get();
