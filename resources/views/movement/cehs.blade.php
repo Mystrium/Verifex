@@ -1,11 +1,69 @@
 @extends('navbar/main')
 @section('title', 'Залишки')
+@section('action', 'Залишки станом на ' . ($offset == 0 ? 'зараз' : \Carbon\Carbon::parse($currentmove->date)->format('d.m.Y')))
 @section('content')
+
+<div class="row py-2">
+    <div class="col-auto">
+        @if(count($moves) > 1)
+            <form method="GET" url="/remains">
+                <input hidden value="{{$offset + 1}}" name="skip">
+                <input hidden value="{{$tab}}" name="tab">
+                <button class="btn btn-success"><</button>
+            </form>
+        @endif
+    </div>
+    <div class="col">
+        <table class="table table-success table-striped w-100">
+            <thead>
+                <tr>
+                    <th scope="col">{{$currentmove->from_pib}}</th>
+                    @if($currentmove->t_worker < 0)
+                        <th scope="col">Закуплено <span class="text-warning">v</span>
+                    @else
+                        @if(isset($currentmove->to_pib))
+                            <th scope="col">Передав <span class="text-info">></span>
+                        @else
+                            @if($currentmove->count > 0)
+                                <th scope="col">Виробив <span class="text-success">+</span>
+                            @else
+                                <th scope="col">Забракував <span class="text-danger">-</span>
+                            @endif
+                        @endif
+                    @endif
+                    </th>
+                    <th scope="col">{{$currentmove->to_pib}}</th>
+                    <th scope="col">{{$currentmove->item_title}}</th>
+                    <th scope="col">
+                        <div style="background-color:#{{$currentmove->hex}};">
+                            <span style="mix-blend-mode: difference; color:white">
+                                {{$currentmove->color}}
+                            </span>
+                        </div>
+                    </th>
+                    <th scope="col">{{abs($currentmove->count)}} {{$currentmove->unit}}</th>
+                    <th scope="col">{{\Carbon\Carbon::parse($currentmove->date)->format('d.m.Y H:i:s')}}</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="col-auto">
+        @if($offset > 0)
+            <form method="GET" url="/remains">
+                @if($offset > 1)
+                    <input hidden value="{{$offset - 1}}" name="skip">
+                @endif
+                <input hidden value="{{$tab}}" name="tab">
+                <button class="btn btn-success">></button>
+            </form>
+        @endif
+    </div>
+</div>
 
 <ul class="mb-1 nav nav-tabs justify-content-center" id="myTab" role="tablist">
     @foreach($workers as $worker => $items)
         <li class="nav-item" role="presentation">
-            <button class="nav-link {{$loop->index == 0 ? 'active' : ''}}" id="home-tab" data-bs-toggle="tab" data-bs-target="#w{{$worker}}" type="button" role="tab" aria-controls="home" aria-selected="true">
+            <button onclick="currentTab({{$worker}})" class="nav-link {{$tab == 0 ? ($loop->index == 0 ? 'active' : '') : ($worker == $tab ? 'active' : '')}}" id="home-tab" data-bs-toggle="tab" data-bs-target="#w{{$worker}}" type="button" role="tab" aria-controls="home" aria-selected="true">
                 @foreach($names as $nm)
                     @if($nm->id == $worker)
                         {{$nm->type}} {{$nm->title}}
@@ -19,7 +77,7 @@
 
 <div class="tab-content" id="myTabContent">
     @foreach($workers as $worker => $items)
-        <div class="tab-pane show {{$loop->index == 0 ? 'active' : ''}}" id="w{{$worker}}" role="tabpanel">
+        <div class="tab-pane show {{$tab == 0 ? ($loop->index == 0 ? 'active' : '') : ($worker == $tab ? 'active' : '')}}" id="w{{$worker}}" role="tabpanel">
             <table name="jsTable" class="table table-success table-striped w-100">
                 <thead>
                     <tr>
@@ -69,40 +127,6 @@
     @endforeach
 </div>
 
-<div class="row pt-5">
-    <div class="col-auto">
-        @if(count($moves) > 1)
-            <a href="/remains?skip={{$offset + 1}}" class="btn btn-success"><</a>
-        @endif
-    </div>
-    <div class="col">
-        <table class="table table-success table-striped w-100">
-            <thead>
-                <tr>
-                    <th scope="col">{{$currentmove->from_pib}}</th>
-                    <th scope="col">{{$currentmove->t_worker < 0 ? 'Закуплено' : (isset($currentmove->to_pib)?'Передав':($currentmove->count > 0 ? 'Виробив':'Забракував'))}}</th>
-                    <th scope="col">{{$currentmove->to_pib}}</th>
-                    <th scope="col">{{$currentmove->item_title}}</th>
-                    <th scope="col">
-                        <div style="background-color:#{{$currentmove->hex}};">
-                            <span style="mix-blend-mode: difference; color:white">
-                                {{$currentmove->color}}
-                            </span>
-                        </div>
-                    </th>
-                    <th scope="col">{{abs($currentmove->count)}}</th>
-                    <th scope="col">{{$currentmove->date}}</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="col-auto">
-        @if($offset > 0)
-            <a href="/remains?skip={{$offset - 1}}" class="btn btn-success">></a>
-        @endif
-    </div>
-</div>
-
 {{--<div style="height:500px"></div>
 <table class="table table-striped table-success">
     <thead>
@@ -143,5 +167,12 @@
         @endforeach
     </tbody>
 </table>--}}
+
+<script>
+    window.currentTab = function(id){ 
+        arrows = document.getElementsByName('tab');
+        arrows.forEach(element => element.value = id);
+    }
+</script>
 
 @endsection

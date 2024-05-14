@@ -55,6 +55,7 @@ class MovementController extends BaseController {
             $curr_move = Transaction::selectRaw('
                     items.id as item,
                     items.title as item_title,
+                    units.title as unit,
                     workers.id as f_worker,
                     workers.pib as from_pib,
                     worker_to.id as t_worker,
@@ -65,6 +66,7 @@ class MovementController extends BaseController {
                     date')
                 ->where('transactions.id', '=', $move[0]->trans)
                 ->join('items', 'items.id', '=', 'transactions.item_id_id')
+                ->join('units', 'units.id', '=', 'items.unit_id')
                 ->join('workers', 'workers.id', '=', 'transactions.worker_from_id')
                 ->join('workers as worker_to', 'worker_to.id', '=', 'transactions.worker_to_id', 'left outer')
                 ->join('colors', 'colors.id', '=', 'transactions.color_id', 'left outer')
@@ -73,6 +75,7 @@ class MovementController extends BaseController {
             $curr_move = Purchase::selectRaw('
                     items.id as item,
                     items.title as item_title,
+                    units.title as unit,
                     workers.id as to_worker,
                     workers.pib as from_pib,
                     colors.title as color,
@@ -82,12 +85,11 @@ class MovementController extends BaseController {
                     date')
                 ->where('purchases.id', '=', $move[0]->trans)
                 ->join('items', 'items.id', '=', 'purchases.item_id')
+                ->join('units', 'units.id', '=', 'items.unit_id')
                 ->join('workers', 'workers.id', '=', DB::raw($storeman[1]))
                 ->join('colors', 'colors.id', '=', 'purchases.color_id', 'left outer')
                 ->get();
         }
-        // dd($curr_move);
-
 
         $consists = Consist::select('what_id', 'have_id', 'count', 'hascolor')
             ->join('items', 'items.id', '=', 'consists.have_id')
@@ -181,6 +183,7 @@ class MovementController extends BaseController {
             ->withColornames($colors)
             ->withOffset($skip)
             ->withCurrentmove($curr_move[0])
+            ->withTab($request->tab ?? 0)
             ->withMoves($move);
     }
 

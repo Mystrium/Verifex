@@ -187,7 +187,6 @@
 
     window.dellTag = function(name){ 
         document.getElementById(name).remove();
-        console.log(document.getElementById('consist_table').rows.length)
         if(document.getElementById('consist_table').rows.length == 1)
             document.getElementById('payment').hidden = true;
     }
