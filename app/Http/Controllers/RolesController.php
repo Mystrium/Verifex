@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\RoleAccess;
 use App\Models\Access;
@@ -28,9 +29,11 @@ class RolesController extends BaseController {
     }
 
     public function add(Request $request){
+        $priority = $request->priority > Auth::user()->role->priority ? $request->priority : Auth::user()->role->priority + 1;
+
         $newrole = Roles::create([
             'title' => $request->title,
-            'priority' => $request->priority,
+            'priority' => $priority,
         ]);
 
         if($request->accesses){

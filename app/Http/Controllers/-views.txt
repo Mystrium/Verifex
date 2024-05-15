@@ -7,7 +7,7 @@ items types
     ??? subtype ???
 
 Admins
-    prior edit
+    profile edit
 
 __________^^^^^^^^tables
 
