@@ -6,17 +6,8 @@
 items types
     ??? subtype ???
 
-(СRUD)
 Admins
-    inp>pib 
-    inp>phone
-    drop-[owner,admin,(zav ceha???)]>role
-    check>allowed
-    inp>password
-
-+ Edit View
-+ allow
-Valid 3
+    prior edit
                 AUTH !!!
 
 
@@ -29,6 +20,7 @@ roles +
     id
     title       15
     priority    tinyint
+        prior edit
 
 role_access +
     id

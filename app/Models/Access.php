@@ -14,4 +14,8 @@ class Access extends Model {
 
     protected $fillable = ['title', 'slug'];
 
+    public function roles(){
+        return $this->belongsToMany(Roles::class, 'role_access', 'access_id', 'role_id');
+    }
+
 }

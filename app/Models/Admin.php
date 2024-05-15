@@ -23,4 +23,8 @@ class Admin extends Authenticatable {
     protected $hidden = ['password'];
 
     protected $casts = ['password' => 'hashed'];
+
+    public function role() {
+        return $this->belongsTo(Roles::class);
+    }
 }

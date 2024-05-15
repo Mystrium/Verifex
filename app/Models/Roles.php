@@ -17,4 +17,7 @@ class Roles extends Model {
         'priority'
     ];
 
+    public function accesses() {
+        return $this->belongsToMany(Access::class, 'role_access', 'role_id', 'access_id');
+    }
 }

@@ -17,12 +17,17 @@ use App\Http\Controllers\{
     RolesController,
     UnitController,
     ItemController,
+    AuthController,
     CehController,
     PayController,
 };
 
+Route::get('/', function () { return view('auth/login');});
 
-Route::get('/', function () { return view('welcome');});
+Route::post('login',    [AuthController::class, 'login']);
+Route::get( 'register', [AuthController::class, 'register']);
+Route::post('register', [AuthController::class, 'adduser']);
+Route::get( 'logout',   [AuthController::class, 'logout']);
 
 Route::get( '/cehtypes',                [CehtypeController::class, 'view']);
 Route::post('/cehtypes/add',            [CehtypeController::class, 'add']);

@@ -8,7 +8,7 @@ use App\Models\Admin;
 
 class AdminsController extends BaseController {
     public function view(){
-        $admins = Admin::select('admins.*', 'roles.title as role')
+        $admins = Admin::select('admins.*', 'roles.title as role', 'roles.priority as prior')
             ->leftJoin('roles', 'roles.id', '=', 'admins.role_id')
             ->orderBy('id', 'desc')
             ->get();
@@ -76,7 +76,7 @@ class AdminsController extends BaseController {
     }
 
     public function check($id, Request $request){
-        Admin::find($id)->update(['checked' => $request->status ? 1 : 0]);
+        Admin::find($id)->update(['allowed' => $request->status ? 1 : 0]);
 
         return redirect('/admins');
     }
