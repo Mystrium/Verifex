@@ -22,94 +22,120 @@ use App\Http\Controllers\{
     PayController,
 };
 
-Route::get('/', function () { return view('auth/login');});
+Route::get('/', function () { return view('auth/login'); })->name('login');
 
 Route::post('login',    [AuthController::class, 'login']);
 Route::get( 'register', [AuthController::class, 'register']);
 Route::post('register', [AuthController::class, 'adduser']);
-Route::get( 'logout',   [AuthController::class, 'logout']);
 
-Route::get( '/cehtypes',                [CehtypeController::class, 'view']);
-Route::post('/cehtypes/add',            [CehtypeController::class, 'add']);
-Route::post('/cehtypes/update/{id}',    [CehtypeController::class, 'edit']);
-Route::get( '/cehtypes/delete/{id}',    [CehtypeController::class, 'delete']);
+Route::middleware('auth')->group(function () {
+    Route::get( 'logout',   [AuthController::class, 'logout']);
 
-Route::get( '/cehs',                    [CehController::class,      'view']);
-Route::post('/cehs/add',                [CehController::class,      'add']);
-Route::post('/cehs/update/{id}',        [CehController::class,      'edit']);
-Route::get( '/cehs/delete/{id}',        [CehController::class,      'delete']);
+    Route::prefix('cehtypes')->middleware('access:cehtypes')->group(function () {
+        Route::get( '/',                [CehtypeController::class, 'view']);
+        Route::post('add',              [CehtypeController::class, 'add']);
+        Route::post('update/{id}',      [CehtypeController::class, 'edit']);
+        Route::get( 'delete/{id}',      [CehtypeController::class, 'delete']);
+    });
 
-Route::get( '/units',                   [UnitController::class,     'view']);
-Route::post('/units/add',               [UnitController::class,     'add']);
-Route::post('/units/update/{id}',       [UnitController::class,     'edit']);
-Route::get( '/units/delete/{id}',       [UnitController::class,     'delete']);
+    Route::prefix('cehs')->middleware('access:cehs')->group(function () {
+        Route::get( '/',                [CehController::class,      'view']);
+        Route::post('/add',             [CehController::class,      'add']);
+        Route::post('/update/{id}',     [CehController::class,      'edit']);
+        Route::get( '/delete/{id}',     [CehController::class,      'delete']);
+    });
 
-Route::get( '/colors',                  [ColorController::class,    'view']);
-Route::post('/colors/add',              [ColorController::class,    'add']);
-Route::post('/colors/update/{id}',      [ColorController::class,    'edit']);
-Route::get( '/colors/delete/{id}',      [ColorController::class,    'delete']);
+    Route::prefix('units')->middleware('access:units')->group(function () {
+        Route::get( '/',                [UnitController::class,     'view']);
+        Route::post('/add',             [UnitController::class,     'add']);
+        Route::post('/update/{id}',     [UnitController::class,     'edit']);
+        Route::get( '/delete/{id}',     [UnitController::class,     'delete']);
+    });
 
-Route::get( '/categoryes',              [CategoryController::class,    'view']);
-Route::post('/categoryes/add',          [CategoryController::class,    'add']);
-Route::post('/categoryes/update/{id}',  [CategoryController::class,    'edit']);
-Route::get( '/categoryes/delete/{id}',  [CategoryController::class,    'delete']);
+    Route::prefix('colors')->middleware('access:colors')->group(function () {
+        Route::get( '/',                [ColorController::class,    'view']);
+        Route::post('/add',             [ColorController::class,    'add']);
+        Route::post('/update/{id}',     [ColorController::class,    'edit']);
+        Route::get( '/delete/{id}',     [ColorController::class,    'delete']);
+    });
 
-Route::get( '/items',                   [ItemController::class,     'items']);
-Route::get( '/items/new',               [ItemController::class,     'new']);
-Route::post('/items/add',               [ItemController::class,     'add']);
-Route::get( '/items/edit/{id}',         [ItemController::class,     'edit']);
-Route::post('/items/update/{id}',       [ItemController::class,     'update']);
-Route::get( '/items/delete/{id}',       [ItemController::class,     'delete']);
+    Route::prefix('categoryes')->middleware('access:categoryes')->group(function () {
+        Route::get( '/',                [CategoryController::class,    'view']);
+        Route::post('/add',             [CategoryController::class,    'add']);
+        Route::post('/update/{id}',     [CategoryController::class,    'edit']);
+        Route::get( '/delete/{id}',     [CategoryController::class,    'delete']);
+    });
 
-Route::get( '/worktypes',               [WorktypeController::class, 'view']);
-Route::get( '/worktypes/new',           [WorktypeController::class, 'new']);
-Route::post('/worktypes/add',           [WorktypeController::class, 'add']);
-Route::get( '/worktypes/edit/{id}',     [WorktypeController::class, 'edit']);
-Route::post('/worktypes/update/{id}',   [WorktypeController::class, 'update']);
-Route::get( '/worktypes/delete/{id}',   [WorktypeController::class, 'delete']);
+    Route::prefix('items')->middleware('access:items')->group(function () {
+        Route::get( '/',                [ItemController::class,     'items']);
+        Route::get( '/new',             [ItemController::class,     'new']);
+        Route::post('/add',             [ItemController::class,     'add']);
+        Route::get( '/edit/{id}',       [ItemController::class,     'edit']);
+        Route::post('/update/{id}',     [ItemController::class,     'update']);
+        Route::get( '/delete/{id}',     [ItemController::class,     'delete']);
+    });
 
-Route::get( '/workers',                 [WorkerController::class,   'view']);
-Route::get( '/workers/new',             [WorkerController::class,   'new']);
-Route::post('/workers/add',             [WorkerController::class,   'add']);
-Route::get( '/workers/edit/{id}',       [WorkerController::class,   'edit']);
-Route::post('/workers/update/{id}',     [WorkerController::class,   'update']);
-Route::post('/workers/check/{id}',      [WorkerController::class,   'check']);
-Route::get( '/workers/delete/{id}',     [WorkerController::class,   'delete']);
+    Route::prefix('worktypes')->middleware('access:worktypes')->group(function () {
+        Route::get( '/',                [WorktypeController::class, 'view']);
+        Route::get( '/new',             [WorktypeController::class, 'new']);
+        Route::post('/add',             [WorktypeController::class, 'add']);
+        Route::get( '/edit/{id}',       [WorktypeController::class, 'edit']);
+        Route::post('/update/{id}',     [WorktypeController::class, 'update']);
+        Route::get( '/delete/{id}',     [WorktypeController::class, 'delete']);
+    });
 
-Route::get('/purchases',                    [PurchaseController::class, 'view']);
-Route::get( '/purchases/new',               [PurchaseController::class, 'new']);
-Route::post('/purchases/add',               [PurchaseController::class, 'add']);
-Route::get( '/purchases/edit/{id}',         [PurchaseController::class, 'edit']);
-Route::post('/purchases/update/{id}',       [PurchaseController::class, 'update']);
-Route::get( '/purchases/arhivate',          [PurchaseController::class, 'archivate']);
-Route::get( '/purchases/materials',         [PurchaseController::class, 'material_ceh']);
-Route::post('/purchases/materials/update',  [PurchaseController::class, 'ceh_update']);
+    Route::prefix('workers')->middleware('access:workers')->group(function () {
+        Route::get( '/',                [WorkerController::class,   'view']);
+        Route::get( '/new',             [WorkerController::class,   'new']);
+        Route::post('/add',             [WorkerController::class,   'add']);
+        Route::get( '/edit/{id}',       [WorkerController::class,   'edit']);
+        Route::post('/update/{id}',     [WorkerController::class,   'update']);
+        Route::post('/check/{id}',      [WorkerController::class,   'check']);
+        Route::get( '/delete/{id}',     [WorkerController::class,   'delete']);
+    });
 
-Route::get( '/roles',               [RolesController::class, 'view']);
-Route::get( '/roles/new',           [RolesController::class, 'new']);
-Route::post('/roles/add',           [RolesController::class, 'add']);
-Route::get( '/roles/edit/{id}',     [RolesController::class, 'edit']);
-Route::post('/roles/update/{id}',   [RolesController::class, 'update']);
-Route::get( '/roles/delete/{id}',   [RolesController::class, 'delete']);
+    Route::prefix('purchases')->middleware('access:purchases')->group(function () {
+        Route::get( '/',                [PurchaseController::class, 'view']);
+        Route::get( '/new',             [PurchaseController::class, 'new']);
+        Route::post('/add',             [PurchaseController::class, 'add']);
+        Route::get( '/edit/{id}',       [PurchaseController::class, 'edit']);
+        Route::post('/update/{id}',     [PurchaseController::class, 'update']);
+        Route::get( '/arhivate',        [PurchaseController::class, 'archivate']);
+        Route::get( '/materials',       [PurchaseController::class, 'material_ceh']);
+        Route::post('/materials/update',[PurchaseController::class, 'ceh_update']);
+    });
 
-Route::get( '/admins',                 [AdminsController::class,   'view']);
-Route::get( '/admins/new',             [AdminsController::class,   'new']);
-Route::post('/admins/add',             [AdminsController::class,   'add']);
-Route::get( '/admins/edit/{id}',       [AdminsController::class,   'edit']);
-Route::post('/admins/update/{id}',     [AdminsController::class,   'update']);
-Route::post('/admins/check/{id}',      [AdminsController::class,   'check']);
-Route::get( '/admins/delete/{id}',     [AdminsController::class,   'delete']);
+    Route::prefix('roles')->middleware('access:roles')->group(function () {
+        Route::get( '/',                [RolesController::class, 'view']);
+        Route::get( '/new',             [RolesController::class, 'new']);
+        Route::post('/add',             [RolesController::class, 'add']);
+        Route::get( '/edit/{id}',       [RolesController::class, 'edit']);
+        Route::post('/update/{id}',     [RolesController::class, 'update']);
+        Route::get( '/delete/{id}',     [RolesController::class, 'delete']);
+    });
 
-Route::get('/pay',                  [PayController::class,      'view']);
-Route::get('/pay/{id}',             [PayController::class,      'byworker']);
+    Route::prefix('admins')->middleware('access:admins')->group(function () {
+        Route::get( '/',                [AdminsController::class,   'view']);
+        Route::get( '/new',             [AdminsController::class,   'new']);
+        Route::post('/add',             [AdminsController::class,   'add']);
+        Route::get( '/edit/{id}',       [AdminsController::class,   'edit']);
+        Route::post('/update/{id}',     [AdminsController::class,   'update']);
+        Route::post('/check/{id}',      [AdminsController::class,   'check']);
+        Route::get( '/delete/{id}',     [AdminsController::class,   'delete']);
+    });
 
-Route::get('/remains',              [MovementController::class, 'view']);
-Route::get('/movement',             [MovementController::class, 'movement']);
-Route::get('/production',           [MovementController::class, 'production']);
-Route::get('/movement/delete/{id}', [MovementController::class, 'delete']);
+    Route::prefix('pay')->middleware('access:pay')->group(function () {
+        Route::get('/',                 [PayController::class,      'view']);
+        Route::get('/{id}',             [PayController::class,      'byworker']);
+    });
 
-Route::get('/cost',                 [SelfcostController::class, 'view']);
+    Route::get('/remains',              [MovementController::class, 'view'])->middleware('access:remains');
+    Route::get('/movement',             [MovementController::class, 'movement'])->middleware('access:movement');
+    Route::get('/production',           [MovementController::class, 'production'])->middleware('access:production');
 
-Route::get('/worktime',             [ChartController::class, 'hours']);
+    Route::get('/cost',                 [SelfcostController::class, 'view'])->middleware('access:cost');
 
-Route::get('/images/{name}',         [ImageController::class, 'view']);
+    Route::get('/worktime',             [ChartController::class, 'hours']);
+
+    Route::get('/images/{name}',        [ImageController::class, 'view']);
+});

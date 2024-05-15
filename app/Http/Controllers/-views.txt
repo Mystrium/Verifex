@@ -8,25 +8,6 @@ items types
 
 Admins
     prior edit
-                AUTH !!!
-
-
-accesses +
-    id
-    title   30
-    slug    20
-
-roles +
-    id
-    title       15
-    priority    tinyint
-        prior edit
-
-role_access +
-    id
-    role_id
-    access_id
-
 
 __________^^^^^^^^tables
 

@@ -198,12 +198,6 @@ class MovementController extends BaseController {
         }
     }
 
-    public function delete($id){
-        Transaction::destroy($id);
-        return redirect()->back();
-    }
-
-
     public function movement(Request $request) {
         $start = $request->period[0] ?? Carbon::now()->subDays(30)->toDateString();
         $end = $request->period[1] ?? Carbon::now()->toDateString();

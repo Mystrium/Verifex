@@ -27,4 +27,8 @@ class Admin extends Authenticatable {
     public function role() {
         return $this->belongsTo(Roles::class);
     }
+
+    public function hasAccess($access){
+        return $this->role->accesses->contains('slug', $access);
+    }
 }

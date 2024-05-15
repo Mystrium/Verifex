@@ -11,10 +11,6 @@
     @if(!empty(app()->view->getSections()['btnroute']))
         <a href="{{app()->view->getSections()['btnroute']}}" class="btn btn-success ms-3">{{ app()->view->getSections()['btntext'] ?? 'Створити'}}</a>
     @endif
-    @php($accesses = auth()->user()->role->accesses->pluck('slug')->toArray())
-@foreach($accesses as $acc)
-    |{{$acc}}
-@endforeach
     @auth
         <div class="ms-auto"></div>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -37,7 +33,7 @@
         </ul>
     @endauth
 </nav>
-
+@php($accesses = auth()->user()->role->accesses->pluck('slug')->toArray())
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion nav1" id="sidenavAccordion">
@@ -159,7 +155,7 @@
                                 <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#units" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                     Одиниці
                                 </a>
-                                <div style="padding-left:20px;" class="collapse {{$title=='Виміри'||$title=='Кольори'||$title=='Сировина'?'show':''}}" id="units" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                <div style="padding-left:20px;" class="collapse {{$title=='Виміри'||$title=='Кольори'||$title=='Сировина'||$title=='Категорії'?'show':''}}" id="units" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
                                         @if(in_array('units', $accesses))
                                             <a class="nav-link {{$title=='Виміри'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/units">
@@ -186,7 +182,7 @@
                             </li>
                         @endif
 
-                        @if(in_array('users', $accesses) || in_array('roles', $accesses))
+                        @if(in_array('admins', $accesses) || in_array('roles', $accesses))
                             <hr class="nav-hr">
                             <li>
                                 <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#admins" aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -194,7 +190,7 @@
                                 </a>
                                 <div style="padding-left:20px;"class="collapse {{$title=='Користувачі'|| $title=='Ролі' ?'show':''}}" id="admins" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        @if(in_array('users', $accesses))
+                                        @if(in_array('admins', $accesses))
                                             <a class="nav-link {{$title=='Користувачі'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/admins">
                                                 Користувачі
                                             </a>

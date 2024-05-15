@@ -29,13 +29,15 @@
                     </a>{{$admin->role}}
                 </td>
                 <td>
-                    <form action="/admins/check/{{$admin->id}}" method="POST">
-                        @csrf
-                        <label class="switch">
-                            <input type="checkbox" name="status" {{$admin->allowed==1?'checked':''}} onchange="this.form.submit()"/>
-                            <span class="slider round"></span>
-                        </label>
-                    </form>
+                    @if(auth()->user()->id != $admin->id)
+                        <form action="/admins/check/{{$admin->id}}" method="POST">
+                            @csrf
+                            <label class="switch">
+                                <input type="checkbox" name="status" {{$admin->allowed==1?'checked':''}} onchange="this.form.submit()"/>
+                                <span class="slider round"></span>
+                            </label>
+                        </form>
+                    @endif
                 </td>
                 <td>
                     @if(auth()->user()->role->priority < $admin->prior)
