@@ -30,7 +30,41 @@
                     </option>
                 @endforeach
             </select>
-            <span class="ps-1 pe-1">Не знайшли колір ?</span><a href="/colors" target="_blank">Створіть новий</a>
+        </div>
+        <div class="col-md-auto">
+            <span class="ps-1 pe-1">Не знайшли колір ?</span>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                Створити новий
+            </button>
+
+            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Додати колір</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="inputName" class="form-label">Назва</label>
+                                    <input type="text" class="form-control" minlength=3 maxlength=20 required name="title" placeholder="Зелений...">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="inputDescription" class="form-label">Колір</label>
+                                    <input type="color" class="form-control" style="height:50px" name="hex" value="#4dff00">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Зберегти зміни</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

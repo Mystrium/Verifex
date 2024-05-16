@@ -40,11 +40,18 @@ class WorkerController extends BaseController {
     }
 
     public function add(Request $request){
+        $phone = substr($request->phone, 0, 1) == '+' ? substr($request->phone, 1, 12) : $request->phone;
+        $phone = substr('380', 0, 12 - strlen($phone)) . $phone;
+
+        $used_phone = Worker::where('phone', '=', $phone)->first();
+        if(isset($used_phone))
+            return back()->with('msg', 'Телефон вже використовується');
+
         Worker::create([
             'pib' => $request->pib,
             'ceh_id' => $request->ceh,
             'role_id' => $request->role,
-            'phone' => substr('380', 0, 12 - strlen($request->phone)) . $request->phone,
+            'phone' => $phone,
             'passport' => $request->passport,
             'password' => $request->password,
             'checked' => 1
@@ -79,12 +86,20 @@ class WorkerController extends BaseController {
     }
 
     public function update($id, Request $request){
-        $toedit = Worker::find($request->id);
+        $toedit = Worker::find($id);
+
+        $phone = substr($request->phone, 0, 1) == '+' ? substr($request->phone, 1, 12) : $request->phone;
+        $phone = substr('380', 0, 12 - strlen($phone)) . $phone;
+
+        $used_phone = Worker::where('phone', '=', $phone)->first();
+        if(isset($used_phone))
+            if($used_phone->id != $id)
+                return back()->with('msg', 'Телефон вже використовується');
 
         $toedit->pib = $request->pib;
         $toedit->ceh_id = $request->ceh;
         $toedit->role_id = $request->role;
-        $toedit->phone = $request->phone;
+        $toedit->phone = $phone;
         $toedit->passport = $request->passport;
         $toedit->checked = $request->checked ? 1 : 0;
 

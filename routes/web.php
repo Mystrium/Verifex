@@ -123,6 +123,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/check/{id}',      [AdminsController::class,   'check']);
         Route::get( '/delete/{id}',     [AdminsController::class,   'delete']);
     });
+    Route::get( '/profile',             [AdminsController::class,   'profile']);
+    Route::post('/profile',             [AdminsController::class,   'saveprofile']);
 
     Route::prefix('pay')->middleware('access:pay')->group(function () {
         Route::get('/',                 [PayController::class,      'view']);

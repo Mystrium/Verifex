@@ -19,7 +19,7 @@
         <div class="col">
             <span class="fw-bold">Дозволи</span><span class="text-danger"> *</span>
             <br>
-            <select class="multiple-search input-group-text w-100" id="acc" multiple="multiple" name="accesses[]" {{isset($edit)?(auth()->user()->role->priority < $edit->priority?'':'disabled'):''}}>
+            <select class="multiple-search input-group-text w-100" id="acc" multiple="multiple" name="accesses[]" {{isset($edit)?(auth()->user()->role->priority <= $edit->priority?'':'disabled'):''}}>
                 @foreach($accesses as $access)
                     <option value="{{$access->id}}" {{isset($edit)?(auth()->user()->id==$edit->id?'disabled':''):''}} {{ (isset($roleaccesses) && in_array($access->id, $roleaccesses)) ? 'selected' : '' }}>
                         {{$access->title}}

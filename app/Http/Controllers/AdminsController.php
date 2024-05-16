@@ -26,11 +26,18 @@ class AdminsController extends BaseController {
             ->withRoles($roles);
     }
 
-    public function add(Request $request){
+    public function add(Request $request) {
+        $phone = substr($request->phone, 0, 1) == '+' ? substr($request->phone, 1, 12) : $request->phone;
+        $phone = substr('380', 0, 12 - strlen($phone)) . $phone;
+
+        $used_phone = Admin::where('phone', '=', $phone)->first();
+        if(isset($used_phone))
+            return back()->with('msg', 'Телефон вже використовується');
+
         Admin::create([
             'pib' => $request->pib,
             'role_id' => $request->role,
-            'phone' => substr('380', 0, 12 - strlen($request->phone)) . $request->phone,
+            'phone' => $phone,
             'password' => $request->password,
             'allowed' => 1
         ]);
@@ -45,7 +52,7 @@ class AdminsController extends BaseController {
             abort(404);
 
         if($edit->allowed == 1)
-            if(Auth::user()->role->priority > $edit->role->priority && Auth::user()->id != $id)
+            if(Auth::user()->role->priority > $edit->role->priority)
                 abort(403, 'У вашої ролі немає доступу до цієї сторінки :`(');
 
         $roles = Roles::all();
@@ -56,12 +63,55 @@ class AdminsController extends BaseController {
             ->withAct('update');
     }
 
+    public function profile() {
+        $edit = Admin::find(Auth::user()->id);
+
+        $roles = Roles::all();
+
+        return view('admins/new')
+            ->withRoles($roles)
+            ->withEdit($edit)
+            ->withAct('update');
+    }
+
     public function update($id, Request $request){
-        $toedit = Admin::find($request->id);
+        $toedit = Admin::find($id);
+
+        $phone = substr($request->phone, 0, 1) == '+' ? substr($request->phone, 1, 12) : $request->phone;
+        $phone = substr('380', 0, 12 - strlen($phone)) . $phone;
+
+        $used_phone = Admin::where('phone', '=', $phone)->first();
+        if(isset($used_phone))
+            if($used_phone->id != $id)
+                return back()->with('msg', 'Телефон вже використовується');
 
         $toedit->pib = $request->pib;
         $toedit->role_id = $request->role;
-        $toedit->phone = substr('380', 0, 12 - strlen($request->phone)) . $request->phone;
+        $toedit->phone = $phone;
+        $toedit->allowed = $request->allowed ? 1 : 0;
+
+        if(isset($request->password))
+            $toedit->password = $request->password;
+
+        $toedit->update();
+
+        return redirect('/admins');
+    }
+
+    public function saveprofile(Request $request){
+        $toedit = Admin::find(Auth::user()->id);
+
+        $phone = substr($request->phone, 0, 1) == '+' ? substr($request->phone, 1, 12) : $request->phone;
+        $phone = substr('380', 0, 12 - strlen($phone)) . $phone;
+
+        $used_phone = Admin::where('phone', '=', $phone)->first();
+        if(isset($used_phone))
+            if($used_phone->id != Auth::user()->id)
+                return back()->with('msg', 'Телефон вже використовується');
+
+        $toedit->pib = $request->pib;
+        $toedit->role_id = $request->role;
+        $toedit->phone = $phone;
         $toedit->allowed = $request->allowed ? 1 : 0;
 
         if(isset($request->password))

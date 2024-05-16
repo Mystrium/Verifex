@@ -15,7 +15,9 @@ class AuthController extends BaseController {
     }
 
     public function login(Request $request) {
-        $credentials = $request->only('phone', 'password');
+        $phone = substr($request->phone, 0, 1) == '+' ? substr($request->phone, 1, 12) : $request->phone;
+        $credentials["phone"] = substr('380', 0, 12 - strlen($phone)) . $phone;
+        $credentials["password"] = $request->password;
 
         if (Auth::attempt($credentials)) {
             if(Auth::user()->allowed == 0){
@@ -30,7 +32,8 @@ class AuthController extends BaseController {
     }
 
     public function adduser(Request $request) {
-        $phone = substr('380', 0, 12 - strlen($request->phone)) . $request->phone;
+        $phone = substr($request->phone, 0, 1) == '+' ? substr($request->phone, 1, 12) : $request->phone;
+        $phone = substr('380', 0, 12 - strlen($phone)) . $phone;
 
         if(isset(Admin::where('phone' , '=', $phone)->first()->pib))
             return redirect('/')->with('msg', 'Такий номер телефону вже зареєстрований');

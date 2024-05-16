@@ -18,7 +18,7 @@
                 <a class="nav-link text-white-50 dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{auth()->user()->pib}}</a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li class="dropdown">
-                        <a href="/admins/edit/{{auth()->user()->id}}" class="btn btn-sm text-success w-100">
+                        <a href="/profile" class="btn btn-sm text-success w-100">
                             Профіль
                         </a>
                     </li>
