@@ -22,7 +22,8 @@ class AuthController extends BaseController {
                 Auth::logout();
                 return back()->with('msg', 'Вашу заявку ще не прийняли');
             }
-            return redirect('/items');
+            $user = Auth::user();
+            return redirect('/' . $user->role->accesses[0]->slug);
         }
 
         return back()->with('msg', 'Не вірний номер телефона, а може і пароль');

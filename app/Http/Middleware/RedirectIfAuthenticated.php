@@ -21,7 +21,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect('/items');
+                $user = Auth::user();
+                return redirect('/' . $user->role->accesses[0]->slug);
             }
         }
 

@@ -29,7 +29,7 @@
                             </div>
 
                             <div data-mdb-input-init class="form-outline mb-4">
-                                <input type="text" name="phone" class="form-control form-control-lg" placeholder="+380..." required autofocus/>
+                                <input type="number" name="phone" class="form-control form-control-lg" placeholder="+380..." required autofocus/>
                                 <label class="form-label">Телефон</label>
                             </div>
 

@@ -21,7 +21,7 @@
                 <td>{{$admin->pib}}</td>
                 <td>+{{$admin->phone}}</td>
                 <td>
-                    @if(auth()->user()->role->priority < $admin->prior || $admin->allowed==0)
+                    @if(auth()->user()->role->priority <= $admin->prior || $admin->allowed==0)
                         <a href="/roles/edit/{{$admin->role_id}}" style="text-decoration: none;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -32,7 +32,7 @@
                     {{$admin->role}}
                 </td>
                 <td>
-                    @if(auth()->user()->role->priority < $admin->prior || $admin->allowed==0)
+                    @if(auth()->user()->role->priority <= $admin->prior || $admin->allowed==0)
                         <form action="/admins/check/{{$admin->id}}" method="POST">
                             @csrf
                             <label class="switch">
