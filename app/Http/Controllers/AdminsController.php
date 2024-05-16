@@ -61,7 +61,7 @@ class AdminsController extends BaseController {
 
         $toedit->pib = $request->pib;
         $toedit->role_id = $request->role;
-        $toedit->phone = $request->phone;
+        $toedit->phone = substr('380', 0, 12 - strlen($request->phone)) . $request->phone;
         $toedit->allowed = $request->allowed ? 1 : 0;
 
         if(isset($request->password))

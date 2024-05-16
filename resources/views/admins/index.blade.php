@@ -32,7 +32,7 @@
                     {{$admin->role}}
                 </td>
                 <td>
-                    @if(auth()->user()->role->priority <= $admin->prior || $admin->allowed==0)
+                    @if((auth()->user()->role->priority <= $admin->prior || $admin->allowed==0) && auth()->user()->id != $admin->id)
                         <form action="/admins/check/{{$admin->id}}" method="POST">
                             @csrf
                             <label class="switch">

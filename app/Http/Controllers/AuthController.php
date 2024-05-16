@@ -26,7 +26,7 @@ class AuthController extends BaseController {
             return redirect('/' . $user->role->accesses[0]->slug);
         }
 
-        return back()->with('msg', 'Не вірний номер телефона, а може і пароль');
+        return back()->with('msg', 'He вірний номер телефона, a може i пароль');
     }
 
     public function adduser(Request $request) {
