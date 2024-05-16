@@ -101,14 +101,17 @@ class ItemController extends BaseController {
     }
 
     public function edit($id){
-        $toedit = Item::where('id', '=', $id)->get()[0];
+        $edit = Item::find($id);
+        if(empty($edit))
+            abort(404);
+
         $items = Item::where('id', '<>', $id)->orderBy('id', 'desc')->get();
         $consist = Consist::where('what_id', '=', $id)->get();
         $units = Unit::all();
         $categoryes = Category::all();
         return view('items/new')
             ->withItems($items)
-            ->withEdit($toedit)
+            ->withEdit($edit)
             ->withUnits($units)
             ->withConsists($consist)
             ->withCategoryes($categoryes)

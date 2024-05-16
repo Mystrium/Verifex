@@ -6,9 +6,6 @@
 items types
     ??? subtype ???
 
-Admins
-    profile edit
-
 __________^^^^^^^^tables
 
 

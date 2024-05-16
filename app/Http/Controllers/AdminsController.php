@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Roles;
 use App\Models\Admin;
@@ -10,7 +11,7 @@ class AdminsController extends BaseController {
     public function view(){
         $admins = Admin::select('admins.*', 'roles.title as role', 'roles.priority as prior')
             ->leftJoin('roles', 'roles.id', '=', 'admins.role_id')
-            ->orderBy('id', 'desc')
+            ->orderBy('priority')
             ->get();
 
         return view('admins/index')
@@ -38,13 +39,19 @@ class AdminsController extends BaseController {
     }
 
     public function edit($id) {
-        $worker = Admin::find($id);
+        $edit = Admin::find($id);
+        
+        if(empty($edit))
+            abort(404);
+
+        if(Auth::user()->role->priority <= $edit->role->priority)
+            abort(403, 'У вашої ролі немає доступу до цієї сторінки :`(');
 
         $roles = Roles::all();
 
         return view('admins/new')
             ->withRoles($roles)
-            ->withEdit($worker)
+            ->withEdit($edit)
             ->withAct('update');
     }
 

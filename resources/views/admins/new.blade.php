@@ -19,7 +19,7 @@
         <div class="col-md-auto">
             <span class="fw-bold">Посада</span><span class="text-danger"> *</span>
             <br>
-            <select class="search-drop input-group-text" style="width:200px" name="role" id="role_select">
+            <select class="search-drop input-group-text" style="width:200px" name="role" id="role_select" {{isset($edit)?(auth()->user()->id==$edit->id?'disabled':''):''}}>
                 @foreach($roles as $role)
                     <option value="{{$role->id}}" {{isset($edit)?($role->id==$edit->role_id?'selected':''):''}}>{{$role->title}}</option>
                 @endforeach
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    @if(isset($edit))
+    @if(isset($edit) && auth()->user()->id != $edit->id)
         <div class="md-auto  mb-4">
             <span class="fw-bold">Статус</span>
             <label class="switch">

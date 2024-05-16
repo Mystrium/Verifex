@@ -50,6 +50,9 @@ class RolesController extends BaseController {
 
     public function edit($id) {
         $toedit = Roles::find($id);
+        if(empty($toedit))
+            abort(404);
+
         $roles_access = RoleAccess::select('access_id')->where('role_id', '=', $id)->get();
         $roles_access2 = [];
         foreach($roles_access as $acc)

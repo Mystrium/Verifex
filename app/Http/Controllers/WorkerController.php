@@ -55,6 +55,9 @@ class WorkerController extends BaseController {
 
     public function edit($id) {
         $worker = Worker::find($id);
+        if(empty($worker))
+            abort(404);
+
         $cehs = Ceh::select('ceh.*','ceh_types.title as ctitle')
             ->leftJoin('ceh_types', 'ceh_types.id', '=', 'ceh.type_id')
             ->orderBy('type_id')

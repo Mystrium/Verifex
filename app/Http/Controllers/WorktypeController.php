@@ -57,6 +57,9 @@ class WorktypeController extends BaseController {
 
     public function edit($id) {
         $toedit = WorkType::find($id);
+        if(empty($toedit))
+            abort(404);
+
         $workitems = RoleItem::select('item_id')->where('role_id', '=', $id)->get();
         $workitems2 = [];
         foreach($workitems as $item)
