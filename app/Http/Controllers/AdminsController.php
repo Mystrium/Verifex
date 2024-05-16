@@ -44,8 +44,9 @@ class AdminsController extends BaseController {
         if(empty($edit))
             abort(404);
 
-        if(Auth::user()->role->priority <= $edit->role->priority && Auth::user()->id != $id)
-            abort(403, 'У вашої ролі немає доступу до цієї сторінки :`(');
+        if($edit->allowed == 1)
+            if(Auth::user()->role->priority <= $edit->role->priority && Auth::user()->id != $id)
+                abort(403, 'У вашої ролі немає доступу до цієї сторінки :`(');
 
         $roles = Roles::all();
 
