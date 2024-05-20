@@ -62,14 +62,13 @@
 
 <script>
     var optionsMap = @json($posistionmap)
-    
+
     var secondDropdown = document.getElementById("role_select");
 
     updateOptions(document.getElementById("ceh_select").value);
-    
+
     function updateOptions(selectedValue) {
         secondDropdown.innerHTML = "";
-
         optionsMap.forEach(function(option) {
             if (option.cehid == selectedValue) {
                 var optionElement = document.createElement("option");
@@ -81,4 +80,9 @@
     }
 </script>
 
+@if(session('msg'))
+    <div class="alert alert-danger" role="alert" style="position: fixed; top: 40%; left:25%; z-index: 1100;">
+        {{session('msg')}}
+    </div>
+@endif
 @endsection

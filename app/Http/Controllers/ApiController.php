@@ -155,9 +155,7 @@ class ApiController extends BaseController {
         $pays = Worker::selectRaw(
                 'date(transactions.date) as date,
                 GREATEST(
-                    sum(
-                        if(transactions.type_id = 4, transactions.count * -1, transactions.count) 
-                            * items.price), 
+                    sum(transactions.count * items.price), 
                         work_types.min_pay) 
                     as value')
             ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
@@ -167,7 +165,7 @@ class ApiController extends BaseController {
                 'workers.id', 
                 '=', 
                 $request->id)
-            ->whereIn('transactions.type_id', [4, 3])
+            ->whereNull('transactions.worker_to_id')
             ->whereBetween(
                 'date', 
                 [
@@ -188,15 +186,15 @@ class ApiController extends BaseController {
     public function items_chart(Request $request){
         $items = Worker::selectRaw(
             'date(transactions.date) as date,
-            sum(if(transactions.type_id = 4, transactions.count * -1, transactions.count)) as count,
+            sum(transactions.count) as count,
             items.title')
         ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
         ->join('items', 'items.id', '=', 'transactions.item_id_id')
         ->where(
             'workers.id', 
             '=', 
-            $request->id)
-        ->whereIn('transactions.type_id', [4, 3])
+            $request->id) 
+        ->whereNull('transactions.worker_to_id')
         ->whereBetween(
             'date', 
             [
