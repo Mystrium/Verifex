@@ -19,7 +19,6 @@ use App\Models\{
 };
 
 class ApiController extends BaseController {
-
     public function login(Request $request){
         $worker = Worker::where('phone', '=', $request->phone)->get()[0];
         if ($worker == null)
@@ -137,19 +136,19 @@ class ApiController extends BaseController {
         return response()->json($workers);
     }
 
-    public function hours_chart(Request $request){
-        $hours = WorkHour::selectRaw('DATE(start) as date, time as value')
-            ->where('worker_id', '=', $request->id)
-            ->whereBetween('start', [$request->start, $request->end])
-            ->orderBy('date', 'desc')
-            ->get();
+    // public function hours_chart(Request $request){
+    //     $hours = WorkHour::selectRaw('DATE(start) as date, time as value')
+    //         ->where('worker_id', '=', $request->id)
+    //         ->whereBetween('start', [$request->start, $request->end])
+    //         ->orderBy('date', 'desc')
+    //         ->get();
 
         // $hours_map = [];
         // foreach($hours as $hour)
         //     $hours_map[$hour->date] = $hour->time;
 
-        return response()->json($hours);
-    }
+    //     return response()->json($hours);
+    // }
 
     public function pay_chart(Request $request){
         $pays = Worker::selectRaw(
@@ -167,7 +166,7 @@ class ApiController extends BaseController {
                 $request->id)
             ->whereNull('transactions.worker_to_id')
             ->whereBetween(
-                'date', 
+                DB::raw('DATE(date)'),
                 [
                     $request->start, 
                     $request->end
@@ -196,7 +195,7 @@ class ApiController extends BaseController {
             $request->id) 
         ->whereNull('transactions.worker_to_id')
         ->whereBetween(
-            'date', 
+            DB::raw('DATE(date)'),
             [
                 $request->start, 
                 $request->end
@@ -249,12 +248,12 @@ class ApiController extends BaseController {
         $map = [];
         foreach($produced as $prod)
             $map[$prod->date][] = [
-                'id' => $prod->id + 0,
-                'worker_to' => $prod->worker_to_id + 0,
-                'item_id' => $prod->item_id_id + 0,
-                'color_id' => $prod->color_id + 0,
+                'id' => $prod->id,
+                'worker_to' => $prod->worker_to_id,
+                'item_id' => $prod->item_id_id,
+                'color_id' => $prod->color_id,
                 'count' => $prod->count + 0,
-                'type_id' => $prod->type_id + 0,
+                'type_id' => $prod->type_id,
             ];
 
         return response()->json($map);

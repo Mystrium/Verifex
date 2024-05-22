@@ -149,13 +149,55 @@
                             </div>
                         @endif
 
+                        @if(in_array('items', $accesses) || in_array('cost', $accesses))
+                            <li>
+                                <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#chartsnav" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                    Статистика
+                                </a>
+                                <div style="padding-left:20px;" class="collapse 
+                                    {{ $title=='Рейтинг зарплат' 
+                                    || $title=='Рейтинг виробітку' 
+                                    || $title=='Виробіток продукції' 
+                                    || $title=='Відвідування робітників' ? 'show' : ''}}" 
+                                    id="chartsnav" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        @if(in_array('items', $accesses))
+                                            <a class="nav-link {{$title=='Рейтинг зарплат'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/charts/payment">
+                                                Рейтинг зарплат
+                                            </a>
+                                        @endif
+                                        @if(in_array('cost', $accesses))
+                                            <a class="nav-link {{$title=='Рейтинг виробітку'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/charts/production">
+                                                Рейтинг виробітку
+                                            </a>
+                                        @endif
+                                        @if(in_array('cost', $accesses))
+                                            <a class="nav-link {{$title=='Виробіток продукції'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/charts/items">
+                                                Виробіток продукції
+                                            </a>
+                                        @endif
+                                        @if(in_array('cost', $accesses))
+                                            <a class="nav-link {{$title=='Відвідування робітників'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/charts/hours">
+                                                Відвідування робітників
+                                            </a>
+                                        @endif
+                                    </nav>
+                                </div>
+                            </li>
+                        @endif
+
                         @if(in_array('units', $accesses) || in_array('colors', $accesses) || in_array('purchases', $accesses) || in_array('categoryes', $accesses))
                             <hr class="nav-hr">
                             <li>
                                 <a class="dropdown-toggle nav-link collapsed text-white-50" href="#" data-bs-toggle="collapse" data-bs-target="#units" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                     Одиниці
                                 </a>
-                                <div style="padding-left:20px;" class="collapse {{$title=='Виміри'||$title=='Кольори'||$title=='Сировина'||$title=='Категорії'?'show':''}}" id="units" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                <div style="padding-left:20px;" class="collapse 
+                                    {{ $title=='Виміри'
+                                    || $title=='Кольори'
+                                    || $title=='Сировина'
+                                    || $title=='Категорії'?'show':''}}" 
+                                    id="units" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
                                         @if(in_array('units', $accesses))
                                             <a class="nav-link {{$title=='Виміри'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/units">

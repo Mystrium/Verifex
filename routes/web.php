@@ -131,13 +131,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}',             [PayController::class,      'byworker']);
     });
 
+    Route::prefix('charts')->middleware('access:pay')->group(function () {
+        Route::get('/items',            [ChartController::class,      'items']);
+        Route::get('/hours',            [ChartController::class,      'hours']);
+        Route::get('/payment',          [ChartController::class,      'payment']);
+        Route::get('/production',       [ChartController::class,      'production']);
+    });
+
     Route::get('/remains',              [MovementController::class, 'view'])->middleware('access:remains');
     Route::get('/movement',             [MovementController::class, 'movement'])->middleware('access:movement');
     Route::get('/production',           [MovementController::class, 'production'])->middleware('access:production');
 
     Route::get('/cost',                 [SelfcostController::class, 'view'])->middleware('access:cost');
-
-    Route::get('/worktime',             [ChartController::class, 'hours']);
 
     Route::get('/images/{name}',        [ImageController::class, 'view']);
 });
