@@ -136,20 +136,6 @@ class ApiController extends BaseController {
         return response()->json($workers);
     }
 
-    // public function hours_chart(Request $request){
-    //     $hours = WorkHour::selectRaw('DATE(start) as date, time as value')
-    //         ->where('worker_id', '=', $request->id)
-    //         ->whereBetween('start', [$request->start, $request->end])
-    //         ->orderBy('date', 'desc')
-    //         ->get();
-
-        // $hours_map = [];
-        // foreach($hours as $hour)
-        //     $hours_map[$hour->date] = $hour->time;
-
-    //     return response()->json($hours);
-    // }
-
     public function pay_chart(Request $request){
         $pays = Worker::selectRaw(
                 'date(transactions.date) as date,
