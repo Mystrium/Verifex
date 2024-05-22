@@ -249,12 +249,12 @@ class ApiController extends BaseController {
         $map = [];
         foreach($produced as $prod)
             $map[$prod->date][] = [
-                'id' => $prod->id,
-                'worker_to' => $prod->worker_to_id,
-                'item_id' => $prod->item_id_id,
-                'color_id' => $prod->color_id,
-                'count' => $prod->count,
-                'type_id' => $prod->type_id,
+                'id' => $prod->id + 0,
+                'worker_to' => $prod->worker_to_id + 0,
+                'item_id' => $prod->item_id_id + 0,
+                'color_id' => $prod->color_id + 0,
+                'count' => $prod->count + 0,
+                'type_id' => $prod->type_id + 0,
             ];
 
         return response()->json($map);
