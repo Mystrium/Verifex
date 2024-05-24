@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
-use App\Models\TransactionType;
 use App\Models\RoleItem;
 use App\Models\WorkType;
 use App\Models\CehType;
@@ -11,7 +10,6 @@ use App\Models\Item;
 
 class WorktypeController extends BaseController {
     public function view() {
-        $perm = TransactionType::all();
         $workitems = RoleItem::select('role_id', 'items.id', 'title')
             ->join('items', 'items.id', '=', 'role_items.item_id')
             ->get();
@@ -20,7 +18,6 @@ class WorktypeController extends BaseController {
             ->get();
 
         return view('worktypes/index')
-            ->withPermisions($perm)
             ->withWorkitems($workitems)
             ->withWorktypes($worktypes);
     }
@@ -28,10 +25,8 @@ class WorktypeController extends BaseController {
     public function new() {
         $cehtypes = CehType::all();
         $items = Item::all();
-        $perm = TransactionType::all();
         return view('worktypes/new')
             ->withCehtypes($cehtypes)
-            ->withPermisions($perm)
             ->withItems($items)
             ->withAct('add');
     }
@@ -66,13 +61,11 @@ class WorktypeController extends BaseController {
             $workitems2[] = $item->item_id;
         $cehtypes = CehType::all();
         $items = Item::all();
-        $perm = TransactionType::all();
         return view('worktypes/new')
             ->withItems($items)
             ->withEdit($toedit)
             ->withWorkitems($workitems2)
             ->withCehtypes($cehtypes)
-            ->withPermisions($perm)
             ->withAct('update');
     }
 

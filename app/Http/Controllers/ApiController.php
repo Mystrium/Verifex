@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Hash;
 
 use App\Models\{
-    TransactionType,
     Transaction,
     WorkHour,
     WorkType,
@@ -87,14 +86,21 @@ class ApiController extends BaseController {
     }
 
     public function transtypes(Request $request) {
-        $types = TransactionType::whereIn('id',
-                explode(',',
-                    WorkType::select('operations')
-                        ->find($request->role_id)['operations']
-                        )
-            )->get();
+        $types = [
+                ['id' => 1, 'title' => 'Віддав'],
+                ['id' => 3, 'title' => 'Виробив'],
+                ['id' => 4, 'title' => 'Брак']
+            ];
 
-        return response()->json($types);
+        $oprs = explode(',', WorkType::select('operations')->find($request->role_id)['operations']);
+
+        $resp = [];
+        foreach($types as $type)
+            foreach($oprs as $opr)
+                if($opr == $type['id'])
+                    $resp[] = $type;
+
+        return response()->json($resp);
     }
 
     public function transact(Request $request){

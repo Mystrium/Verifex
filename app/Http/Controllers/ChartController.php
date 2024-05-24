@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 use App\Models\WorkHour;
 use App\Models\Consist;
 use App\Models\Worker;
@@ -43,19 +43,18 @@ class ChartController extends BaseController {
             // ->groupBy('item_id_id')
             ->get();
 
-        // $data = [{"datasets":[{"data":[{"x":1625443200,"y":11.74},{"x":1626048,"y":12.43},{"x":1626652800,"y":34.18}],"label":"Hike","hidden":true},{"data":[{"x":1624233600,"y":5.27},{"x":1630281600,"y":7.32}],"label":"Kayaking","hidden":true}];
-
         $data = [];
-        foreach($produced as $prd){
-            $data['label'][] = [$prd->title];
-            $data['val'][] = [$prd->count];
+        foreach($produced as $prd) {
+            $data['label'][] = $prd->title;
+            $data['val'][] = $prd->count;
         }
-        
+
         return view('charts/index')
             ->withRoute('items')
             ->withPagetitle('Виробіток продукції')
             ->withPeriod([$start, $end])
             ->withData($data)
+            ->withChart('pie')
             ->withTest($produced);
     }
 
@@ -63,20 +62,46 @@ class ChartController extends BaseController {
         $start = $request->period[0] ?? Carbon::now()->subDays(30)->toDateString();
         $end  =  $request->period[1] ?? Carbon::now()->toDateString();
 
-        $hours = WorkHour::selectRaw('workers.pib, worker_id, DATE(start) as date, time')
+        $hours = WorkHour::selectRaw('workers.pib, worker_id, DATE(start) as date, TIME_TO_SEC(time) as time')
             ->join('workers', 'workers.id', '=', 'work_hours.worker_id')
             ->whereBetween(DB::raw('DATE(start)'), [$start, $end])
             ->get();
 
-        // foreach($hours as $hour){
-        //     $data['datasets'][] = ['data' => ['x' => $hour->date, 'y' => $hour->time], 'label' => 'test'];
-        //     $data['test'][] = ['x' => $hour->date, 'y' => $hour->time];
+        // $data = [];
+        // foreach($hours as $prd){
+        //     $data['label'][] = $prd->date;
+        //     $data['val'][] = $prd->time;
         // }
 
+        // $data = [
+        //     {"data":[
+        //         {"x":1625443200,"y":11.74},
+        //         {"x":1626048,"y":12.43},
+        //         {"x":1626652800,"y":34.18}
+        //     ],
+        //     "label":"Hike"},
+        //     {"data":[
+        //         {"x":1624233600,"y":5.27},
+        //         {"x":1630281600,"y":7.32}
+        //     ],
+        //     "label":"Kayaking"
+        //     }
+        // ];
+
+        $lines = [];
+        foreach($hours as $prd) {
+            $lines[$prd->pib][] = [
+                'x' => $prd->date,
+                'y' => $prd->time
+            ];
+        }
+
         $data = [];
-        foreach($hours as $prd){
-            $data['label'][] = [$prd->time];
-            $data['val'][] = [$prd->date];
+        foreach($lines as $line => $name){
+            $data[] = [
+                'data' => $line,
+                'label' => $name
+            ];
         }
         
         return view('charts/index')
@@ -84,6 +109,7 @@ class ChartController extends BaseController {
             ->withPagetitle('Відвідування робітників')
             ->withPeriod([$start, $end])
             ->withData($data)
+            ->withChart('line')
             ->withTest($hours);
     }
     
@@ -111,8 +137,8 @@ class ChartController extends BaseController {
 
         $data = [];
         foreach($pays as $prd){
-            $data['label'][] = [$prd->pib];
-            $data['val'][] = [$prd->value];
+            $data['label'][] = $prd->pib;
+            $data['val'][] = $prd->value;
         }
 
         return view('charts/index')
@@ -120,6 +146,7 @@ class ChartController extends BaseController {
             ->withPagetitle('Рейтинг зарплат')
             ->withPeriod([$start, $end])
             ->withData($data)
+            ->withChart('pie')
             ->withTest($pays);
     }
 
@@ -148,8 +175,8 @@ class ChartController extends BaseController {
 
         $data = [];
         foreach($items as $prd){
-            $data['label'][] = [$prd->title];
-            $data['val'][] = [$prd->count];
+            $data['label'][] = $prd->title;
+            $data['val'][] = $prd->count;
         }
 
         return view('charts/index')
@@ -157,6 +184,7 @@ class ChartController extends BaseController {
             ->withPagetitle('Рейтинг виробітку')
             ->withPeriod([$start, $end])
             ->withData($data)
+            ->withChart('pie')
             ->withTest($items);
     }
 

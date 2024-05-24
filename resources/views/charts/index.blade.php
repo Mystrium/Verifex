@@ -22,30 +22,30 @@
     </div>
 </form>
 
-<pre>{{json_encode($test, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)}}</pre>
-
 <div class="card chart-container w-25">
-    <canvas id="hourschart"></canvas>
+    <canvas id="chart"></canvas>
 </div>
 
-<br>
+<pre>{{json_encode($test, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)}}</pre>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
-    const ctx2 = document.getElementById("hourschart").getContext('2d');
-    let rand_colors = [];
+    const ctx2 = document.getElementById("chart").getContext('2d');
+    let colors = [];
     for (let i = 0; i < {{ count($data['val']) }}; i++)
-        rand_colors[i] = "hsl(" + 360 / {{ count($data['val']) }} * i +", 100%, 50%)";
+        colors[i] = "hsl(" + 360 / {{ count($data['val']) }} * i +", 80%, 50%)";
 
     new Chart(ctx2, {
-        type: "pie",
+        type: @json($chart),
         data: {
             labels: @json($data['label']),
             datasets: [{
-                backgroundColor: rand_colors,
+                backgroundColor: colors,
                 data: @json($data['val'])
             }]
         }
     });
 </script>
+
 @endsection

@@ -33,12 +33,15 @@
                 </td>
                 <td>
                     @foreach(explode(',', $type->operations) as $oper)
-                        @foreach($permisions as $per)
-                            @if($per->id == $oper)
-                                {{$per->title}}{{count(explode(',', $type->operations)) == 1 ? '' : ($loop->last ? '' : ',')}}
-                                @break
-                            @endif
-                        @endforeach
+                        @if($oper == 1)
+                            Віддав{{count(explode(',', $type->operations)) == 1 ? '' : ($loop->last ? '' : ',')}}
+                        @endif
+                        @if($oper == 3)
+                            Виробив{{count(explode(',', $type->operations)) == 1 ? '' : ($loop->last ? '' : ',')}}
+                        @endif
+                        @if($oper == 4)
+                            Брак{{count(explode(',', $type->operations)) == 1 ? '' : ($loop->last ? '' : ',')}}
+                        @endif
                     @endforeach
                 </td>
                 <td>

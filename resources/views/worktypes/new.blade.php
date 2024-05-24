@@ -32,11 +32,9 @@
             <span class="fw-bold">Дозволи</span><span class="text-danger"> *</span>
             <br>
             <select class="multiple-search input-group-text w-100" id="opr" multiple="multiple" name="operations[]">
-                @foreach($permisions as $item)
-                    <option value="{{$item->id}}" {{ (isset($edit) && in_array($item->id, explode(',', $edit->operations))) ? 'selected' : '' }}>
-                        {{$item->title}}
-                    </option>
-                @endforeach
+                <option value="1" {{ (isset($edit) && in_array(1, explode(',', $edit->operations))) ? 'selected' : '' }}>Віддав</option>
+                <option value="3" {{ (isset($edit) && in_array(3, explode(',', $edit->operations))) ? 'selected' : '' }}>Виробив</option>
+                <option value="4" {{ (isset($edit) && in_array(4, explode(',', $edit->operations))) ? 'selected' : '' }}>Брак</option>
             </select>
         </div>
         <div class="col">

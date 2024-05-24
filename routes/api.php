@@ -10,7 +10,7 @@ Route::get( '/cehs',        [ApiController::class, 'cehs']);
 Route::post('/roles',       [ApiController::class, 'roles']);
 Route::post('/items',       [ApiController::class, 'items']);
 Route::get( '/colors',      [ApiController::class, 'colors']);
-Route::post('/transtypes',  [ApiController::class, 'transtypes']);
+Route::get('/transtypes',  [ApiController::class, 'transtypes']);
 Route::post('/transaction', [ApiController::class, 'transact']);
 Route::post('/worktime',    [ApiController::class, 'worktime']);
 Route::post('/workers',     [ApiController::class, 'workers']);
