@@ -163,7 +163,7 @@ class ApiController extends BaseController {
                     $request->start, 
                     $request->end
                 ])
-            ->orderBy('date', 'desc')
+            ->orderBy('date', 'asc')
             ->groupByRaw('DATE(date)')
             ->get();
 
@@ -192,7 +192,7 @@ class ApiController extends BaseController {
                 $request->start, 
                 $request->end
             ])
-        ->orderBy('date', 'desc')
+        ->orderBy('date', 'asc')
         ->groupBy('items.id')
         ->get();
 
@@ -234,21 +234,21 @@ class ApiController extends BaseController {
                 IF(worker_to_id is not null, 1, IF(count > 0, 3, 4)) as type_id')
             ->where('worker_from_id', '=', $request->id)
             ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
-            ->orderBy('date', 'desc')
+            ->orderBy('date', 'asc')
             ->get();
 
-        $map = [];
-        foreach($produced as $prod)
-            $map[$prod->date][] = [
-                'id' => $prod->id,
-                'worker_to' => $prod->worker_to_id,
-                'item_id' => $prod->item_id_id,
-                'color_id' => $prod->color_id,
-                'count' => $prod->count + 0,
-                'type_id' => $prod->type_id,
-            ];
+        // $map = [];
+        // foreach($produced as $prod)
+        //     $map[$prod->date][] = [
+        //         'id' => $prod->id,
+        //         'worker_to' => $prod->worker_to_id,
+        //         'item_id' => $prod->item_id_id,
+        //         'color_id' => $prod->color_id,
+        //         'count' => $prod->count + 0,
+        //         'type_id' => $prod->type_id,
+        //     ];
 
-        return response()->json($map);
+        return response()->json($produced);
     }
 
     public function edittrans(Request $request){
