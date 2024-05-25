@@ -196,11 +196,11 @@ class ApiController extends BaseController {
         ->groupBy('items.id')
         ->get();
 
-        $items_map = [];
-        foreach($items as $item)
-            $items_map[$item->date][] = [$item->title => $item->count];
+        // $items_map = [];
+        // foreach($items as $item)
+        //     $items_map[$item->date][] = [$item->title => $item->count];
 
-        return response()->json($items_map);
+        return response()->json($items);
     }
 
     public function editworker(Request $request){
