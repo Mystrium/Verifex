@@ -171,13 +171,19 @@ class ApiController extends BaseController {
         // foreach($pays as $pay)
         //     $pay_map[$pay->date] = $pay->pay;
 
-        return response()->json($pays);
+        $pay_map = [];
+        foreach($pays as $pay)
+            $pay_map[] = [
+                'date'  => $pay->date, 
+                'value' => $pay->value + 0
+            ];
+
+        return response()->json($pay_map);
     }
 
     public function items_chart(Request $request){
         $items = Worker::selectRaw(
-            'date(transactions.date) as date,
-            sum(transactions.count) as count,
+            'sum(transactions.count) as count,
             items.title')
         ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
         ->join('items', 'items.id', '=', 'transactions.item_id_id')
@@ -200,7 +206,14 @@ class ApiController extends BaseController {
         // foreach($items as $item)
         //     $items_map[$item->date][] = [$item->title => $item->count];
 
-        return response()->json($items);
+        $item_map = [];
+        foreach($items as $item)
+            $item_map[] = [
+                'title'  => $item->title, 
+                'count' => $item->count + 0
+            ];
+
+        return response()->json($item_map);
     }
 
     public function editworker(Request $request){
@@ -237,18 +250,18 @@ class ApiController extends BaseController {
             ->orderBy('date', 'asc')
             ->get();
 
-        // $map = [];
-        // foreach($produced as $prod)
-        //     $map[$prod->date][] = [
-        //         'id' => $prod->id,
-        //         'worker_to' => $prod->worker_to_id,
-        //         'item_id' => $prod->item_id_id,
-        //         'color_id' => $prod->color_id,
-        //         'count' => $prod->count + 0,
-        //         'type_id' => $prod->type_id,
-        //     ];
+        $map = [];
+        foreach($produced as $prod)
+            $map[$prod->date][] = [
+                'id' => $prod->id,
+                'worker_to' => $prod->worker_to_id,
+                'item_id' => $prod->item_id_id,
+                'color_id' => $prod->color_id,
+                'count' => $prod->count + 0,
+                'type_id' => $prod->type_id,
+            ];
 
-        return response()->json($produced);
+        return response()->json($map);
     }
 
     public function edittrans(Request $request){
