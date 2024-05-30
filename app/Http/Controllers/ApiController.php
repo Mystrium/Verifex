@@ -163,7 +163,7 @@ class ApiController extends BaseController {
                     $request->start, 
                     $request->end
                 ])
-            ->orderBy('date', 'asc')
+            ->orderBy('date', 'desc')
             ->groupByRaw('DATE(date)')
             ->get();
 
@@ -247,7 +247,7 @@ class ApiController extends BaseController {
                 IF(worker_to_id is not null, 1, IF(count > 0, 3, 4)) as type_id')
             ->where('worker_from_id', '=', $request->id)
             ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
-            ->orderBy('date', 'asc')
+            ->orderBy('date', 'desc')
             ->get();
 
         $map = [];
