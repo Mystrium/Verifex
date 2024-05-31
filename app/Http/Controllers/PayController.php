@@ -25,7 +25,7 @@ class PayController extends BaseController {
             ->whereNull('transactions.worker_to_id')
             ->whereBetween(DB::raw('DATE(date)'), [$start, $end])
             ->orderBy('date', 'asc')
-            ->groupByRaw('workers.id, WEEK(date)')
+            ->groupByRaw('workers.id, WEEK(DATE(date))')
             ->get();
         
         return view('pay/index')
