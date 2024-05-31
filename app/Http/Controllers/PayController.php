@@ -12,13 +12,13 @@ class PayController extends BaseController {
     public function view(Request $request) {
         $start = $request->period[0] ?? Carbon::now()->startOfWeek()->subDays(7)->toDateString();
         $end = $request->period[1] ?? Carbon::now()->startOfWeek()->toDateString();
-        
+
         $pays = Worker::selectRaw('
                 DATE_FORMAT(transactions.date, "%d.%m.%Y") as date, 
                 sum(transactions.count * items.price) as sum,
                 workers.id,
                 workers.pib, 
-                work_types.min_pay')
+                work_types.min_pay / 4')
             ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')
@@ -27,7 +27,7 @@ class PayController extends BaseController {
             ->orderBy('date', 'asc')
             ->groupByRaw('workers.id, WEEK(DATE(date))')
             ->get();
-        
+
         return view('pay/index')
             ->withPeriod([$start, $end])
             ->withPays($pays);
