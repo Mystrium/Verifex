@@ -143,6 +143,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/production',           [MovementController::class, 'production'])->middleware('access:production');
 
     Route::get('/cost',                 [SelfcostController::class, 'view'])->middleware('access:cost');
-
-    Route::get('/images/{name}',        [ImageController::class, 'view']);
 });
+
+Route::get('/images/{name}',        [ImageController::class, 'view']);
