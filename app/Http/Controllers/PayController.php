@@ -18,7 +18,7 @@ class PayController extends BaseController {
                 sum(transactions.count * items.price) as sum,
                 workers.id,
                 workers.pib, 
-                work_types.min_pay / 4')
+                work_types.min_pay / 4 as min_pay')
             ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
             ->join('work_types', 'work_types.id', '=', 'workers.role_id')

@@ -147,7 +147,7 @@ class ApiController extends BaseController {
                 'date(transactions.date) as date,
                 GREATEST(
                     sum(transactions.count * items.price), 
-                        work_types.min_pay) 
+                        work_types.min_pay / 20) 
                     as value')
             ->join('transactions', 'transactions.worker_from_id', '=', 'workers.id')
             ->join('items', 'items.id', '=', 'transactions.item_id_id')
