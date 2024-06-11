@@ -176,11 +176,11 @@
                                                 Виробіток продукції
                                             </a>
                                         @endif
-                                        @if(in_array('cost', $accesses))
+                                        {{--@if(in_array('cost', $accesses))
                                             <a class="nav-link {{$title=='Відвідування робітників'?'text-bold text-warning':'text-white-50 link-body-emphasis'}}" href="/charts/hours">
                                                 Відвідування робітників
                                             </a>
-                                        @endif
+                                        @endif--}}
                                     </nav>
                                 </div>
                             </li>

@@ -39,15 +39,15 @@
                                 <div class="form-check mb-0">
                                 <input class="form-check-input me-2" type="checkbox" id="form2Example3"/>
                                 <label class="form-check-label" for="form2Example3">
-                                    Забути мене
+                                    Запам'ятати мене
                                 </label>
                                 </div>
-                                <a href="#!" class="text-body">Забули пароль? Добре, допобачення !</a>
+                                <a href="#" class="text-body">Забули пароль? Відновити</a>
                             </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">
                                 <button type="submit" type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Увійти</button>
-                                <p class="small fw-bold mt-2 pt-1 mb-0">Не зареєстровані ? <a href="/register" class="link-danger">то зареєструйтесь</a></p>
+                                <p class="small fw-bold mt-2 pt-1 mb-0">Не зареєстровані ? <a href="/register" class="link-danger">Зареєструйтесьь</a></p>
                             </div>
                         </form>
                     </div>
