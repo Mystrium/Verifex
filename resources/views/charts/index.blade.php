@@ -22,27 +22,31 @@
     </div>
 </form>
 
-<div class="card chart-container w-25">
-    <canvas id="chart"></canvas>
-</div>
+@if(isset($data['val']))
+    <div class="card chart-container w-25">
+        <canvas id="chart"></canvas>
+    </div>
+@else
+    <p>Немає що показувати за цей період</p>
+@endif
 
-<pre>{{json_encode($test, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)}}</pre>
+{{--<pre>{{jso_encode($test, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)}}</pre>--}}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
     const ctx2 = document.getElementById("chart").getContext('2d');
     let colors = [];
-    for (let i = 0; i < {{ count($data['val']) }}; i++)
-        colors[i] = "hsl(" + 360 / {{ count($data['val']) }} * i +", 80%, 50%)";
+    for (let i = 0; i < {{ count($data['val']??[]) }}; i++)
+        colors[i] = "hsl(" + 360 / {{ count($data['val']??[]) }} * i +", 80%, 50%)";
 
     new Chart(ctx2, {
         type: @json($chart),
         data: {
-            labels: @json($data['label']),
+            labels: @json($data['label']??[]),
             datasets: [{
                 backgroundColor: colors,
-                data: @json($data['val'])
+                data: @json($data['val']??[])
             }]
         }
     });
